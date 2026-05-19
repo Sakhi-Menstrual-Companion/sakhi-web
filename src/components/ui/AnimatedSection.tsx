@@ -21,6 +21,19 @@ export default function AnimatedSection({
     const el = ref.current;
     if (!el) return;
 
+    const rect = el.getBoundingClientRect();
+    const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+
+    if (inViewport) {
+      // Already visible on screen — show immediately, no animation
+      return;
+    }
+
+    // Below the fold — hide it and animate in on scroll
+    el.style.opacity = "0";
+    el.style.transform = "translateY(28px)";
+    el.style.transition = "opacity 0.7s ease, transform 0.7s ease";
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -47,12 +60,7 @@ export default function AnimatedSection({
     <div
       ref={ref}
       className={className}
-      style={{
-        opacity: 0,
-        transform: "translateY(28px)",
-        transition: `opacity 0.7s ease, transform 0.7s ease`,
-        ...style,
-      }}
+      style={style}
     >
       {children}
     </div>

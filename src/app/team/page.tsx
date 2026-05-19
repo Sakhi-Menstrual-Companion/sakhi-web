@@ -3,213 +3,120 @@ import AnimatedSection from "@/components/ui/AnimatedSection";
 
 export const metadata: Metadata = {
   title: "Team — Sakhi",
-  description: "The people building Sakhi. Three students who refused to look away from a real problem.",
+  description: "The people building Sakhi. The story of how a university bootcamp became a real women's health product.",
 };
 
-const container: React.CSSProperties = { maxWidth: 1200, margin: "0 auto" };
+const container: React.CSSProperties = { maxWidth: 1160, margin: "0 auto" };
 const sectionPad: React.CSSProperties = { padding: "96px 24px" };
-
-const pill: React.CSSProperties = {
-  background: "rgba(246,24,135,0.08)",
-  color: "#F61887",
-  padding: "6px 16px",
-  borderRadius: 999,
-  fontSize: 11,
-  fontWeight: 500,
-  letterSpacing: "0.06em",
-  textTransform: "uppercase",
-  display: "inline-block",
-  marginBottom: 28,
-};
+const label = (mb = 16): React.CSSProperties => ({
+  fontSize: 13, fontWeight: 400, color: "#F61887",
+  letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: mb, display: "block",
+});
 
 const teamMembers = [
   {
     initials: "KK",
     name: "Karan Kumar",
-    role: "Co-founder & Product Lead, iOS Developer",
+    role: "Founder & Product Lead",
     quote: "Product is not what you build. It's the problem you solve.",
-    bio: "Returned May 10, 2026. Karan leads product strategy, iOS development, and everything in between. He started Sakhi at Galgotias University in January 2024 and has been building it since.",
-  },
-  {
-    initials: "AG",
-    name: "Arpita Gupta",
-    role: "Co-founder & iOS Developer",
-    quote: "Every line of code is written for someone who needed this.",
-    bio: "Building Sakhi from Day 1. Arpita manages iOS development and has kept the product alive and growing through every chapter of this journey.",
+    bio: "Karan started Sakhi at the ISDP Bootcamp, Galgotias University, in January 2024. He leads product strategy, iOS development, AI integration, and the overall direction of where Sakhi goes. Returned full-time on May 10, 2026 to build v2.",
+    highlight: true,
   },
   {
     initials: "SS",
     name: "Shruti Sachdeva",
     role: "Design Lead",
     quote: "Design is not decoration. It is the experience.",
-    bio: "Shruti shapes how Sakhi looks and feels — the visual system, the interactions, the moments of care embedded in the design.",
+    bio: "Shruti is the visual mind behind Sakhi. She designed the logo, the brand system, the design language, and every screen of the app. The warmth and clarity that makes Sakhi feel trusted is Shruti's work.",
+    highlight: false,
   },
 ];
 
 export default function TeamPage() {
   return (
-    <div style={{ overflowX: "hidden" }}>
+    <div style={{ overflowX: "hidden", fontFamily: "var(--font-lato), Lato, sans-serif" }}>
 
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section
-        style={{
-          backgroundColor: "#F8F2F4",
-          padding: "160px 24px 96px",
-          textAlign: "center",
-        }}
-      >
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
+      <section style={{
+        background: "linear-gradient(160deg, #FDF0F5 0%, #F8F2F4 50%, #FFF5F8 100%)",
+        padding: "160px 24px 96px",
+      }}>
+        <div style={{ ...container, maxWidth: 760 }}>
           <AnimatedSection delay={0}>
-            <span style={pill}>The Team</span>
-            <h1
-              style={{
-                fontSize: "clamp(48px, 6vw, 80px)",
-                fontWeight: 300,
-                color: "#1A1A1A",
-                letterSpacing: "-1px",
-                lineHeight: 1.1,
-                margin: "0 0 24px",
-              }}
-            >
-              Built by people who refused to look away.
+            <span style={label(20)}>The Team</span>
+            <h1 style={{ fontSize: "clamp(48px, 6vw, 76px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-1.5px", lineHeight: 1.05, margin: "0 0 28px" }}>
+              Built by people<br />who care.
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={100}>
-            <p
-              style={{
-                fontSize: 18,
-                fontWeight: 300,
-                color: "#5A5A5A",
-                lineHeight: 1.75,
-                margin: 0,
-              }}
-            >
-              Sakhi began as Team 07. Three students. One assignment.
-              Something that became impossible to walk away from.
+            <p style={{ fontSize: 18, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, maxWidth: 540, margin: 0 }}>
+              Sakhi began as Team 07. A university bootcamp. One assignment. Something that became impossible to walk away from.
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* ── TEAM ──────────────────────────────────────────────────────────── */}
+      {/* ── TEAM ─────────────────────────────────────────────────────────────── */}
       <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
         <div style={container}>
           <AnimatedSection delay={0}>
-            <div style={{ textAlign: "center", marginBottom: 52 }}>
-              <h2
-                style={{
-                  fontSize: "clamp(32px, 4vw, 52px)",
-                  fontWeight: 300,
-                  color: "#1A1A1A",
-                  letterSpacing: "-0.5px",
-                  lineHeight: 1.15,
-                  margin: "0 0 12px",
-                }}
-              >
+            <div style={{ marginBottom: 52 }}>
+              <span style={label()}>The People</span>
+              <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 12px" }}>
                 The people building Sakhi.
               </h2>
-              <p
-                style={{
-                  fontSize: 16,
-                  fontWeight: 300,
-                  color: "#9A9A9A",
-                  margin: 0,
-                }}
-              >
-                Small team, deep conviction.
-              </p>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, margin: 0 }}>Small team. Deep conviction.</p>
             </div>
           </AnimatedSection>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              border: "1px solid rgba(0,0,0,0.07)",
-            }}
-          >
-            {teamMembers.map((member, i, arr) => (
-              <AnimatedSection key={i} delay={i * 80}>
-                <div
-                  style={{
-                    padding: "40px 32px",
-                    borderRight: i < arr.length - 1 ? "1px solid rgba(0,0,0,0.07)" : "none",
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, maxWidth: 880 }}>
+            {teamMembers.map((member, i) => (
+              <AnimatedSection key={i} delay={i * 100}>
+                <div style={{
+                  background: "#F8F2F4",
+                  borderRadius: 20,
+                  padding: "40px 32px",
+                  height: "100%",
+                  boxSizing: "border-box" as const,
+                  display: "flex",
+                  flexDirection: "column" as const,
+                  gap: 20,
+                }}>
+                  {/* Avatar */}
+                  <div style={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: "50%",
+                    background: member.highlight ? "#F61887" : "rgba(246,24,135,0.08)",
+                    border: member.highlight ? "none" : "1.5px solid rgba(246,24,135,0.2)",
                     display: "flex",
-                    flexDirection: "column",
-                    gap: 20,
-                    height: "100%",
-                    boxSizing: "border-box",
-                  }}
-                >
-                  {/* Initials circle */}
-                  <div
-                    style={{
-                      width: 56,
-                      height: 56,
-                      borderRadius: "50%",
-                      backgroundColor: "rgba(246,24,135,0.08)",
-                      border: "1px solid rgba(246,24,135,0.2)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#F61887",
-                      fontWeight: 400,
-                      fontSize: 18,
-                    }}
-                  >
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 18,
+                    fontWeight: 400,
+                    color: member.highlight ? "#FFFFFF" : "#F61887",
+                    flexShrink: 0,
+                  }}>
                     {member.initials}
                   </div>
 
                   {/* Name + role */}
                   <div>
-                    <div
-                      style={{
-                        fontWeight: 500,
-                        fontSize: 20,
-                        color: "#1A1A1A",
-                        marginBottom: 4,
-                      }}
-                    >
-                      {member.name}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 300,
-                        color: "#9A9A9A",
-                        lineHeight: 1.5,
-                      }}
-                    >
-                      {member.role}
-                    </div>
+                    <div style={{ fontSize: 20, fontWeight: 500, color: "#1A1A1A", marginBottom: 4 }}>{member.name}</div>
+                    <div style={{ fontSize: 14, fontWeight: 400, color: "#F61887" }}>{member.role}</div>
                   </div>
 
                   {/* Quote */}
-                  <p
-                    style={{
-                      fontSize: 15,
-                      fontWeight: 300,
-                      fontStyle: "italic",
-                      color: "#5A5A5A",
-                      lineHeight: 1.65,
-                      margin: 0,
-                      paddingLeft: 14,
-                      borderLeft: "2px solid rgba(246,24,135,0.3)",
-                    }}
-                  >
+                  <p style={{
+                    fontSize: 15, fontWeight: 400, fontStyle: "italic",
+                    color: "#5A5A5A", lineHeight: 1.65, margin: 0,
+                    paddingLeft: 14, borderLeft: "2px solid rgba(246,24,135,0.3)",
+                  }}>
                     &ldquo;{member.quote}&rdquo;
                   </p>
 
                   {/* Bio */}
-                  <p
-                    style={{
-                      fontSize: 15,
-                      fontWeight: 300,
-                      color: "#5A5A5A",
-                      lineHeight: 1.75,
-                      margin: 0,
-                    }}
-                  >
+                  <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
                     {member.bio}
                   </p>
                 </div>
@@ -219,71 +126,51 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* ── ORIGIN ────────────────────────────────────────────────────────── */}
+      {/* ── ORIGIN ───────────────────────────────────────────────────────────── */}
       <section style={{ ...sectionPad, backgroundColor: "#F8F2F4" }}>
         <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
           <AnimatedSection delay={0}>
-            <span style={pill}>Where It Began</span>
-            <h2
-              style={{
-                fontSize: "clamp(28px, 3.5vw, 44px)",
-                fontWeight: 300,
-                color: "#1A1A1A",
-                letterSpacing: "-0.5px",
-                lineHeight: 1.2,
-                margin: "0 0 24px",
-              }}
-            >
+            <span style={label()}>Where It Began</span>
+            <h2 style={{ fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 24px" }}>
               January 9, 2024. Galgotias University.
             </h2>
-            <p
-              style={{
-                fontSize: 17,
-                fontWeight: 300,
-                color: "#5A5A5A",
-                lineHeight: 1.75,
-                margin: 0,
-              }}
-            >
-              The ISDP Bootcamp assigned Team 07 a problem. They chose women&rsquo;s health.
-              Nobody told them to. They did 49 interviews, consulted gynaecologists, and
-              found a gap so large it couldn&rsquo;t be ignored. Sakhi was the answer.
+            <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
+              The ISDP Bootcamp assigned Team 07 a problem. They chose women&rsquo;s health — not because they were told to, but because it felt unaddressed. 49 user interviews. Gynaecologist consultations. A gap so large it couldn&rsquo;t be ignored. Sakhi was the answer.
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* ── GALGOTIAS ─────────────────────────────────────────────────────── */}
+      {/* ── GALGOTIAS ────────────────────────────────────────────────────────── */}
       <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
         <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
           <AnimatedSection delay={0}>
-            <span style={pill}>Founding Partner</span>
-            <h2
-              style={{
-                fontSize: "clamp(28px, 3.5vw, 44px)",
-                fontWeight: 300,
-                color: "#1A1A1A",
-                letterSpacing: "-0.5px",
-                lineHeight: 1.2,
-                margin: "0 0 24px",
-              }}
-            >
+            <span style={label()}>Founding Partner</span>
+            <h2 style={{ fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 24px" }}>
               Galgotias University
             </h2>
-            <p
-              style={{
-                fontSize: 17,
-                fontWeight: 300,
-                color: "#5A5A5A",
-                lineHeight: 1.75,
-                margin: 0,
-              }}
-            >
-              Sakhi exists because of Galgotias University. Not as a customer or a client —
-              as a founding patron. The ISDP program, the campus, the relationships, the Apple
-              Developer enrollment, the institutional credibility — all of it comes from GU.
-              We are grateful for every bit of it.
+            <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
+              Sakhi exists because of Galgotias University — not as a customer, but as a founding patron. The ISDP program, the campus, the Apple Developer Program enrollment, the institutional credibility — all of it comes from GU. We carry that forward in everything we build.
             </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── CTA ──────────────────────────────────────────────────────────────── */}
+      <section style={{ background: "linear-gradient(160deg, #F61887 0%, #D4127A 100%)", padding: "80px 24px", textAlign: "center" }}>
+        <div style={{ maxWidth: 520, margin: "0 auto" }}>
+          <AnimatedSection delay={0}>
+            <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#FFFFFF", letterSpacing: "-1px", lineHeight: 1.1, margin: "0 0 20px" }}>
+              Join the journey.
+            </h2>
+            <p style={{ fontSize: 17, fontWeight: 400, color: "rgba(255,255,255,0.8)", lineHeight: 1.8, margin: "0 0 36px" }}>
+              Free. No ads. Your data stays yours.
+            </p>
+            <a href="https://apps.apple.com/app/id6742219623" target="_blank" rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, backgroundColor: "#FFFFFF", color: "#F61887", padding: "16px 36px", borderRadius: 999, textDecoration: "none", fontSize: 15, fontWeight: 600 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#F61887"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              Download on App Store
+            </a>
           </AnimatedSection>
         </div>
       </section>

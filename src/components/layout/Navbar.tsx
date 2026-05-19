@@ -270,12 +270,6 @@ export default function Navbar() {
         </div>
       )}
 
-      <style>{`
-        @media (max-width: 768px) {
-          .sakhi-desktop-nav { display: none !important; }
-          .sakhi-hamburger { display: flex !important; }
-        }
-      `}</style>
     </>
   );
 }

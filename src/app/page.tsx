@@ -1,93 +1,84 @@
 import Link from "next/link";
-import Image from "next/image";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 
 const container: React.CSSProperties = { maxWidth: 1160, margin: "0 auto" };
 const sectionPad: React.CSSProperties = { padding: "96px 24px" };
 
-const pill: React.CSSProperties = {
-  background: "rgba(246,24,135,0.08)",
-  color: "#F61887",
-  padding: "6px 16px",
-  borderRadius: 999,
-  fontSize: 11,
-  fontWeight: 500,
-  letterSpacing: "0.06em",
-  textTransform: "uppercase" as const,
-  display: "inline-block",
-  marginBottom: 24,
-};
-
 export default function HomePage() {
   return (
-    <div style={{ overflowX: "hidden" }}>
+    <div style={{ overflowX: "hidden", fontFamily: "var(--font-lato), Lato, sans-serif" }}>
 
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
+      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
       <section style={{
         minHeight: "100vh",
-        backgroundColor: "#F8F2F4",
+        background: "linear-gradient(160deg, #FDF0F5 0%, #F8F2F4 50%, #FFF5F8 100%)",
         display: "flex",
         alignItems: "center",
         padding: "120px 24px 80px",
+        position: "relative",
+        overflow: "hidden",
       }}>
-        <div style={{ ...container, width: "100%" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+        <div style={{
+          position: "absolute", top: -120, right: -120,
+          width: 500, height: 500, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(246,24,135,0.06) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+
+        <div style={{ ...container, width: "100%", position: "relative" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center" }}>
 
             {/* Left */}
             <div>
               <AnimatedSection delay={0}>
-                <span style={pill}>Now on App Store · Free</span>
-                <h1 style={{
-                  fontSize: "clamp(44px, 5.5vw, 76px)",
-                  fontWeight: 300,
-                  color: "#1A1A1A",
-                  letterSpacing: "-1.5px",
-                  lineHeight: 1.08,
-                  margin: "0 0 28px",
+                <div style={{
+                  display: "inline-flex", alignItems: "center", gap: 8,
+                  background: "rgba(246,24,135,0.08)", border: "1px solid rgba(246,24,135,0.15)",
+                  borderRadius: 999, padding: "6px 14px", marginBottom: 32,
                 }}>
-                  Your Health,<br />
-                  <span style={{ color: "#F61887" }}>Finally</span> Understood.
+                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#F61887" }} />
+                  <span style={{ fontSize: 12, fontWeight: 400, color: "#F61887", letterSpacing: "0.06em" }}>Available on the App Store · Free</span>
+                </div>
+
+                <h1 style={{ fontSize: "clamp(48px, 6vw, 82px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-2px", lineHeight: 1.04, margin: "0 0 10px" }}>
+                  She knows
                 </h1>
+                <h1 style={{ fontSize: "clamp(48px, 6vw, 82px)", fontWeight: 300, color: "#F61887", letterSpacing: "-2px", lineHeight: 1.04, margin: "0 0 14px" }}>
+                  your body.
+                </h1>
+                <h2 style={{ fontSize: "clamp(18px, 2.2vw, 26px)", fontWeight: 300, color: "#B0889A", letterSpacing: "-0.3px", lineHeight: 1.2, margin: "0 0 32px", fontStyle: "italic" }}>
+                  Because she has been paying attention.
+                </h2>
               </AnimatedSection>
 
               <AnimatedSection delay={120}>
-                <p style={{
-                  fontSize: 18,
-                  fontWeight: 300,
-                  color: "#5A5A5A",
-                  lineHeight: 1.8,
-                  margin: "0 0 36px",
-                  maxWidth: 460,
-                }}>
-                  In a world where periods are still a taboo, Sakhi was created to break the silence — with empathy, dignity, and support. A small step each day helps Sakhi understand your body like no one else can.
+                <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: "0 0 40px", maxWidth: 440 }}>
+                  Sakhi is India&rsquo;s first women&rsquo;s health companion built for Indian women — not adapted for them. Log your cycle, talk to Sakhi AI, and let one trusted person be there on the days you need it most.
                 </p>
               </AnimatedSection>
 
-              <AnimatedSection delay={240}>
-                <div style={{ display: "flex", gap: 16, flexWrap: "wrap" as const, marginBottom: 52 }}>
+              <AnimatedSection delay={220}>
+                <div style={{ display: "flex", gap: 14, flexWrap: "wrap" as const, marginBottom: 48 }}>
                   <a href="https://apps.apple.com/app/id6742219623" target="_blank" rel="noopener noreferrer"
                     style={{ display: "inline-flex", alignItems: "center", gap: 10, backgroundColor: "#F61887", color: "#FFFFFF", padding: "15px 28px", borderRadius: 999, textDecoration: "none", fontSize: 15, fontWeight: 500 }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
-                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                    </svg>
-                    Download on App Store
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    Download Free
                   </a>
-                  <Link href="/story" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#5A5A5A", textDecoration: "none", fontSize: 15, fontWeight: 300, padding: "15px 0" }}>
-                    Our Story →
+                  <Link href="/story" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#9A9A9A", textDecoration: "none", fontSize: 15, fontWeight: 400, padding: "15px 0" }}>
+                    Our story →
                   </Link>
                 </div>
 
-                <div style={{ borderTop: "1px solid rgba(0,0,0,0.07)", paddingTop: 32 }}>
+                <div style={{ borderTop: "1px solid rgba(246,24,135,0.12)", paddingTop: 28 }}>
                   <div style={{ display: "flex", gap: 0, flexWrap: "wrap" as const }}>
                     {[
+                      { num: "4.5★", label: "App Store rating" },
                       { num: "252M", label: "Women in India" },
-                      { num: "1 in 5", label: "Has PCOD" },
-                      { num: "50M+", label: "Unheard voices" },
-                      { num: "4.5★", label: "App Rating" },
+                      { num: "Free", label: "Always" },
                     ].map((s, i, arr) => (
-                      <div key={i} style={{ paddingRight: 28, paddingLeft: i > 0 ? 28 : 0, borderRight: i < arr.length - 1 ? "1px solid rgba(0,0,0,0.07)" : "none" }}>
-                        <div style={{ fontSize: 24, fontWeight: 400, color: "#F61887", letterSpacing: "-0.5px", lineHeight: 1.2 }}>{s.num}</div>
-                        <div style={{ fontSize: 12, fontWeight: 300, color: "#9A9A9A", marginTop: 3 }}>{s.label}</div>
+                      <div key={i} style={{ paddingRight: 28, paddingLeft: i > 0 ? 28 : 0, borderRight: i < arr.length - 1 ? "1px solid rgba(246,24,135,0.12)" : "none" }}>
+                        <div style={{ fontSize: 22, fontWeight: 400, color: "#F61887", letterSpacing: "-0.5px", lineHeight: 1.2 }}>{s.num}</div>
+                        <div style={{ fontSize: 12, fontWeight: 400, color: "#B0889A", marginTop: 3 }}>{s.label}</div>
                       </div>
                     ))}
                   </div>
@@ -95,267 +86,389 @@ export default function HomePage() {
               </AnimatedSection>
             </div>
 
-            {/* Right — Image */}
-            <AnimatedSection delay={200}>
-              <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", aspectRatio: "4/5" }}>
-                <Image
-                  src="https://images.unsplash.com/photo-1607748862156-7c548e7e98f4?w=800&q=80&auto=format&fit=crop"
-                  alt="Indian woman using Sakhi health app"
-                  fill
-                  style={{ objectFit: "cover" }}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
-                />
-                {/* Floating stat badge */}
-                <div style={{ position: "absolute", bottom: 24, left: 24, background: "rgba(255,255,255,0.95)", borderRadius: 14, padding: "14px 20px", backdropFilter: "blur(8px)" }}>
-                  <div style={{ fontSize: 11, fontWeight: 300, color: "#9A9A9A", marginBottom: 4, letterSpacing: "0.04em" }}>SAKHI AI</div>
-                  <div style={{ fontSize: 14, fontWeight: 400, color: "#1A1A1A" }}>&ldquo;Your cycle is 29 days. You&rsquo;re in your follicular phase.&rdquo;</div>
+            {/* Right — Sakhi AI conversation */}
+            <AnimatedSection delay={180}>
+              <div style={{ display: "flex", flexDirection: "column" as const, gap: 0 }}>
+                <div style={{ background: "#FFFFFF", border: "1px solid rgba(246,24,135,0.1)", borderRadius: 28, padding: "24px 0 0", overflow: "hidden" }}>
+
+                  {/* Top bar */}
+                  <div style={{ padding: "0 24px 20px", borderBottom: "1px solid rgba(246,24,135,0.08)", display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(246,24,135,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <span style={{ fontSize: 14, fontWeight: 500, color: "#F61887" }}>S</span>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 500, color: "#1A1A1A" }}>Sakhi AI</div>
+                      <div style={{ fontSize: 12, fontWeight: 400, color: "#B0889A" }}>Day 14 · Ovulation phase</div>
+                    </div>
+                    <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 6 }}>
+                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#22C55E" }} />
+                      <span style={{ fontSize: 11, color: "#B0889A", fontWeight: 400 }}>Active</span>
+                    </div>
+                  </div>
+
+                  {/* Chat */}
+                  <div style={{ padding: "20px", display: "flex", flexDirection: "column" as const, gap: 16, background: "#FDFBFC" }}>
+                    <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
+                      <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(246,24,135,0.1)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <span style={{ fontSize: 10, color: "#F61887", fontWeight: 500 }}>S</span>
+                      </div>
+                      <div style={{ maxWidth: "78%", background: "#FFFFFF", border: "1px solid rgba(246,24,135,0.1)", borderRadius: "18px 18px 18px 4px", padding: "12px 16px" }}>
+                        <p style={{ fontSize: 14, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.6, margin: 0 }}>You&rsquo;re on Day 14. This is usually when your energy is highest. Your pattern shows you sleep better this week too.</p>
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                      <div style={{ maxWidth: "70%", background: "#F61887", borderRadius: "18px 18px 4px 18px", padding: "12px 16px" }}>
+                        <p style={{ fontSize: 14, fontWeight: 400, color: "#FFFFFF", lineHeight: 1.6, margin: 0 }}>Why do I always get headaches right before my period?</p>
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
+                      <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(246,24,135,0.1)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <span style={{ fontSize: 10, color: "#F61887", fontWeight: 500 }}>S</span>
+                      </div>
+                      <div style={{ maxWidth: "82%", background: "#FFFFFF", border: "1px solid rgba(246,24,135,0.1)", borderRadius: "18px 18px 18px 4px", padding: "12px 16px" }}>
+                        <p style={{ fontSize: 14, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.6, margin: 0 }}>Your logs show this on Days 25–27 for 4 cycles in a row. Progesterone drops before your period and that affects blood vessels. Worth mentioning to your doctor — it&rsquo;s common and treatable.</p>
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                      <div style={{ maxWidth: "65%", background: "rgba(246,24,135,0.08)", border: "1px solid rgba(246,24,135,0.15)", borderRadius: "18px 18px 4px 18px", padding: "12px 16px" }}>
+                        <p style={{ fontSize: 14, fontWeight: 400, color: "#F61887", lineHeight: 1.6, margin: 0 }}>Can you make me a doctor report?</p>
+                      </div>
+                    </div>
+
+                    {/* Typing */}
+                    <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
+                      <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(246,24,135,0.1)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <span style={{ fontSize: 10, color: "#F61887", fontWeight: 500 }}>S</span>
+                      </div>
+                      <div style={{ background: "#FFFFFF", border: "1px solid rgba(246,24,135,0.1)", borderRadius: "18px 18px 18px 4px", padding: "14px 18px", display: "flex", gap: 5, alignItems: "center" }}>
+                        {[0, 1, 2].map(i => (
+                          <div key={i} style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(246,24,135,0.35)" }} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Input bar */}
+                  <div style={{ padding: "12px 16px 18px", borderTop: "1px solid rgba(246,24,135,0.08)", display: "flex", alignItems: "center", gap: 10, background: "#FFFFFF" }}>
+                    <div style={{ flex: 1, background: "#F8F2F4", borderRadius: 999, padding: "10px 16px" }}>
+                      <span style={{ fontSize: 14, fontWeight: 400, color: "#C0A0B0" }}>Ask Sakhi anything...</span>
+                    </div>
+                    <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#F61887", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                    </div>
+                  </div>
                 </div>
-                <div style={{ position: "absolute", top: 20, right: 20, background: "rgba(255,255,255,0.95)", borderRadius: 12, padding: "10px 16px", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", gap: 8 }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#F61887", flexShrink: 0 }} />
-                  <span style={{ fontSize: 13, fontWeight: 400, color: "#1A1A1A" }}>Day 8 · Follicular</span>
+
+                <div style={{ marginTop: 16, display: "flex", justifyContent: "center" }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(246,24,135,0.06)", border: "1px solid rgba(246,24,135,0.1)", borderRadius: 999, padding: "8px 16px" }}>
+                    <span style={{ fontSize: 12, fontWeight: 400, color: "#B0889A" }}>Powered by Claude AI · Knows your body, not the internet</span>
+                  </div>
                 </div>
               </div>
             </AnimatedSection>
+
           </div>
         </div>
       </section>
 
-      {/* ── THE PROBLEM ── */}
-      <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
-        <div style={container}>
+      {/* ── MANIFESTO ────────────────────────────────────────────────────────── */}
+      <section style={{ backgroundColor: "#F61887", padding: "80px 24px" }}>
+        <div style={{ ...container, width: "100%" }}>
           <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 56 }}>
-              <span style={pill}>The Reality</span>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "end" }}>
-                <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: 0 }}>
-                  She&rsquo;s been managing her health alone.
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
+              <div>
+                <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.6)", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 20 }}>Why Sakhi exists</p>
+                <h2 style={{ fontSize: "clamp(36px, 5vw, 66px)", fontWeight: 300, color: "#FFFFFF", letterSpacing: "-1.5px", lineHeight: 1.06, margin: 0 }}>
+                  Period is not a taboo.<br />
+                  <span style={{ opacity: 0.5 }}>Not here.</span>
                 </h2>
-                <p style={{ fontSize: 17, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
-                  Across India, millions of women navigate their bodies in silence — without support, without diagnosis, and without the tools to understand what they&rsquo;re experiencing. The numbers are sobering. The silence is deafening.
+              </div>
+              <div>
+                <p style={{ fontSize: 18, fontWeight: 400, color: "rgba(255,255,255,0.85)", lineHeight: 1.85, margin: "0 0 24px" }}>
+                  In India, most girls learn about their first period after it happens. Most women manage pain alone. Most cycles go untracked, most symptoms go unnamed. Not because women don&rsquo;t care. Because no one made it easy enough to care.
+                </p>
+                <p style={{ fontSize: 20, fontWeight: 500, color: "#FFFFFF", lineHeight: 1.5, margin: 0 }}>
+                  Sakhi does.
                 </p>
               </div>
             </div>
           </AnimatedSection>
+        </div>
+      </section>
 
-          <AnimatedSection delay={100}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", borderTop: "1px solid rgba(0,0,0,0.07)", borderLeft: "1px solid rgba(0,0,0,0.07)" }}>
+      {/* ── THE REAL INDIA ────────────────────────────────────────────────── */}
+      <section style={{ backgroundColor: "#FFFFFF", ...sectionPad }}>
+        <div style={container}>
+          <AnimatedSection delay={0}>
+            <div style={{ marginBottom: 64 }}>
+              <p style={{ fontSize: 13, fontWeight: 400, color: "#F61887", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 16 }}>The reality she lives in</p>
+              <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 16px", maxWidth: 600 }}>
+                She has been managing this alone.
+              </h2>
+              <p style={{ fontSize: 16, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, maxWidth: 460, margin: 0 }}>
+                Not because she is weak. Because no one gave her the right tools.
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection delay={80}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 2 }}>
               {[
-                { num: "252M",  desc: "menstruating women in India",                  context: "The size of the opportunity — and the responsibility." },
-                { num: "1 in 5", desc: "has PCOD — 70% undiagnosed",                 context: "The most common hormonal disorder, largely invisible." },
-                { num: "50M",   desc: "never spoke to anyone about menstrual health", context: "50 million women carrying this alone." },
-                { num: "83.2%", desc: "manage period pain with rest alone",           context: "Without guidance, without support, without care." },
+                { num: "1 in 5",  desc: "Indian women has PCOD",                        detail: "And 70% of them don't know it. They blame themselves for weight, mood, and fatigue that has a name and a treatment." },
+                { num: "50M",     desc: "never spoke to anyone about their period",      detail: "Fifty million women carrying this alone. Not a statistic. Someone's mother. Someone's sister." },
+                { num: "83%",     desc: "manage period pain with rest alone",            detail: "No guidance, no support, no care. A hot water bag and silence is not healthcare." },
+                { num: "14.2%",   desc: "ever see a doctor for period pain",             detail: "The rest manage alone. Sakhi doesn't replace a doctor. But it helps her have that conversation for the first time." },
               ].map((s, i) => (
-                <div key={i} style={{ padding: "36px 28px", borderRight: "1px solid rgba(0,0,0,0.07)", borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
-                  <div style={{ fontSize: "clamp(32px, 3.5vw, 48px)", fontWeight: 300, color: "#F61887", letterSpacing: "-1px", lineHeight: 1, marginBottom: 10 }}>{s.num}</div>
-                  <div style={{ fontSize: 14, fontWeight: 400, color: "#1A1A1A", marginBottom: 8, lineHeight: 1.4 }}>{s.desc}</div>
-                  <div style={{ fontSize: 13, fontWeight: 300, color: "#9A9A9A", lineHeight: 1.5 }}>{s.context}</div>
+                <div key={i} style={{ background: "#F8F2F4", padding: "40px 36px" }}>
+                  <div style={{ fontSize: "clamp(36px, 4vw, 54px)", fontWeight: 300, color: "#F61887", letterSpacing: "-1.5px", lineHeight: 1, marginBottom: 10 }}>{s.num}</div>
+                  <div style={{ fontSize: 15, fontWeight: 500, color: "#1A1A1A", marginBottom: 12, lineHeight: 1.4 }}>{s.desc}</div>
+                  <div style={{ fontSize: 14, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.7 }}>{s.detail}</div>
                 </div>
               ))}
             </div>
           </AnimatedSection>
-
-          <AnimatedSection delay={200}>
-            <div style={{ marginTop: 48, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, padding: "40px 0", borderTop: "1px solid rgba(0,0,0,0.07)" }}>
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 500, color: "#F61887", letterSpacing: "0.06em", textTransform: "uppercase" as const, marginBottom: 12 }}>The PCOD Problem</div>
-                <p style={{ fontSize: 16, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
-                  1 in 5 Indian women has PCOD. But 70% of them don&rsquo;t know it. They blame themselves — for weight gain, irregular cycles, low energy, skin changes. Sakhi&rsquo;s Doctor Report has helped women walk into their gynaecologist&rsquo;s office with a complete picture for the first time.
-                </p>
-              </div>
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 500, color: "#F61887", letterSpacing: "0.06em", textTransform: "uppercase" as const, marginBottom: 12 }}>The Silence Problem</div>
-                <p style={{ fontSize: 16, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
-                  Only 14.2% of Indian women with period pain ever speak to a doctor. The rest manage alone — hot water bags, rest, silence. Sakhi doesn&rsquo;t replace a doctor. But it helps her understand her body well enough to finally have the conversation.
-                </p>
-              </div>
-            </div>
-          </AnimatedSection>
         </div>
       </section>
 
-      {/* ── WHAT IS SAKHI ── */}
-      <section style={{ ...sectionPad, backgroundColor: "#F8F2F4" }}>
+      {/* ── WHAT SAKHI DOES ───────────────────────────────────────────────── */}
+      <section style={{ backgroundColor: "#F8F2F4", ...sectionPad }}>
         <div style={container}>
           <AnimatedSection delay={0}>
-            <div style={{ textAlign: "center", marginBottom: 56 }}>
-              <span style={pill}>The Product</span>
-              <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 20px" }}>
-                Everything she needs. Nothing she doesn&rsquo;t.
+            <div style={{ textAlign: "center", marginBottom: 64 }}>
+              <p style={{ fontSize: 13, fontWeight: 400, color: "#F61887", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 16 }}>What she gets</p>
+              <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 16px" }}>
+                Everything she needs.
               </h2>
-              <p style={{ fontSize: 17, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, maxWidth: 580, margin: "0 auto" }}>
-                Sakhi is built for Indian women — combining complete health logging, AI-powered insights from Claude, and a relationship layer that lets one trusted person truly understand and support her.
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, maxWidth: 460, margin: "0 auto" }}>
+                Sakhi puts together three things no other app has combined.
               </p>
             </div>
           </AnimatedSection>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", border: "1px solid rgba(0,0,0,0.07)" }}>
-            {[
-              {
-                num: "01", title: "Health Log",
-                short: "Everything in one place.",
-                desc: "Period tracking, cycle phases, flow levels, mood, sleep quality, cramps, headache, fever, energy levels, weight, custom symptoms — every aspect of her health, logged with intention. Your body has a pattern. Sakhi helps you see it clearly for the first time.",
-                extras: ["Cycle prediction", "Phase tracking", "Doctor Report PDF", "Offline first"],
-              },
-              {
-                num: "02", title: "Sakhi AI",
-                short: "Answers about you, not the internet.",
-                desc: "Powered by Claude AI, Sakhi AI responds to her questions based on her actual cycle data, symptom history, and patterns — not generic health advice. Ask what you would never search. Get answers that are actually about your body.",
-                extras: ["Context-aware responses", "Cycle-phase insights", "Symptom correlation", "Always private"],
-              },
-              {
-                num: "03", title: "Be Her Sakhi",
-                short: "One trusted person. Full care.",
-                desc: "The only women&rsquo;s health app with a built-in relationship layer. She shares her health with one trusted person — her mother, partner, sister, or friend. They see what matters, get care guidance, and know when to reach out. Built on consent. Built on love.",
-                extras: ["Consent-gated", "Curated updates", "Care guidance", "One-to-one only"],
-              },
-            ].map((col, i, arr) => (
-              <AnimatedSection key={i} delay={i * 80}>
-                <div style={{ padding: "40px 32px", borderRight: i < arr.length - 1 ? "1px solid rgba(0,0,0,0.07)" : "none", height: "100%", boxSizing: "border-box" as const, backgroundColor: "#FFFFFF", display: "flex", flexDirection: "column" as const, gap: 16 }}>
-                  <div style={{ fontSize: 11, fontWeight: 300, color: "#F61887", letterSpacing: "0.06em" }}>{col.num}</div>
-                  <div style={{ borderTop: "2px solid rgba(246,24,135,0.3)", paddingTop: 20 }}>
-                    <h3 style={{ fontSize: 22, fontWeight: 400, color: "#1A1A1A", margin: "0 0 6px" }}>{col.title}</h3>
-                    <p style={{ fontSize: 14, fontWeight: 500, color: "#F61887", margin: "0 0 16px" }}>{col.short}</p>
-                    <p style={{ fontSize: 15, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, margin: "0 0 24px" }}>{col.desc}</p>
-                    <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
-                      {col.extras.map(e => (
-                        <div key={e} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                          <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#F61887", flexShrink: 0 }} />
-                          <span style={{ fontSize: 13, fontWeight: 300, color: "#5A5A5A" }}>{e}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
+          <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
 
-      {/* ── BE HER SAKHI DEEP DIVE ── */}
-      <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
-        <div style={container}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
-
-            {/* Image side */}
+            {/* Feature 01 — Health Log */}
             <AnimatedSection delay={0}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                <div style={{ borderRadius: 20, overflow: "hidden", aspectRatio: "3/4", position: "relative" }}>
-                  <Image
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80&auto=format&fit=crop"
-                    alt="Woman logging health in Sakhi"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    sizes="25vw"
-                  />
-                </div>
-                <div style={{ display: "flex", flexDirection: "column" as const, gap: 16, paddingTop: 32 }}>
-                  <div style={{ borderRadius: 20, overflow: "hidden", aspectRatio: "3/4", position: "relative" }}>
-                    <Image
-                      src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80&auto=format&fit=crop"
-                      alt="Two women talking and caring for each other"
-                      fill
-                      style={{ objectFit: "cover" }}
-                      sizes="25vw"
-                    />
+              <div style={{ background: "#FFFFFF", borderRadius: 24, padding: "48px", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 48, alignItems: "center" }}>
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12 }}>01</div>
+                  <h3 style={{ fontSize: "clamp(22px, 2.5vw, 32px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 16px" }}>
+                    Know your body.
+                  </h3>
+                  <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: "0 0 24px" }}>
+                    Period, mood, pain, sleep, energy, cramps, weight. Every day you log is a day Sakhi understands you better. Over time the pattern becomes visible.
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column" as const, gap: 8 }}>
+                    {["Cycle prediction that learns your rhythm", "Doctor Report PDF — one tap", "Offline-first, no internet needed", "Follicular, ovulation, and luteal phase tracking"].map(e => (
+                      <div key={e} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#F61887", flexShrink: 0 }} />
+                        <span style={{ fontSize: 13, fontWeight: 400, color: "#5A5A5A" }}>{e}</span>
+                      </div>
+                    ))}
                   </div>
-                  <div style={{ background: "#F8F2F4", borderRadius: 16, padding: "20px 20px", border: "1px solid rgba(246,24,135,0.1)" }}>
-                    <div style={{ fontSize: 11, fontWeight: 300, color: "#9A9A9A", marginBottom: 8, letterSpacing: "0.04em", textTransform: "uppercase" as const }}>Trusted Person</div>
-                    <div style={{ fontSize: 14, fontWeight: 400, color: "#1A1A1A", lineHeight: 1.5 }}>&ldquo;She needs you today.&rdquo;</div>
-                    <div style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 6 }}>
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#F61887" }} />
-                      <span style={{ fontSize: 12, fontWeight: 300, color: "#9A9A9A" }}>Day 2 · High pain</span>
-                    </div>
+                </div>
+                <div style={{ background: "#F8F2F4", borderRadius: 20, padding: "28px" }}>
+                  <div style={{ fontSize: 12, fontWeight: 400, color: "#B0889A", letterSpacing: "0.04em", textTransform: "uppercase" as const, marginBottom: 16 }}>Today · Day 8 · Follicular</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 14 }}>
+                    {[
+                      { label: "Flow", value: "Light", active: true },
+                      { label: "Mood", value: "Good",  active: true },
+                      { label: "Energy", value: "High", active: true },
+                      { label: "Sleep", value: "7h",   active: false },
+                    ].map(item => (
+                      <div key={item.label} style={{ background: item.active ? "rgba(246,24,135,0.07)" : "#FFFFFF", border: `1px solid ${item.active ? "rgba(246,24,135,0.18)" : "rgba(0,0,0,0.06)"}`, borderRadius: 12, padding: "12px", textAlign: "center" as const }}>
+                        <div style={{ fontSize: 11, fontWeight: 400, color: "#9A9A9A", marginBottom: 4 }}>{item.label}</div>
+                        <div style={{ fontSize: 14, fontWeight: 500, color: item.active ? "#F61887" : "#1A1A1A" }}>{item.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ background: "#FFFFFF", border: "1px solid rgba(246,24,135,0.1)", borderRadius: 14, padding: "14px 16px" }}>
+                    <div style={{ fontSize: 12, fontWeight: 400, color: "#B0889A", marginBottom: 6 }}>Sakhi says</div>
+                    <div style={{ fontSize: 14, fontWeight: 400, color: "#1A1A1A", lineHeight: 1.6 }}>Your energy is usually highest in days 7–14. Good time to exercise or start something you&rsquo;ve been putting off.</div>
                   </div>
                 </div>
               </div>
             </AnimatedSection>
 
-            {/* Text side */}
-            <AnimatedSection delay={150}>
-              <span style={pill}>Be Her Sakhi</span>
-              <h2 style={{ fontSize: "clamp(28px, 3.5vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 20px" }}>
-                You don&rsquo;t have to face it alone.
+            {/* Feature 02 — Sakhi AI */}
+            <AnimatedSection delay={80}>
+              <div style={{ background: "#FFF5F8", borderRadius: 24, padding: "48px", display: "grid", gridTemplateColumns: "2fr 1fr", gap: 48, alignItems: "center", border: "1px solid rgba(246,24,135,0.08)" }}>
+                <div style={{ display: "flex", flexDirection: "column" as const, gap: 14 }}>
+                  <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
+                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(246,24,135,0.1)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <span style={{ fontSize: 10, color: "#F61887", fontWeight: 500 }}>S</span>
+                    </div>
+                    <div style={{ background: "#FFFFFF", border: "1px solid rgba(246,24,135,0.12)", borderRadius: "18px 18px 18px 4px", padding: "12px 16px", maxWidth: "80%" }}>
+                      <p style={{ fontSize: 14, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.6, margin: 0 }}>You&rsquo;ve had cramps for 6 days this cycle. Last cycle it was 3. That&rsquo;s worth mentioning to a doctor.</p>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <div style={{ background: "#F61887", borderRadius: "18px 18px 4px 18px", padding: "12px 16px", maxWidth: "65%" }}>
+                      <p style={{ fontSize: 14, fontWeight: 400, color: "#FFFFFF", lineHeight: 1.6, margin: 0 }}>Is this normal for PCOS?</p>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
+                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(246,24,135,0.1)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <span style={{ fontSize: 10, color: "#F61887", fontWeight: 500 }}>S</span>
+                    </div>
+                    <div style={{ background: "#FFFFFF", border: "1px solid rgba(246,24,135,0.12)", borderRadius: "18px 18px 18px 4px", padding: "12px 16px", maxWidth: "85%" }}>
+                      <p style={{ fontSize: 14, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.6, margin: 0 }}>In PCOS, cycles can be irregular and cramps more intense — but prolonged cramping beyond your period days is something to flag. Your symptom history is ready to share with your doctor.</p>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12 }}>02</div>
+                  <h3 style={{ fontSize: "clamp(22px, 2.5vw, 32px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 16px" }}>
+                    Ask what you&rsquo;d never Google.
+                  </h3>
+                  <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: "0 0 16px" }}>
+                    Powered by Claude AI. Sakhi answers questions about your body using your actual data — your cycle, your patterns, your symptoms. Every answer is about you.
+                  </p>
+                  <div style={{ fontSize: 13, fontWeight: 400, color: "#B0889A", fontStyle: "italic" }}>
+                    Always private. Never stored for ads. Never sold.
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Feature 03 — Be Her Sakhi */}
+            <AnimatedSection delay={160}>
+              <div style={{ background: "#FFFFFF", borderRadius: 24, padding: "48px", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 48, alignItems: "center" }}>
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12 }}>03</div>
+                  <h3 style={{ fontSize: "clamp(22px, 2.5vw, 32px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 16px" }}>
+                    Never face it alone.
+                  </h3>
+                  <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: "0 0 20px" }}>
+                    She chooses one person — a mother, a partner, a best friend — and they see what matters. When Day 2 hits, they already know. Built on consent. Built on love.
+                  </p>
+                  <div style={{ fontSize: 13, fontWeight: 400, color: "#B0889A", fontStyle: "italic" }}>
+                    She controls everything — what they see, when, and for how long.
+                  </div>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                  <div style={{ background: "#F8F2F4", borderRadius: 18, padding: "24px", gridColumn: "span 2" }}>
+                    <div style={{ fontSize: 11, fontWeight: 400, color: "#B0889A", marginBottom: 10, letterSpacing: "0.04em", textTransform: "uppercase" as const }}>Notification · Trusted Person</div>
+                    <div style={{ fontSize: 15, fontWeight: 500, color: "#1A1A1A", lineHeight: 1.5, marginBottom: 14 }}>&ldquo;Riya is on Day 2. She might need you today.&rdquo;</div>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <div style={{ background: "#F61887", color: "#FFFFFF", borderRadius: 999, padding: "8px 18px", fontSize: 13, fontWeight: 500 }}>Call her</div>
+                      <div style={{ background: "#FFFFFF", border: "1px solid rgba(0,0,0,0.08)", borderRadius: 999, padding: "8px 18px", fontSize: 13, fontWeight: 400, color: "#5A5A5A" }}>Send care</div>
+                    </div>
+                  </div>
+                  <div style={{ background: "#F8F2F4", borderRadius: 18, padding: "20px" }}>
+                    <div style={{ fontSize: 28, fontWeight: 300, color: "#F61887", letterSpacing: "-0.5px", marginBottom: 6 }}>1</div>
+                    <div style={{ fontSize: 13, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.5 }}>Trusted person only. Not a group. Not a feed.</div>
+                  </div>
+                  <div style={{ background: "#F8F2F4", borderRadius: 18, padding: "20px" }}>
+                    <div style={{ fontSize: 28, fontWeight: 300, color: "#F61887", letterSpacing: "-0.5px", marginBottom: 6 }}>100%</div>
+                    <div style={{ fontSize: 13, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.5 }}>Consent-controlled by her, always.</div>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── BUILT FOR INDIA ───────────────────────────────────────────────── */}
+      <section style={{ backgroundColor: "#FFFFFF", ...sectionPad }}>
+        <div style={container}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+
+            <AnimatedSection delay={0}>
+              <p style={{ fontSize: 13, fontWeight: 400, color: "#F61887", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 16 }}>Built for India</p>
+              <h2 style={{ fontSize: "clamp(28px, 3.5vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 24px" }}>
+                For the girl in Lucknow. The student in Pune. The woman in Bangalore managing everything alone.
               </h2>
-              <p style={{ fontSize: 17, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, margin: "0 0 28px" }}>
-                Add someone who&rsquo;ll always be there. One tap and they know you need them. The relationship layer in Sakhi is built on consent — she controls exactly what is shared, with whom, and when. It&rsquo;s not surveillance. It&rsquo;s care.
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: "0 0 20px" }}>
+                Sakhi was not adapted for India. It was made here. Understanding that talking about periods is still difficult, that most women navigate their health without the right support, and that the person you need most is often 500km away.
               </p>
-              <p style={{ fontSize: 17, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, margin: "0 0 32px" }}>
-                People pay for Sakhi Premium not for themselves — but for the woman they love. A mother who wants to understand her daughter. A partner who wants to be there. A friend who always shows up. This is the feature that makes Sakhi irreplaceable.
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: 0 }}>
+                One app, one companion, made for the way Indian women actually live.
               </p>
-              <div style={{ display: "flex", flexDirection: "column" as const, gap: 14, marginBottom: 36 }}>
+            </AnimatedSection>
+
+            <AnimatedSection delay={150}>
+              <div style={{ display: "flex", flexDirection: "column" as const, gap: 2 }}>
                 {[
-                  "She decides what they see — full consent control",
-                  "Trusted person gets care guidance, not just data",
-                  "Real-time updates on days she needs support most",
-                  "Works for mothers, partners, siblings, best friends",
-                ].map((point, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, paddingLeft: 14, borderLeft: "2px solid rgba(246,24,135,0.25)" }}>
-                    <p style={{ fontSize: 15, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.6, margin: 0 }}>{point}</p>
+                  { city: "Lucknow",   story: "Where Sakhi was born. A student project that became something real.", highlight: true },
+                  { city: "Mumbai",    story: "Working women who needed PCOD answers without a doctor appointment.", highlight: false },
+                  { city: "Delhi",     story: "Students away from home for the first time, managing alone.", highlight: false },
+                  { city: "Bangalore", story: "Women who wanted AI health insights without sharing data with big tech.", highlight: false },
+                  { city: "Pune",      story: "Mothers and daughters using Sakhi together, 300km apart.", highlight: false },
+                ].map((item, i) => (
+                  <div key={i} style={{
+                    background: item.highlight ? "#F61887" : "#F8F2F4",
+                    padding: "20px 24px",
+                    borderRadius: i === 0 ? "14px 14px 0 0" : i === 4 ? "0 0 14px 14px" : 0,
+                    display: "flex", alignItems: "center", gap: 20,
+                  }}>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: item.highlight ? "#FFFFFF" : "#1A1A1A", minWidth: 90 }}>{item.city}</div>
+                    <div style={{ fontSize: 14, fontWeight: 400, color: item.highlight ? "rgba(255,255,255,0.85)" : "#5A5A5A", lineHeight: 1.5 }}>{item.story}</div>
                   </div>
                 ))}
               </div>
-              <a href="https://apps.apple.com/app/id6742219623" target="_blank" rel="noopener noreferrer"
-                style={{ display: "inline-block", backgroundColor: "#F61887", color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, textDecoration: "none", fontSize: 15, fontWeight: 500 }}>
-                Download Sakhi →
-              </a>
             </AnimatedSection>
+
           </div>
         </div>
       </section>
 
-      {/* ── USER STORIES ── */}
-      <section style={{ ...sectionPad, backgroundColor: "#F8F2F4" }}>
+      {/* ── REAL WOMEN ────────────────────────────────────────────────────── */}
+      <section style={{ backgroundColor: "#F8F2F4", ...sectionPad }}>
         <div style={container}>
           <AnimatedSection delay={0}>
             <div style={{ marginBottom: 56 }}>
-              <span style={pill}>Real Women</span>
+              <p style={{ fontSize: 13, fontWeight: 400, color: "#F61887", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 16 }}>Real women</p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "end" }}>
                 <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: 0 }}>
-                  Their Stories
+                  Their stories.
                 </h2>
-                <p style={{ fontSize: 16, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
-                  Sakhi was built for these moments. Real experiences from real women across India — the ones who needed this most.
+                <p style={{ fontSize: 16, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
+                  Real experiences from real women across India — the ones who needed this most.
                 </p>
               </div>
             </div>
           </AnimatedSection>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", border: "1px solid rgba(0,0,0,0.07)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
             {[
               {
-                initials: "PS", name: "Priya S.", role: "Engineering Student", city: "Lucknow", age: 21,
-                story: "I always had irregular cycles but never thought much of it. I just assumed it was stress. Sakhi's Doctor Report showed my pattern clearly over 6 months. When I showed it to my gynaecologist, she said PCOD immediately. Sakhi quite literally changed my health.",
-                detail: "Diagnosed with PCOD after 3 years of irregular cycles.",
+                initials: "PS", name: "Priya S.", role: "Engineering student", city: "Lucknow", age: 21,
+                story: "I always had irregular cycles but thought it was stress. Sakhi's Doctor Report showed my pattern clearly over 6 months. When I showed my gynaecologist, she diagnosed PCOD immediately. Sakhi changed my health.",
+                detail: "Diagnosed with PCOD after 3 years.",
               },
               {
-                initials: "KR", name: "Kavya R.", role: "Product Manager", city: "Bangalore", age: 28,
-                story: "I used to blame my mood swings entirely on work stress. Sakhi showed me the clear correlation with my cycle phases — I was irritable 3 days before every period, without exception. I shared my log with my partner and he finally understood. That one thing changed our relationship.",
-                detail: "Found pattern: mood tied to luteal phase, not just work.",
+                initials: "KR", name: "Kavya R.", role: "Product manager", city: "Bangalore", age: 28,
+                story: "I used to blame mood swings on work stress. Sakhi showed me it happened every cycle, Days 25–27, without exception. I shared the log with my partner. He finally understood. That one thing changed our relationship.",
+                detail: "Found the pattern. Partner now understands.",
               },
               {
-                initials: "RM", name: "Riya M.", role: "First-Year Student", city: "Pune", age: 20,
-                story: "I moved away from home at 18 and felt completely alone with my health. My mother wasn't there to notice things anymore. I added her on Sakhi. She now gets a notification when I'm in pain. She called me on Day 2 last month before I even said anything. That meant everything.",
-                detail: "Shared Sakhi with her mother 500km away. She calls now.",
+                initials: "RM", name: "Riya M.", role: "First-year student", city: "Pune", age: 20,
+                story: "I moved away from home at 18. My mother wasn't there anymore. I added her on Sakhi. She gets a notification on Day 2. She called me last month before I even said anything. That meant everything.",
+                detail: "Mother, 500km away, now knows when to call.",
               },
-            ].map((story, i, arr) => (
+            ].map((story, i) => (
               <AnimatedSection key={i} delay={i * 80}>
-                <div style={{ padding: "36px 28px", borderRight: i < arr.length - 1 ? "1px solid rgba(0,0,0,0.07)" : "none", backgroundColor: "#FFFFFF", display: "flex", flexDirection: "column" as const, gap: 20, height: "100%", boxSizing: "border-box" as const }}>
+                <div style={{ background: "#FFFFFF", borderRadius: 20, padding: "36px 28px", display: "flex", flexDirection: "column" as const, gap: 20, height: "100%", boxSizing: "border-box" as const }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: "50%", background: "rgba(246,24,135,0.08)", border: "1px solid rgba(246,24,135,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 400, color: "#F61887", flexShrink: 0 }}>{story.initials}</div>
+                    <div style={{ width: 44, height: 44, borderRadius: "50%", background: "rgba(246,24,135,0.08)", border: "1px solid rgba(246,24,135,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 500, color: "#F61887", flexShrink: 0 }}>{story.initials}</div>
                     <div>
-                      <div style={{ fontSize: 15, fontWeight: 500, color: "#1A1A1A" }}>{story.name}, {story.age}</div>
-                      <div style={{ fontSize: 13, fontWeight: 300, color: "#9A9A9A" }}>{story.role} · {story.city}</div>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: "#1A1A1A" }}>{story.name}, {story.age}</div>
+                      <div style={{ fontSize: 12, fontWeight: 400, color: "#B0889A" }}>{story.role} · {story.city}</div>
                     </div>
                   </div>
-                  <p style={{ fontSize: 15, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, fontStyle: "italic", margin: 0, flexGrow: 1 }}>
+                  <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, fontStyle: "italic", margin: 0, flexGrow: 1 }}>
                     &ldquo;{story.story}&rdquo;
                   </p>
-                  <div style={{ paddingTop: 16, borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+                  <div style={{ paddingTop: 16, borderTop: "1px solid rgba(246,24,135,0.1)" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#F61887", flexShrink: 0 }} />
-                      <span style={{ fontSize: 13, fontWeight: 300, color: "#9A9A9A" }}>{story.detail}</span>
+                      <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#F61887", flexShrink: 0 }} />
+                      <span style={{ fontSize: 13, fontWeight: 400, color: "#B0889A" }}>{story.detail}</span>
                     </div>
                   </div>
                 </div>
@@ -365,98 +478,59 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
-      <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
-        <div style={container}>
-          <AnimatedSection delay={0}>
-            <div style={{ textAlign: "center", marginBottom: 56 }}>
-              <span style={pill}>How It Works</span>
-              <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 16px" }}>
-                Three steps. One companion.
-              </h2>
-              <p style={{ fontSize: 17, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, maxWidth: 520, margin: "0 auto" }}>
-                Sakhi takes 30 seconds a day. Over time, those seconds add up to something that feels like being truly understood.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", border: "1px solid rgba(0,0,0,0.07)" }}>
-            {[
-              {
-                step: "1", title: "Log your day",
-                desc: "Period, mood, pain, sleep, energy. Takes 30 seconds. Sakhi makes it frictionless — a few taps and you're done. Do it long enough and a pattern emerges that will surprise you.",
-                note: "Offline-first. Works without internet.",
-              },
-              {
-                step: "2", title: "Sakhi learns",
-                desc: "Every log deepens Sakhi's understanding of your body. Cycle length, luteal phase patterns, symptom correlations — it all builds into a picture that is uniquely yours, not pulled from a generic database.",
-                note: "The longer you use it, the smarter it gets.",
-              },
-              {
-                step: "3", title: "Get real answers",
-                desc: "Ask Sakhi AI anything — about your symptoms, your mood, your cycle. Get answers that reference your actual data. Or export a Doctor Report that puts your complete health history in one clean PDF.",
-                note: "Powered by Claude AI. Always personal.",
-              },
-            ].map((item, i, arr) => (
-              <AnimatedSection key={i} delay={i * 80}>
-                <div style={{ padding: "40px 32px", borderRight: i < arr.length - 1 ? "1px solid rgba(0,0,0,0.07)" : "none", display: "flex", flexDirection: "column" as const, gap: 16 }}>
-                  <div style={{ fontSize: 40, fontWeight: 200, color: "#F61887", lineHeight: 1, letterSpacing: "-1px" }}>{item.step}</div>
-                  <h3 style={{ fontSize: 20, fontWeight: 400, color: "#1A1A1A", margin: 0 }}>{item.title}</h3>
-                  <p style={{ fontSize: 15, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>{item.desc}</p>
-                  <p style={{ fontSize: 13, fontWeight: 300, color: "#9A9A9A", fontStyle: "italic", margin: 0 }}>{item.note}</p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── PRIVACY ── */}
-      <section style={{ ...sectionPad, backgroundColor: "#F8F2F4" }}>
+      {/* ── PRIVACY ───────────────────────────────────────────────────────── */}
+      <section style={{ backgroundColor: "#FFFFFF", ...sectionPad }}>
         <div style={container}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
             <AnimatedSection delay={0}>
-              <span style={pill}>Privacy First</span>
+              <p style={{ fontSize: 13, fontWeight: 400, color: "#F61887", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 16 }}>Your data. Only yours.</p>
               <h2 style={{ fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 20px" }}>
-                Your privacy comes first. Always.
+                This is a safe space.
               </h2>
-              <p style={{ fontSize: 17, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.8, margin: "0 0 32px" }}>
-                Sakhi was designed with privacy as a core value — not a feature. Health data is intimate. We treat it that way. Your data is never sold. Sharing is always your choice.
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: "0 0 32px" }}>
+                Health data is not a product. It is one of the most intimate things about a person. Sakhi treats it that way. Your data is never sold. Sharing is always your decision.
               </p>
               <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
-                {["Never sold or shared without explicit consent", "Offline-first — core features work without internet", "DPDP Act compliant — India's data protection law", "End-to-end encrypted cloud backup (optional)"].map((p, i) => (
+                {[
+                  "Never sold or shared without your choice",
+                  "Offline-first — core features work without internet",
+                  "DPDP Act compliant — India's data protection law",
+                  "End-to-end encrypted cloud backup, optional",
+                  "No ads. No tracking. No selling.",
+                ].map((p, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                     <div style={{ width: 18, height: 18, borderRadius: "50%", background: "rgba(246,24,135,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#F61887" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                     </div>
-                    <span style={{ fontSize: 15, fontWeight: 300, color: "#5A5A5A" }}>{p}</span>
+                    <span style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A" }}>{p}</span>
                   </div>
                 ))}
               </div>
             </AnimatedSection>
 
-            {/* Privacy choice cards — from app screenshots */}
             <AnimatedSection delay={150}>
-              <div style={{ display: "flex", flexDirection: "column" as const, gap: 16 }}>
-                {/* Selected */}
-                <div style={{ background: "#FFFFFF", border: "1.5px solid #F61887", borderRadius: 16, padding: "24px 24px", display: "flex", gap: 16, alignItems: "flex-start" }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(246,24,135,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6L12 2z" fill="#F61887"/></svg>
+              <div style={{ background: "#F8F2F4", borderRadius: 24, padding: "36px", display: "flex", flexDirection: "column" as const, gap: 14 }}>
+                <div style={{ fontSize: 12, fontWeight: 400, color: "#B0889A", letterSpacing: "0.04em", textTransform: "uppercase" as const, marginBottom: 4 }}>Your privacy choice</div>
+                <div style={{ background: "#FFFFFF", border: "1.5px solid #F61887", borderRadius: 16, padding: "20px 22px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(246,24,135,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6L12 2z" fill="#F61887"/></svg>
                   </div>
                   <div>
-                    <div style={{ fontSize: 15, fontWeight: 500, color: "#F61887", marginBottom: 6 }}>Secure my data</div>
-                    <div style={{ fontSize: 14, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.6 }}>Create an account to safely back up your journey and access it anytime, across your devices.</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: "#F61887", marginBottom: 6 }}>Back up securely</div>
+                    <div style={{ fontSize: 13, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.6 }}>Create an account to back up your health data and access it across devices. Encrypted.</div>
                   </div>
                 </div>
-                {/* Unselected */}
-                <div style={{ background: "#FFFFFF", border: "1px solid rgba(0,0,0,0.08)", borderRadius: 16, padding: "24px 24px", display: "flex", gap: 16, alignItems: "flex-start" }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(0,0,0,0.04)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="3" stroke="#9A9A9A" strokeWidth="1.5"/><circle cx="12" cy="16" r="1" fill="#9A9A9A"/></svg>
+                <div style={{ background: "#FFFFFF", border: "1px solid rgba(0,0,0,0.07)", borderRadius: 16, padding: "20px 22px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(0,0,0,0.04)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="3" stroke="#9A9A9A" strokeWidth="1.5"/><circle cx="12" cy="16" r="1" fill="#9A9A9A"/></svg>
                   </div>
                   <div>
-                    <div style={{ fontSize: 15, fontWeight: 500, color: "#5A5A5A", marginBottom: 6 }}>Keep data on this device only</div>
-                    <div style={{ fontSize: 14, fontWeight: 300, color: "#9A9A9A", lineHeight: 1.6 }}>Your data stays on this device and won&rsquo;t be available if you change or lose your phone.</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: "#5A5A5A", marginBottom: 6 }}>Stay on this device only</div>
+                    <div style={{ fontSize: 13, fontWeight: 400, color: "#9A9A9A", lineHeight: 1.6 }}>Your data stays here. Never leaves your phone.</div>
                   </div>
+                </div>
+                <div style={{ paddingTop: 4, fontSize: 13, fontWeight: 400, color: "#B0889A", lineHeight: 1.7, fontStyle: "italic" }}>
+                  This choice is yours. You can change it at any time from settings.
                 </div>
               </div>
             </AnimatedSection>
@@ -464,30 +538,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── RECOGNITION ── */}
-      <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
+      {/* ── RECOGNITION ───────────────────────────────────────────────────── */}
+      <section style={{ backgroundColor: "#F8F2F4", ...sectionPad }}>
         <div style={container}>
           <AnimatedSection delay={0}>
-            <div style={{ textAlign: "center", marginBottom: 48 }}>
-              <span style={pill}>Recognition</span>
+            <div style={{ marginBottom: 48 }}>
+              <p style={{ fontSize: 13, fontWeight: 400, color: "#F61887", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 16 }}>Recognition</p>
               <h2 style={{ fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", margin: 0 }}>
                 Sakhi in the world.
               </h2>
             </div>
           </AnimatedSection>
 
-          <AnimatedSection delay={100}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", border: "1px solid rgba(0,0,0,0.07)" }}>
+          <AnimatedSection delay={80}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }}>
               {[
-                { org: "Times of India", when: "Q4 2024", desc: "National coverage for a student-built women's health app making waves in India's health tech space." },
-                { org: "Apple Success Story", when: "September 2025", desc: "Apple selected Sakhi for a global Success Story feature. Photoshoot on the Galgotias campus. Publication pending." },
-                { org: "UP International Trade Show", when: "Q4 2024", desc: "Sakhi represented the next generation of Indian health technology at India's most prominent innovation showcase." },
-                { org: "Apple SVP — Greg Joswiak", when: "Q4 2024", desc: "Sakhi was presented directly to Apple's Senior Vice President. A student app from UP, on the world's biggest tech stage." },
+                { org: "Times of India",            when: "Q4 2024",        desc: "National coverage for a student-built women's health app making waves in India's health tech space." },
+                { org: "Apple Success Story",        when: "September 2025", desc: "Apple selected Sakhi for a global Success Story feature. Photoshoot on the Galgotias campus. Publication pending." },
+                { org: "UP International Trade Show",when: "Q4 2024",        desc: "Sakhi represented the next generation of Indian health technology at India's most prominent innovation showcase." },
+                { org: "Apple SVP Greg Joswiak",     when: "Q4 2024",        desc: "Sakhi was presented directly to Apple's Senior Vice President. A student app from UP, on the world's biggest stage." },
               ].map((item, i) => (
-                <div key={i} style={{ padding: "32px 32px", borderRight: i % 2 === 0 ? "1px solid rgba(0,0,0,0.07)" : "none", borderBottom: i < 2 ? "1px solid rgba(0,0,0,0.07)" : "none" }}>
-                  <div style={{ fontSize: 16, fontWeight: 500, color: "#1A1A1A", marginBottom: 6 }}>{item.org}</div>
-                  <div style={{ fontSize: 12, fontWeight: 300, color: "#F61887", marginBottom: 12, letterSpacing: "0.04em" }}>{item.when}</div>
-                  <p style={{ fontSize: 15, fontWeight: 300, color: "#5A5A5A", lineHeight: 1.7, margin: 0 }}>{item.desc}</p>
+                <div key={i} style={{ background: "#FFFFFF", borderRadius: 16, padding: "32px" }}>
+                  <div style={{ fontSize: 16, fontWeight: 600, color: "#1A1A1A", marginBottom: 6 }}>{item.org}</div>
+                  <div style={{ fontSize: 12, fontWeight: 400, color: "#F61887", marginBottom: 12, letterSpacing: "0.04em" }}>{item.when}</div>
+                  <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.7, margin: 0 }}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -495,25 +569,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── DOWNLOAD CTA ── */}
-      <section style={{ ...sectionPad, backgroundColor: "#F61887", textAlign: "center" }}>
-        <div style={{ maxWidth: 620, margin: "0 auto", padding: "0 24px" }}>
+      {/* ── DOWNLOAD CTA ──────────────────────────────────────────────────── */}
+      <section style={{ background: "linear-gradient(160deg, #F61887 0%, #D4127A 100%)", padding: "100px 24px", textAlign: "center" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto" }}>
           <AnimatedSection delay={0}>
-            <h2 style={{ fontSize: "clamp(32px, 4vw, 56px)", fontWeight: 300, color: "#FFFFFF", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 20px" }}>
-              Ready to understand your body?
+            <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.65)", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 24 }}>Free. Always.</p>
+            <h2 style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#FFFFFF", letterSpacing: "-1.5px", lineHeight: 1.08, margin: "0 0 24px" }}>
+              Your body deserves<br />
+              to be understood.
             </h2>
-            <p style={{ fontSize: 18, fontWeight: 300, color: "rgba(255,255,255,0.85)", lineHeight: 1.8, margin: "0 0 40px" }}>
-              Sakhi is free. Always will be. Download on the App Store and take your first step today. No ads. No data selling. Just you and your health.
+            <p style={{ fontSize: 18, fontWeight: 400, color: "rgba(255,255,255,0.8)", lineHeight: 1.8, margin: "0 0 44px" }}>
+              Free. No ads. Your data stays yours. Just you and your health.
             </p>
             <a href="https://apps.apple.com/app/id6742219623" target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: 10, backgroundColor: "#FFFFFF", color: "#1A1A1A", padding: "16px 36px", borderRadius: 999, textDecoration: "none", fontSize: 15, fontWeight: 500 }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-              </svg>
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, backgroundColor: "#FFFFFF", color: "#F61887", padding: "18px 40px", borderRadius: 999, textDecoration: "none", fontSize: 16, fontWeight: 600 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#F61887"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
               Download on App Store
             </a>
-            <p style={{ fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.6)", marginTop: 20 }}>
-              Free · No ads · Your data stays yours · Available on iOS
+            <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.5)", marginTop: 20 }}>
+              Free · No ads · Your data stays yours · iOS
             </p>
           </AnimatedSection>
         </div>
