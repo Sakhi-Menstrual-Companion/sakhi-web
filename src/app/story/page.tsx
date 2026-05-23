@@ -103,6 +103,98 @@ export default function StoryPage() {
         </div>
       </section>
 
+      {/* ── THE MOMENT ───────────────────────────────────────────────────────── */}
+      <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
+          <AnimatedSection delay={0}>
+            <span style={label()}>Where it began</span>
+            <h2 style={{ fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 40px" }}>
+              A friend. Bad cramps.<br />A moment I couldn&rsquo;t shake.
+            </h2>
+          </AnimatedSection>
+
+          <AnimatedSection delay={80}>
+            <div style={{
+              borderLeft: "2px solid rgba(246,24,135,0.25)",
+              paddingLeft: 28,
+              display: "flex",
+              flexDirection: "column" as const,
+              gap: 20,
+              marginBottom: 48,
+            }}>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.85, margin: 0 }}>
+                When I was in college, one of my close friends was having really bad period cramps.
+                She had already taken a medicine in the morning, but by the middle of the day, the pain was still not going away —
+                and she was thinking about taking another one.
+              </p>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.85, margin: 0 }}>
+                I didn&rsquo;t even know if that was right or not. I told her the few things I knew —
+                rest a little, use a hot water bag, try to eat something.
+                But deep down, I knew I was just giving generic advice.
+                I didn&rsquo;t really know what would actually help her.
+              </p>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.85, margin: 0 }}>
+                And that stayed with me. Because later I realised that every girl experiences these things differently.
+                What feels normal for one person may not feel normal for someone else.
+                And most of the time, they&rsquo;re figuring it out completely alone.
+              </p>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#F61887", fontStyle: "italic", lineHeight: 1.75, margin: 0 }}>
+                That&rsquo;s where Sakhi began.
+              </p>
+            </div>
+          </AnimatedSection>
+
+          {/* The gap */}
+          <AnimatedSection delay={160}>
+            <div style={{
+              background: "#F8F2F4",
+              borderRadius: 20,
+              padding: "36px 40px",
+              marginBottom: 48,
+            }}>
+              <p style={{ fontSize: 14, fontWeight: 500, color: "#F61887", letterSpacing: "0.08em", textTransform: "uppercase" as const, margin: "0 0 20px" }}>
+                The reality behind that moment
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px 40px" }}>
+                {[
+                  { stat: "252M", desc: "menstruating women in India" },
+                  { stat: "70.2%", desc: "have period pain severe enough to disrupt their day" },
+                  { stat: "14.2%", desc: "have ever spoken to a doctor about it" },
+                  { stat: "1 in 5", desc: "has PCOD — and 70% of them don't know it" },
+                ].map(s => (
+                  <div key={s.stat}>
+                    <div style={{ fontSize: 32, fontWeight: 300, color: "#F61887", letterSpacing: "-0.5px", lineHeight: 1, marginBottom: 6 }}>{s.stat}</div>
+                    <div style={{ fontSize: 13, fontWeight: 400, color: "#7A5A6A", lineHeight: 1.5 }}>{s.desc}</div>
+                  </div>
+                ))}
+              </div>
+              <p style={{ fontSize: 14, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.7, margin: "24px 0 0", borderTop: "1px solid rgba(246,24,135,0.12)", paddingTop: 20 }}>
+                This is not a story about rural India or poor India. This is about the girl studying at an engineering college in Lucknow.
+                The woman managing a team at a startup in Bangalore. The 20-year-old in a Pune hostel with an iPhone and 4G — who has still
+                never had a real conversation about what&rsquo;s happening in her own body.
+              </p>
+            </div>
+          </AnimatedSection>
+
+          {/* The gap between her and people who love her */}
+          <AnimatedSection delay={200}>
+            <p style={{ fontSize: "clamp(18px, 2vw, 24px)", fontWeight: 300, color: "#1A1A1A", lineHeight: 1.7, margin: "0 0 24px", fontStyle: "italic" }}>
+              &ldquo;I truly cared. And I had nothing real to offer.
+              Not because I didn&rsquo;t want to help — but because I had no way in.&rdquo;
+            </p>
+            <p style={{ fontSize: 16, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: "0 0 16px" }}>
+              Her mother senses something is off. She calls every Sunday. Hears &ldquo;fine.&rdquo; Worries quietly.
+              There is a 7-percentage-point gap between how sick daughters actually are and how sick their mothers believe them to be.
+            </p>
+            <p style={{ fontSize: 16, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: 0 }}>
+              Her partner wants to help. He doesn&rsquo;t know how.
+              Her best friend would show up if she knew. She doesn&rsquo;t know.
+              This is the loneliest part — not the pain itself, but managing it surrounded by people who love her and cannot reach her.
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* ── OPENING STATEMENT ────────────────────────────────────────────────── */}
       <section style={{ ...sectionPad, backgroundColor: "#F61887" }}>
         <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
@@ -111,7 +203,7 @@ export default function StoryPage() {
               &ldquo;Period is not a taboo. Not here.&rdquo;
             </p>
             <p style={{ fontSize: 18, fontWeight: 400, color: "rgba(255,255,255,0.8)", lineHeight: 1.85, margin: 0 }}>
-              We built Sakhi because the silence around women's health in India is deafening. 49 interviews. Dozens of gynaecologist conversations. One consistent finding: women weren't being heard. We decided to build the thing that would hear them.
+              We built Sakhi because the silence around women&rsquo;s health in India is deafening. 49 interviews. Dozens of gynaecologist conversations. One consistent finding: women weren&rsquo;t being heard. We decided to build the thing that would hear them.
             </p>
           </AnimatedSection>
         </div>

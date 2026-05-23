@@ -1,5 +1,6 @@
 import Link from "next/link";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import LifeStages from "@/components/ui/LifeStages";
 
 const container: React.CSSProperties = { maxWidth: 1160, margin: "0 auto" };
 const sectionPad: React.CSSProperties = { padding: "96px 24px" };
@@ -11,19 +12,18 @@ export default function HomePage() {
       {/* ── HERO ─────────────────────────────────────────────────────────────── */}
       <section style={{
         minHeight: "100vh",
-        background: "linear-gradient(160deg, #FDF0F5 0%, #F8F2F4 50%, #FFF5F8 100%)",
+        background: "linear-gradient(160deg, #FFF8FC 0%, #F8F4FF 35%, #F0FBF6 65%, #FFF5EE 100%)",
         display: "flex",
         alignItems: "center",
         padding: "120px 24px 80px",
         position: "relative",
         overflow: "hidden",
       }}>
-        <div style={{
-          position: "absolute", top: -120, right: -120,
-          width: 500, height: 500, borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(246,24,135,0.06) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }} />
+        {/* Stage color orbs */}
+        <div style={{ position: "absolute", top: -80, right: -60, width: 420, height: 420, borderRadius: "50%", background: "radial-gradient(circle, rgba(246,24,135,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -100, right: 200, width: 320, height: 320, borderRadius: "50%", background: "radial-gradient(circle, rgba(107,107,245,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: 160, right: 80, width: 240, height: 240, borderRadius: "50%", background: "radial-gradient(circle, rgba(58,183,149,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: 40, left: -60, width: 280, height: 280, borderRadius: "50%", background: "radial-gradient(circle, rgba(200,109,212,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />
 
         <div style={{ ...container, width: "100%", position: "relative" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center" }}>
@@ -175,28 +175,55 @@ export default function HomePage() {
       </section>
 
       {/* ── MANIFESTO ────────────────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: "#F61887", padding: "80px 24px" }}>
-        <div style={{ ...container, width: "100%" }}>
+      <section style={{ background: "linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #1A1A2E 100%)", padding: "80px 24px", position: "relative", overflow: "hidden" }}>
+        {/* Stage color accents */}
+        <div style={{ position: "absolute", top: -40, left: -40, width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle, rgba(246,24,135,0.25) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -40, right: 100, width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle, rgba(107,107,245,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: 20, right: 200, width: 140, height: 140, borderRadius: "50%", background: "radial-gradient(circle, rgba(58,183,149,0.18) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: 20, left: 300, width: 120, height: 120, borderRadius: "50%", background: "radial-gradient(circle, rgba(200,109,212,0.18) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: 30, right: 40, width: 100, height: 100, borderRadius: "50%", background: "radial-gradient(circle, rgba(232,131,74,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+        <div style={{ ...container, width: "100%", position: "relative" }}>
           <AnimatedSection delay={0}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
               <div>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.6)", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 20 }}>Why Sakhi exists</p>
-                <h2 style={{ fontSize: "clamp(36px, 5vw, 66px)", fontWeight: 300, color: "#FFFFFF", letterSpacing: "-1.5px", lineHeight: 1.06, margin: 0 }}>
+                <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 20 }}>Why Sakhi exists</p>
+                <h2 style={{ fontSize: "clamp(36px, 5vw, 66px)", fontWeight: 300, color: "#FFFFFF", letterSpacing: "-1.5px", lineHeight: 1.06, margin: "0 0 24px" }}>
                   Period is not a taboo.<br />
-                  <span style={{ opacity: 0.5 }}>Not here.</span>
+                  <span style={{ opacity: 0.4 }}>Not here.</span>
                 </h2>
+                {/* Stage dots row */}
+                <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                  {[
+                    { color: "#E8834A", label: "Teen" },
+                    { color: "#F61887", label: "Young adult" },
+                    { color: "#3AB795", label: "Fertility" },
+                    { color: "#6B6BF5", label: "Postpartum" },
+                    { color: "#C86DD4", label: "Midlife" },
+                  ].map(s => (
+                    <div key={s.label} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                      <div style={{ width: 8, height: 8, borderRadius: "50%", background: s.color }} />
+                      <span style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", fontWeight: 400 }}>{s.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
               <div>
-                <p style={{ fontSize: 18, fontWeight: 400, color: "rgba(255,255,255,0.85)", lineHeight: 1.85, margin: "0 0 24px" }}>
+                <p style={{ fontSize: 18, fontWeight: 400, color: "rgba(255,255,255,0.7)", lineHeight: 1.85, margin: "0 0 24px" }}>
                   In India, most girls learn about their first period after it happens. Most women manage pain alone. Most cycles go untracked, most symptoms go unnamed. Not because women don&rsquo;t care. Because no one made it easy enough to care.
                 </p>
-                <p style={{ fontSize: 20, fontWeight: 500, color: "#FFFFFF", lineHeight: 1.5, margin: 0 }}>
-                  Sakhi does.
+                <p style={{ fontSize: 20, fontWeight: 400, color: "#FFFFFF", lineHeight: 1.5, margin: 0 }}>
+                  Sakhi does. <span style={{ background: "linear-gradient(90deg, #F61887, #6B6BF5, #3AB795)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>At every stage.</span>
                 </p>
               </div>
             </div>
           </AnimatedSection>
         </div>
+      </section>
+
+      {/* ── LIFE STAGES ──────────────────────────────────────────────────── */}
+      <section style={{ backgroundColor: "#FFFFFF", ...sectionPad }}>
+        <LifeStages />
       </section>
 
       {/* ── THE REAL INDIA ────────────────────────────────────────────────── */}
@@ -217,13 +244,13 @@ export default function HomePage() {
           <AnimatedSection delay={80}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 2 }}>
               {[
-                { num: "1 in 5",  desc: "Indian women has PCOD",                        detail: "And 70% of them don't know it. They blame themselves for weight, mood, and fatigue that has a name and a treatment." },
-                { num: "50M",     desc: "never spoke to anyone about their period",      detail: "Fifty million women carrying this alone. Not a statistic. Someone's mother. Someone's sister." },
-                { num: "83%",     desc: "manage period pain with rest alone",            detail: "No guidance, no support, no care. A hot water bag and silence is not healthcare." },
-                { num: "14.2%",   desc: "ever see a doctor for period pain",             detail: "The rest manage alone. Sakhi doesn't replace a doctor. But it helps her have that conversation for the first time." },
+                { num: "1 in 5",  desc: "Indian women has PCOD",                        detail: "And 70% of them don't know it. They blame themselves for weight, mood, and fatigue that has a name and a treatment.", color: "#F61887", bg: "#FFF0F7" },
+                { num: "50M",     desc: "never spoke to anyone about their period",      detail: "Fifty million women carrying this alone. Not a statistic. Someone's mother. Someone's sister.",                       color: "#E8834A", bg: "#FFF5EE" },
+                { num: "83%",     desc: "manage period pain with rest alone",            detail: "No guidance, no support, no care. A hot water bag and silence is not healthcare.",                                     color: "#6B6BF5", bg: "#F0F0FF" },
+                { num: "14.2%",   desc: "ever see a doctor for period pain",             detail: "The rest manage alone. Sakhi doesn't replace a doctor. But it helps her have that conversation for the first time.",    color: "#3AB795", bg: "#EDFAF5" },
               ].map((s, i) => (
-                <div key={i} style={{ background: "#F8F2F4", padding: "40px 36px" }}>
-                  <div style={{ fontSize: "clamp(36px, 4vw, 54px)", fontWeight: 300, color: "#F61887", letterSpacing: "-1.5px", lineHeight: 1, marginBottom: 10 }}>{s.num}</div>
+                <div key={i} style={{ background: s.bg, padding: "40px 36px" }}>
+                  <div style={{ fontSize: "clamp(36px, 4vw, 54px)", fontWeight: 300, color: s.color, letterSpacing: "-1.5px", lineHeight: 1, marginBottom: 10 }}>{s.num}</div>
                   <div style={{ fontSize: 15, fontWeight: 500, color: "#1A1A1A", marginBottom: 12, lineHeight: 1.4 }}>{s.desc}</div>
                   <div style={{ fontSize: 14, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.7 }}>{s.detail}</div>
                 </div>
@@ -252,7 +279,7 @@ export default function HomePage() {
 
             {/* Feature 01 — Health Log */}
             <AnimatedSection delay={0}>
-              <div style={{ background: "#FFFFFF", borderRadius: 24, padding: "48px", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 48, alignItems: "center" }}>
+              <div style={{ background: "#FFFFFF", borderRadius: 24, padding: "48px", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 48, alignItems: "center", borderTop: "3px solid #F61887" }}>
                 <div>
                   <div style={{ fontSize: 11, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12 }}>01</div>
                   <h3 style={{ fontSize: "clamp(22px, 2.5vw, 32px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 16px" }}>
@@ -295,7 +322,7 @@ export default function HomePage() {
 
             {/* Feature 02 — Sakhi AI */}
             <AnimatedSection delay={80}>
-              <div style={{ background: "#FFF5F8", borderRadius: 24, padding: "48px", display: "grid", gridTemplateColumns: "2fr 1fr", gap: 48, alignItems: "center", border: "1px solid rgba(246,24,135,0.08)" }}>
+              <div style={{ background: "#F8F6FF", borderRadius: 24, padding: "48px", display: "grid", gridTemplateColumns: "2fr 1fr", gap: 48, alignItems: "center", border: "1px solid rgba(107,107,245,0.1)", borderTop: "3px solid #6B6BF5" }}>
                 <div style={{ display: "flex", flexDirection: "column" as const, gap: 14 }}>
                   <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
                     <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(246,24,135,0.1)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -320,7 +347,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 11, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12 }}>02</div>
+                  <div style={{ fontSize: 11, fontWeight: 400, color: "#6B6BF5", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12 }}>02</div>
                   <h3 style={{ fontSize: "clamp(22px, 2.5vw, 32px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 16px" }}>
                     Ask what you&rsquo;d never Google.
                   </h3>
@@ -336,9 +363,9 @@ export default function HomePage() {
 
             {/* Feature 03 — Be Her Sakhi */}
             <AnimatedSection delay={160}>
-              <div style={{ background: "#FFFFFF", borderRadius: 24, padding: "48px", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 48, alignItems: "center" }}>
+              <div style={{ background: "#FFFFFF", borderRadius: 24, padding: "48px", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 48, alignItems: "center", borderTop: "3px solid #3AB795" }}>
                 <div>
-                  <div style={{ fontSize: 11, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12 }}>03</div>
+                  <div style={{ fontSize: 11, fontWeight: 400, color: "#3AB795", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12 }}>03</div>
                   <h3 style={{ fontSize: "clamp(22px, 2.5vw, 32px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 16px" }}>
                     Never face it alone.
                   </h3>
@@ -570,23 +597,32 @@ export default function HomePage() {
       </section>
 
       {/* ── DOWNLOAD CTA ──────────────────────────────────────────────────── */}
-      <section style={{ background: "linear-gradient(160deg, #F61887 0%, #D4127A 100%)", padding: "100px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 640, margin: "0 auto" }}>
+      <section style={{ background: "#0F0F1A", padding: "100px 24px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        {/* Stage color orbs */}
+        <div style={{ position: "absolute", top: -60, left: "10%",  width: 220, height: 220, borderRadius: "50%", background: "radial-gradient(circle, rgba(246,24,135,0.3) 0%, transparent 70%)",  pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -40, right: "12%", width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle, rgba(107,107,245,0.25) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: 40, right: "8%",   width: 160, height: 160, borderRadius: "50%", background: "radial-gradient(circle, rgba(58,183,149,0.2) 0%, transparent 70%)",  pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: 30, left: "15%", width: 140, height: 140, borderRadius: "50%", background: "radial-gradient(circle, rgba(200,109,212,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: 60, left: "30%",   width: 120, height: 120, borderRadius: "50%", background: "radial-gradient(circle, rgba(232,131,74,0.2) 0%, transparent 70%)",  pointerEvents: "none" }} />
+
+        <div style={{ maxWidth: 640, margin: "0 auto", position: "relative" }}>
           <AnimatedSection delay={0}>
-            <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.65)", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 24 }}>Free. Always.</p>
+            <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 24 }}>Free. Always.</p>
             <h2 style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 300, color: "#FFFFFF", letterSpacing: "-1.5px", lineHeight: 1.08, margin: "0 0 24px" }}>
               Your body deserves<br />
-              to be understood.
+              <span style={{ background: "linear-gradient(90deg, #F61887 0%, #6B6BF5 40%, #3AB795 70%, #C86DD4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                to be understood.
+              </span>
             </h2>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "rgba(255,255,255,0.8)", lineHeight: 1.8, margin: "0 0 44px" }}>
+            <p style={{ fontSize: 18, fontWeight: 400, color: "rgba(255,255,255,0.55)", lineHeight: 1.8, margin: "0 0 44px" }}>
               Free. No ads. Your data stays yours. Just you and your health.
             </p>
             <a href="https://apps.apple.com/app/id6742219623" target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: 10, backgroundColor: "#FFFFFF", color: "#F61887", padding: "18px 40px", borderRadius: 999, textDecoration: "none", fontSize: 16, fontWeight: 600 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#F61887"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, backgroundColor: "#F61887", color: "#FFFFFF", padding: "18px 40px", borderRadius: 999, textDecoration: "none", fontSize: 16, fontWeight: 500 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
               Download on App Store
             </a>
-            <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.5)", marginTop: 20 }}>
+            <p style={{ fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.3)", marginTop: 20 }}>
               Free · No ads · Your data stays yours · iOS
             </p>
           </AnimatedSection>
