@@ -53,7 +53,7 @@ export default function PressPage() {
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={100}>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, maxWidth: 540, margin: 0 }}>
+            <p style={{ fontSize: 18, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 540, margin: 0 }}>
               We didn&rsquo;t chase press. We built something worth talking about. Here&rsquo;s where the world has noticed.
             </p>
           </AnimatedSection>
@@ -85,7 +85,7 @@ export default function PressPage() {
                     <span style={{ fontSize: 12, fontWeight: 400, color: "#F61887" }}>{item.date}</span>
                   </div>
                   <div style={{ padding: "28px 28px", display: "flex", alignItems: "center" }}>
-                    <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.75, margin: 0 }}>{item.description}</p>
+                    <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>{item.description}</p>
                   </div>
                 </div>
               </AnimatedSection>
@@ -102,7 +102,7 @@ export default function PressPage() {
             <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 20px" }}>
               For journalists and media.
             </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: "0 0 36px" }}>
+            <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: "0 0 36px" }}>
               Brand assets, product screenshots, founder bios, and the full Sakhi story — ready for press use. Reach out and we&rsquo;ll send everything over.
             </p>
             <a href="mailto:contact@sakhiapp.in"

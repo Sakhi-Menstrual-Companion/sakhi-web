@@ -88,7 +88,7 @@ export default function Footer() {
               style={{
                 fontSize: 15,
                 fontWeight: 300,
-                color: "#9A9A9A",
+                color: "#A0A0A0",
                 lineHeight: 1.7,
                 margin: "0 0 24px",
                 maxWidth: 220,
@@ -152,7 +152,7 @@ export default function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
-                        color: "#9A9A9A",
+                        color: "#A0A0A0",
                         textDecoration: "none",
                         fontSize: 15,
                         fontWeight: 300,
@@ -161,7 +161,7 @@ export default function Footer() {
                         (e.currentTarget as HTMLAnchorElement).style.color = "#F61887";
                       }}
                       onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLAnchorElement).style.color = "#9A9A9A";
+                        (e.currentTarget as HTMLAnchorElement).style.color = "#A0A0A0";
                       }}
                     >
                       {link.label}
@@ -170,7 +170,7 @@ export default function Footer() {
                     <Link
                       href={link.href}
                       style={{
-                        color: "#9A9A9A",
+                        color: "#A0A0A0",
                         textDecoration: "none",
                         fontSize: 15,
                         fontWeight: 300,
@@ -179,7 +179,7 @@ export default function Footer() {
                         (e.currentTarget as HTMLAnchorElement).style.color = "#F61887";
                       }}
                       onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLAnchorElement).style.color = "#9A9A9A";
+                        (e.currentTarget as HTMLAnchorElement).style.color = "#A0A0A0";
                       }}
                     >
                       {link.label}
@@ -219,7 +219,7 @@ export default function Footer() {
                   <Link
                     href={link.href}
                     style={{
-                      color: "#9A9A9A",
+                      color: "#A0A0A0",
                       textDecoration: "none",
                       fontSize: 15,
                       fontWeight: 300,
@@ -228,7 +228,7 @@ export default function Footer() {
                       (e.currentTarget as HTMLAnchorElement).style.color = "#F61887";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = "#9A9A9A";
+                      (e.currentTarget as HTMLAnchorElement).style.color = "#A0A0A0";
                     }}
                   >
                     {link.label}
@@ -267,7 +267,7 @@ export default function Footer() {
                   <a
                     href={link.href}
                     style={{
-                      color: "#9A9A9A",
+                      color: "#A0A0A0",
                       textDecoration: "none",
                       fontSize: 15,
                       fontWeight: 300,
@@ -276,7 +276,7 @@ export default function Footer() {
                       (e.currentTarget as HTMLAnchorElement).style.color = "#F61887";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = "#9A9A9A";
+                      (e.currentTarget as HTMLAnchorElement).style.color = "#A0A0A0";
                     }}
                   >
                     {link.label}
@@ -302,7 +302,7 @@ export default function Footer() {
               style={{
                 fontSize: 14,
                 fontWeight: 300,
-                color: "#9A9A9A",
+                color: "#A0A0A0",
                 margin: 0,
               }}
             >
@@ -312,7 +312,7 @@ export default function Footer() {
               style={{
                 fontSize: 14,
                 fontWeight: 300,
-                color: "#9A9A9A",
+                color: "#A0A0A0",
                 margin: 0,
               }}
             >

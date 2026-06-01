@@ -15,13 +15,13 @@ const label: React.CSSProperties = {
 
 const colors = [
   { name: "Primary Pink",    hex: "#F61887", rgb: "246 · 24 · 135",  bg: "#F61887", text: "#fff",    usage: "CTA buttons, active states, key icons. The color of action and care." },
-  { name: "Deep Pink",       hex: "#BB2968", rgb: "187 · 41 · 104",  bg: "#BB2968", text: "#fff",    usage: "Hover states, pressed buttons, gradient endpoints." },
-  { name: "Deep Burgundy",   hex: "#6D1743", rgb: "109 · 23 · 67",   bg: "#6D1743", text: "#fff",    usage: "Rich dark accents, bold headings, brand identity moments." },
+  { name: "Deep Pink",       hex: "#D4006E", rgb: "187 · 41 · 104",  bg: "#D4006E", text: "#fff",    usage: "Hover states, pressed buttons, gradient endpoints." },
+  { name: "Deep Burgundy",   hex: "#D4006E", rgb: "109 · 23 · 67",   bg: "#D4006E", text: "#fff",    usage: "Rich dark accents, bold headings, brand identity moments." },
   { name: "Background Blush",hex: "#F8F2F4", rgb: "248 · 242 · 244", bg: "#F8F2F4", text: "#1A1A1A", usage: "Primary background. Warm near-white that gives Sakhi its warmth." },
   { name: "Soft Blush",      hex: "#F8E5EC", rgb: "248 · 229 · 236", bg: "#F8E5EC", text: "#1A1A1A", usage: "Card surfaces, modal backgrounds, secondary highlights." },
-  { name: "Text Black",      hex: "#1C1C1E", rgb: "28 · 28 · 30",    bg: "#1C1C1E", text: "#fff",    usage: "All headings, primary body text." },
-  { name: "Body Gray",       hex: "#6B6B7A", rgb: "107 · 107 · 122", bg: "#6B6B7A", text: "#fff",    usage: "Subtext, labels, secondary information, captions." },
-  { name: "Light Gray",      hex: "#E5E4EA", rgb: "229 · 228 · 234", bg: "#E5E4EA", text: "#1A1A1A", usage: "Inactive UI states, dividers, unselected backgrounds." },
+  { name: "Text Black",      hex: "#1A1A1A", rgb: "28 · 28 · 30",    bg: "#1A1A1A", text: "#fff",    usage: "All headings, primary body text." },
+  { name: "Body Gray",       hex: "#6B6B6B", rgb: "107 · 107 · 122", bg: "#6B6B6B", text: "#fff",    usage: "Subtext, labels, secondary information, captions." },
+  { name: "Light Gray",      hex: "#EAD8E0", rgb: "229 · 228 · 234", bg: "#EAD8E0", text: "#1A1A1A", usage: "Inactive UI states, dividers, unselected backgrounds." },
 ];
 
 const typeScale = [
@@ -88,7 +88,7 @@ export default function BrandPage() {
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={120}>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, maxWidth: 520, margin: "0 0 40px" }}>
+            <p style={{ fontSize: 18, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, maxWidth: 520, margin: "0 0 40px" }}>
               Every color, every word, every decision in Sakhi&rsquo;s design comes from one place — making a woman feel understood, not processed. This page documents how we do that.
             </p>
           </AnimatedSection>
@@ -113,7 +113,7 @@ export default function BrandPage() {
               <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 14px" }}>
                 The palette of care.
               </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, maxWidth: 520, margin: 0 }}>
+              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 520, margin: 0 }}>
                 Never purple — that&rsquo;s Flo. Never dark backgrounds by default — that&rsquo;s Clue. Sakhi owns warm, pink, and human.
               </p>
             </div>
@@ -124,11 +124,11 @@ export default function BrandPage() {
               <AnimatedSection key={c.hex} delay={i * 50}>
                 <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)" }}>
                   <div style={{ height: 72, background: c.bg }} />
-                  <div style={{ padding: "16px 18px", background: "#FAFAFA" }}>
+                  <div style={{ padding: "16px 18px", background: "#F8F2F4" }}>
                     <div style={{ fontSize: 13, fontWeight: 500, color: "#1A1A1A", marginBottom: 3 }}>{c.name}</div>
                     <div style={{ fontSize: 12, fontWeight: 400, color: "#F61887", fontFamily: "monospace", marginBottom: 8 }}>{c.hex}</div>
-                    <div style={{ fontSize: 10, fontWeight: 400, color: "#9A9A9A", marginBottom: 8 }}>RGB {c.rgb}</div>
-                    <div style={{ fontSize: 11, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.5 }}>{c.usage}</div>
+                    <div style={{ fontSize: 10, fontWeight: 400, color: "#A0A0A0", marginBottom: 8 }}>RGB {c.rgb}</div>
+                    <div style={{ fontSize: 11, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.5 }}>{c.usage}</div>
                   </div>
                 </div>
               </AnimatedSection>
@@ -149,7 +149,7 @@ export default function BrandPage() {
                 ].map((r, i) => (
                   <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                     <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#F61887", flexShrink: 0, marginTop: 5 }} />
-                    <span style={{ fontSize: 13, color: "#5A5A5A", lineHeight: 1.5 }}>{r}</span>
+                    <span style={{ fontSize: 13, color: "#6B6B6B", lineHeight: 1.5 }}>{r}</span>
                   </div>
                 ))}
               </div>
@@ -167,7 +167,7 @@ export default function BrandPage() {
               <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 14px" }}>
                 General Sans.
               </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, maxWidth: 540, margin: 0 }}>
+              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 540, margin: 0 }}>
                 Clean, geometric, warm. Not clinical. Not cute. It pairs confidence with enough roundness to feel approachable. Free for commercial use via{" "}
                 <a href="https://www.fontshare.com/fonts/general-sans" target="_blank" rel="noopener noreferrer" style={{ color: "#F61887", textDecoration: "none" }}>fontshare.com</a>.
               </p>
@@ -177,22 +177,22 @@ export default function BrandPage() {
           {/* Type specimen */}
           <AnimatedSection delay={80}>
             <div style={{ background: "#fff", borderRadius: 20, padding: "48px", marginBottom: 24 }}>
-              <div style={{ fontSize: 11, color: "#B0889A", letterSpacing: "0.08em", textTransform: "uppercase" as const, marginBottom: 32 }}>Type specimen</div>
+              <div style={{ fontSize: 11, color: "#A0A0A0", letterSpacing: "0.08em", textTransform: "uppercase" as const, marginBottom: 32 }}>Type specimen</div>
               <div style={{ borderBottom: "1px solid rgba(246,24,135,0.1)", paddingBottom: 24, marginBottom: 24 }}>
                 <p style={{ fontSize: 42, fontWeight: 700, color: "#1A1A1A", lineHeight: 1.1, margin: 0 }}>Tell me your cycle length.</p>
-                <p style={{ fontSize: 13, color: "#B0889A", marginTop: 8 }}>Display / 42pt Semibold</p>
+                <p style={{ fontSize: 13, color: "#A0A0A0", marginTop: 8 }}>Display / 42pt Semibold</p>
               </div>
               <div style={{ borderBottom: "1px solid rgba(246,24,135,0.1)", paddingBottom: 24, marginBottom: 24 }}>
                 <p style={{ fontSize: 22, fontWeight: 600, color: "#1A1A1A", lineHeight: 1.2, margin: 0 }}>You have been logging cramps for 5 days.</p>
-                <p style={{ fontSize: 13, color: "#B0889A", marginTop: 8 }}>Section Heading / 22pt Semibold</p>
+                <p style={{ fontSize: 13, color: "#A0A0A0", marginTop: 8 }}>Section Heading / 22pt Semibold</p>
               </div>
               <div style={{ borderBottom: "1px solid rgba(246,24,135,0.1)", paddingBottom: 24, marginBottom: 24 }}>
-                <p style={{ fontSize: 16, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.75, margin: 0 }}>That sounds really rough. Your body has been dealing with a lot this week. Looking at what you have logged — you are on day 26, which is often the hardest part of the cycle for mood.</p>
-                <p style={{ fontSize: 13, color: "#B0889A", marginTop: 8 }}>Body / 16pt Regular</p>
+                <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>That sounds really rough. Your body has been dealing with a lot this week. Looking at what you have logged — you are on day 26, which is often the hardest part of the cycle for mood.</p>
+                <p style={{ fontSize: 13, color: "#A0A0A0", marginTop: 8 }}>Body / 16pt Regular</p>
               </div>
               <div>
                 <p style={{ fontSize: 13, fontWeight: 500, color: "#F61887", margin: 0, letterSpacing: "0.02em" }}>OVULATION PHASE · DAY 14</p>
-                <p style={{ fontSize: 13, color: "#B0889A", marginTop: 8 }}>Label / 13pt Medium · loose tracking</p>
+                <p style={{ fontSize: 13, color: "#A0A0A0", marginTop: 8 }}>Label / 13pt Medium · loose tracking</p>
               </div>
             </div>
           </AnimatedSection>
@@ -208,9 +208,9 @@ export default function BrandPage() {
                   padding: "18px 24px", alignItems: "center",
                 }}>
                   <div style={{ fontSize: 13, fontWeight: 500, color: "#1A1A1A" }}>{t.role}</div>
-                  <div style={{ fontSize: 12, color: "#9A9A9A" }}>{t.weight}</div>
+                  <div style={{ fontSize: 12, color: "#A0A0A0" }}>{t.weight}</div>
                   <div style={{ fontSize: 12, color: "#F61887", fontFamily: "monospace" }}>{t.size}</div>
-                  <div style={{ fontSize: 12, color: "#7A7A7A" }}>{t.usage}</div>
+                  <div style={{ fontSize: 12, color: "#6B6B6B" }}>{t.usage}</div>
                 </div>
               ))}
             </div>
@@ -230,7 +230,7 @@ export default function BrandPage() {
                 ].map((r, i) => (
                   <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                     <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#F61887", flexShrink: 0, marginTop: 5 }} />
-                    <span style={{ fontSize: 13, color: "#5A5A5A", lineHeight: 1.5 }}>{r}</span>
+                    <span style={{ fontSize: 13, color: "#6B6B6B", lineHeight: 1.5 }}>{r}</span>
                   </div>
                 ))}
               </div>
@@ -248,7 +248,7 @@ export default function BrandPage() {
               <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 14px" }}>
                 One voice. Five traits.
               </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, maxWidth: 520, margin: 0 }}>
+              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 520, margin: 0 }}>
                 Sakhi is the friend who is always honest with you. Warm but not soft. Direct but not cold. She never judges. She remembers everything you told her and brings it up at the right moment.
               </p>
             </div>
@@ -259,8 +259,8 @@ export default function BrandPage() {
               <AnimatedSection key={t.trait} delay={i * 60}>
                 <div style={{ background: "#F8F2F4", borderRadius: 18, padding: "28px 24px", height: "100%", boxSizing: "border-box" as const }}>
                   <div style={{ fontSize: 15, fontWeight: 600, color: "#F61887", marginBottom: 10 }}>{t.trait}</div>
-                  <p style={{ fontSize: 13, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.7, margin: "0 0 16px" }}>{t.desc}</p>
-                  <p style={{ fontSize: 12, fontWeight: 400, color: "#9A9A9A", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>{t.example}</p>
+                  <p style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.7, margin: "0 0 16px" }}>{t.desc}</p>
+                  <p style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>{t.example}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -276,20 +276,20 @@ export default function BrandPage() {
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
                   {dos.map((d, i) => (
-                    <div key={i} style={{ fontSize: 13, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.6, paddingLeft: 14, borderLeft: "2px solid rgba(246,24,135,0.25)" }}>
+                    <div key={i} style={{ fontSize: 13, fontWeight: 400, color: "#1A1A1A", lineHeight: 1.6, paddingLeft: 14, borderLeft: "2px solid rgba(246,24,135,0.25)" }}>
                       {d}
                     </div>
                   ))}
                 </div>
               </div>
-              <div style={{ background: "#FFF5F5", borderRadius: 18, padding: "32px", border: "1px solid rgba(0,0,0,0.05)" }}>
+              <div style={{ background: "#F8E5EC", borderRadius: 18, padding: "32px", border: "1px solid rgba(0,0,0,0.05)" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#9A9A9A" }} />
-                  <span style={{ fontSize: 12, fontWeight: 500, color: "#9A9A9A", letterSpacing: "0.08em", textTransform: "uppercase" as const }}>Sakhi never sounds like this</span>
+                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#A0A0A0" }} />
+                  <span style={{ fontSize: 12, fontWeight: 500, color: "#A0A0A0", letterSpacing: "0.08em", textTransform: "uppercase" as const }}>Sakhi never sounds like this</span>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
                   {donts.map((d, i) => (
-                    <div key={i} style={{ fontSize: 13, fontWeight: 400, color: "#9A9A9A", lineHeight: 1.6, paddingLeft: 14, borderLeft: "2px solid #E5E4EA", textDecoration: i < 4 ? "line-through" : "none" }}>
+                    <div key={i} style={{ fontSize: 13, fontWeight: 400, color: "#A0A0A0", lineHeight: 1.6, paddingLeft: 14, borderLeft: "2px solid #EAD8E0", textDecoration: i < 4 ? "line-through" : "none" }}>
                       {d}
                     </div>
                   ))}
@@ -320,7 +320,7 @@ export default function BrandPage() {
               <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 14px" }}>
                 The words that define Sakhi.
               </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, margin: 0 }}>
+              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
                 These lines are not taglines written by a copywriter. They came from understanding the problem deeply and saying it honestly.
               </p>
             </div>
@@ -341,7 +341,7 @@ export default function BrandPage() {
                   <div style={{ fontSize: 18, fontWeight: 400, color: "#1A1A1A", lineHeight: 1.4, fontStyle: "italic" }}>
                     &ldquo;{t.line}&rdquo;
                   </div>
-                  <div style={{ fontSize: 12, fontWeight: 400, color: "#B0889A", lineHeight: 1.5 }}>
+                  <div style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0", lineHeight: 1.5 }}>
                     {t.context}
                   </div>
                 </div>
@@ -360,7 +360,7 @@ export default function BrandPage() {
               <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 14px" }}>
                 sakhi. in Primary Pink.
               </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, maxWidth: 480, margin: 0 }}>
+              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 480, margin: 0 }}>
                 The logotype is the brand. Clear space, no effects, approved colors only.
               </p>
             </div>
@@ -375,7 +375,7 @@ export default function BrandPage() {
               <AnimatedSection key={i} delay={i * 60}>
                 <div style={{ background: v.bg, borderRadius: 16, padding: "40px 28px", textAlign: "center" as const, border: v.bg === "#FFFFFF" ? "1px solid rgba(0,0,0,0.06)" : "none" }}>
                   <div style={{ fontSize: 28, fontWeight: 700, color: v.textColor, letterSpacing: "-0.5px", marginBottom: 16 }}>sakhi.</div>
-                  <div style={{ fontSize: 11, fontWeight: 400, color: v.textColor === "#FFFFFF" ? "rgba(255,255,255,0.6)" : "#B0889A", letterSpacing: "0.06em" }}>{v.label}</div>
+                  <div style={{ fontSize: 11, fontWeight: 400, color: v.textColor === "#FFFFFF" ? "rgba(255,255,255,0.6)" : "#A0A0A0", letterSpacing: "0.06em" }}>{v.label}</div>
                 </div>
               </AnimatedSection>
             ))}
@@ -395,7 +395,7 @@ export default function BrandPage() {
                 ].map((r, i) => (
                   <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                     <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#F61887", flexShrink: 0, marginTop: 5 }} />
-                    <span style={{ fontSize: 13, color: "#5A5A5A", lineHeight: 1.5 }}>{r}</span>
+                    <span style={{ fontSize: 13, color: "#6B6B6B", lineHeight: 1.5 }}>{r}</span>
                   </div>
                 ))}
               </div>

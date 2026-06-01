@@ -221,11 +221,11 @@ const categories = [
 ];
 
 const categoryColor: Record<string, string> = {
-  hormonal:     "#E8834A",
+  hormonal:     "#F61887",
   pain:         "#F61887",
-  mental:       "#6B6BF5",
-  reproductive: "#3AB795",
-  systemic:     "#C86DD4",
+  mental:       "#F61887",
+  reproductive: "#F61887",
+  systemic:     "#F61887",
 };
 
 function ConditionCard({ c, index }: { c: Condition; index: number }) {
@@ -298,7 +298,7 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
           }}>
             {c.stat}
           </div>
-          <div style={{ fontSize: 12, fontWeight: 400, color: "#9A9A9A" }}>
+          <div style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0" }}>
             {c.statLabel}
           </div>
         </div>
@@ -308,7 +308,7 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
           <div style={{ fontSize: 18, fontWeight: 500, color: "#1A1A1A", marginBottom: 8, lineHeight: 1.25 }}>
             {c.name}
           </div>
-          <div style={{ fontSize: 13, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.6 }}>
+          <div style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.6 }}>
             {c.tagline}
           </div>
         </div>
@@ -334,7 +334,7 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
                 <div style={{ fontSize: 11, fontWeight: 500, color, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 10 }}>
                   What it is
                 </div>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.75, margin: 0 }}>
+                <p style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>
                   {c.what}
                 </p>
               </div>
@@ -351,7 +351,7 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
                         width: 5, height: 5, borderRadius: "50%",
                         background: color, flexShrink: 0, marginTop: 6,
                       }} />
-                      <span style={{ fontSize: 13, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.6 }}>{s}</span>
+                      <span style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.6 }}>{s}</span>
                     </div>
                   ))}
                 </div>
@@ -368,14 +368,14 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
                 <div style={{ fontSize: 11, fontWeight: 500, color, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
                   What the silence costs
                 </div>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.75, margin: 0 }}>
+                <p style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>
                   {c.silence}
                 </p>
               </div>
 
               {/* Sakhi */}
               <div style={{
-                background: "linear-gradient(135deg, #FFF0F7 0%, #FDF8FA 100%)",
+                background: "#F8E5EC",
                 border: "1px solid rgba(246,24,135,0.14)",
                 borderRadius: 12,
                 padding: "16px 18px",
@@ -383,7 +383,7 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
                 <div style={{ fontSize: 11, fontWeight: 500, color: "#F61887", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
                   How Sakhi helps
                 </div>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.75, margin: 0 }}>
+                <p style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>
                   {c.sakhi}
                 </p>
               </div>
@@ -428,7 +428,7 @@ export default function HealthConditions() {
             <div style={{ fontSize: 28, fontWeight: 300, color: "#F61887", letterSpacing: "-0.5px", marginBottom: 6 }}>
               {s.n}
             </div>
-            <div style={{ fontSize: 11, fontWeight: 400, color: "#9A9A9A", lineHeight: 1.4 }}>
+            <div style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", lineHeight: 1.4 }}>
               {s.label}
             </div>
           </div>
@@ -453,7 +453,7 @@ export default function HealthConditions() {
                 ? "1.5px solid #F61887"
                 : "1px solid rgba(0,0,0,0.1)",
               background: activeCategory === cat.id ? "#F61887" : "#fff",
-              color: activeCategory === cat.id ? "#fff" : "#5A5A5A",
+              color: activeCategory === cat.id ? "#fff" : "#6B6B6B",
               fontSize: 13,
               fontWeight: activeCategory === cat.id ? 500 : 400,
               cursor: "pointer",
@@ -504,7 +504,7 @@ export default function HealthConditions() {
         <div style={{ fontSize: 20, fontWeight: 300, color: "#fff", letterSpacing: "-0.3px" }}>
           Sakhi tracks. Doctors diagnose.
         </div>
-        <p style={{ fontSize: 14, fontWeight: 400, color: "#9A9A9A", lineHeight: 1.8, margin: 0, maxWidth: 640 }}>
+        <p style={{ fontSize: 14, fontWeight: 400, color: "#A0A0A0", lineHeight: 1.8, margin: 0, maxWidth: 640 }}>
           Everything on this page is educational research. Sakhi is a tracking and awareness tool —
           not a medical device, not a diagnostic system. If something in what you&apos;ve read resonates,
           bring it to a gynaecologist. Sakhi&apos;s Doctor Report is built to help you have that conversation.

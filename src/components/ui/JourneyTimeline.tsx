@@ -64,7 +64,7 @@ export default function JourneyTimeline() {
                   <>
                     <div style={{ fontSize: 11, fontWeight: 400, color: "#F61887", letterSpacing: "0.08em", textTransform: "uppercase" as const, marginBottom: 6 }}>{m.date}</div>
                     <div style={{ fontSize: 16, fontWeight: 500, color: "#1A1A1A", marginBottom: 6, lineHeight: 1.3 }}>{m.label}</div>
-                    <div style={{ fontSize: 13, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.65 }}>{m.desc}</div>
+                    <div style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.65 }}>{m.desc}</div>
                   </>
                 )}
               </div>
@@ -93,7 +93,7 @@ export default function JourneyTimeline() {
                   <>
                     <div style={{ fontSize: 11, fontWeight: 400, color: "#F61887", letterSpacing: "0.08em", textTransform: "uppercase" as const, marginBottom: 6 }}>{m.date}</div>
                     <div style={{ fontSize: 16, fontWeight: 500, color: "#1A1A1A", marginBottom: 6, lineHeight: 1.3 }}>{m.label}</div>
-                    <div style={{ fontSize: 13, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.65 }}>{m.desc}</div>
+                    <div style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.65 }}>{m.desc}</div>
                   </>
                 )}
               </div>

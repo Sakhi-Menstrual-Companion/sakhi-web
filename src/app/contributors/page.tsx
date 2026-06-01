@@ -139,7 +139,7 @@ export default function ContributorsPage() {
                 </h1>
               </AnimatedSection>
               <AnimatedSection delay={120}>
-                <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, maxWidth: 480, margin: "0 0 40px" }}>
+                <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, maxWidth: 480, margin: "0 0 40px" }}>
                   Sakhi began in Lucknow and reached every corner of India — because the problem it solves lives everywhere. From classrooms to boardrooms, from mothers to daughters.
                 </p>
               </AnimatedSection>
@@ -153,13 +153,13 @@ export default function ContributorsPage() {
                   ].map((s, i, arr) => (
                     <div key={i} style={{ paddingRight: i < arr.length - 1 ? 28 : 0, borderRight: i < arr.length - 1 ? "1px solid rgba(246,24,135,0.12)" : "none" }}>
                       <div style={{ fontSize: 20, fontWeight: 400, color: "#F61887", letterSpacing: "-0.5px", lineHeight: 1.2 }}>{s.n}</div>
-                      <div style={{ fontSize: 11, fontWeight: 400, color: "#B0889A", marginTop: 3 }}>{s.l}</div>
+                      <div style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", marginTop: 3 }}>{s.l}</div>
                     </div>
                   ))}
                 </div>
               </AnimatedSection>
               <AnimatedSection delay={300}>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "#C0A0B0", fontStyle: "italic", margin: 0 }}>
+                <p style={{ fontSize: 13, fontWeight: 400, color: "#A0A0A0", fontStyle: "italic", margin: 0 }}>
                   Hover the map to explore Sakhi&apos;s presence across India →
                 </p>
               </AnimatedSection>
@@ -183,7 +183,7 @@ export default function ContributorsPage() {
               <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 14px" }}>
                 From a classroom to India.
               </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, maxWidth: 480, margin: 0 }}>
+              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 480, margin: 0 }}>
                 Every person who contributed to Sakhi — organized by role and depth of involvement.
               </p>
             </div>
@@ -247,7 +247,7 @@ export default function ContributorsPage() {
                     <div>
                       <div style={{ fontSize: 18, fontWeight: 500, color: "#1A1A1A", lineHeight: 1.3 }}>{member.name}</div>
                       <div style={{ fontSize: 12, fontWeight: 400, color: "#F61887", marginTop: 2 }}>{member.role}</div>
-                      <div style={{ fontSize: 11, fontWeight: 400, color: "#B0889A", marginTop: 1 }}>Since {member.since}</div>
+                      <div style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", marginTop: 1 }}>Since {member.since}</div>
                     </div>
                   </div>
 
@@ -256,13 +256,13 @@ export default function ContributorsPage() {
                     margin: 0, paddingLeft: 16,
                     borderLeft: "2px solid rgba(246,24,135,0.25)",
                     fontStyle: "italic", fontSize: 15, fontWeight: 400,
-                    color: "#5A5A5A", lineHeight: 1.75,
+                    color: "#6B6B6B", lineHeight: 1.75,
                   }}>
                     &ldquo;{member.quote}&rdquo;
                   </blockquote>
 
                   {/* Bio */}
-                  <p style={{ fontSize: 14, fontWeight: 400, color: "#6A6A6A", lineHeight: 1.85, margin: 0 }}>
+                  <p style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: 0 }}>
                     {member.bio}
                   </p>
 
@@ -296,10 +296,10 @@ export default function ContributorsPage() {
                 <h2 style={{ fontSize: "clamp(24px, 3vw, 38px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", margin: "0 0 20px", lineHeight: 1.2 }}>
                   Galgotias University
                 </h2>
-                <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: "0 0 16px" }}>
+                <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: "0 0 16px" }}>
                   Sakhi exists because of Galgotias University — not as a customer, but as a founding patron. The ISDP Bootcamp gave Sakhi its first moment. The campus gave it its first users.
                 </p>
-                <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: 0 }}>
+                <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: 0 }}>
                   We carry that support forward in everything we build.
                 </p>
               </div>
@@ -321,7 +321,7 @@ export default function ContributorsPage() {
                     <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#F61887", flexShrink: 0, marginTop: 5 }} />
                     <div>
                       <div style={{ fontSize: 14, fontWeight: 500, color: "#1A1A1A", marginBottom: 3 }}>{item.label}</div>
-                      <div style={{ fontSize: 12, fontWeight: 400, color: "#9A9A9A" }}>{item.desc}</div>
+                      <div style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0" }}>{item.desc}</div>
                     </div>
                   </div>
                 ))}
@@ -340,7 +340,7 @@ export default function ContributorsPage() {
               <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 16px" }}>
                 From idea to India.
               </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, maxWidth: 420, margin: "0 auto" }}>
+              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 420, margin: "0 auto" }}>
                 Every milestone in Sakhi&rsquo;s story — from a bootcamp classroom to the App Store.
               </p>
             </div>

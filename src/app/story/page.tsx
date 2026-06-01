@@ -93,10 +93,10 @@ export default function StoryPage() {
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={100}>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: "0 0 16px", maxWidth: 580 }}>
+            <p style={{ fontSize: 18, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: "0 0 16px", maxWidth: 580 }}>
               What began as a university assignment became something none of us could walk away from. This is the honest account of how Sakhi came to be.
             </p>
-            <p style={{ fontSize: 13, fontWeight: 400, color: "#B0889A", letterSpacing: "0.03em", margin: 0 }}>
+            <p style={{ fontSize: 13, fontWeight: 400, color: "#A0A0A0", letterSpacing: "0.03em", margin: 0 }}>
               January 2024 — Present · Galgotias University, Greater Noida
             </p>
           </AnimatedSection>
@@ -122,18 +122,18 @@ export default function StoryPage() {
               gap: 20,
               marginBottom: 48,
             }}>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.85, margin: 0 }}>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#1A1A1A", lineHeight: 1.85, margin: 0 }}>
                 When I was in college, one of my close friends was having really bad period cramps.
                 She had already taken a medicine in the morning, but by the middle of the day, the pain was still not going away —
                 and she was thinking about taking another one.
               </p>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.85, margin: 0 }}>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#1A1A1A", lineHeight: 1.85, margin: 0 }}>
                 I didn&rsquo;t even know if that was right or not. I told her the few things I knew —
                 rest a little, use a hot water bag, try to eat something.
                 But deep down, I knew I was just giving generic advice.
                 I didn&rsquo;t really know what would actually help her.
               </p>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#3A3A3A", lineHeight: 1.85, margin: 0 }}>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#1A1A1A", lineHeight: 1.85, margin: 0 }}>
                 And that stayed with me. Because later I realised that every girl experiences these things differently.
                 What feels normal for one person may not feel normal for someone else.
                 And most of the time, they&rsquo;re figuring it out completely alone.
@@ -164,11 +164,11 @@ export default function StoryPage() {
                 ].map(s => (
                   <div key={s.stat}>
                     <div style={{ fontSize: 32, fontWeight: 300, color: "#F61887", letterSpacing: "-0.5px", lineHeight: 1, marginBottom: 6 }}>{s.stat}</div>
-                    <div style={{ fontSize: 13, fontWeight: 400, color: "#7A5A6A", lineHeight: 1.5 }}>{s.desc}</div>
+                    <div style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.5 }}>{s.desc}</div>
                   </div>
                 ))}
               </div>
-              <p style={{ fontSize: 14, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.7, margin: "24px 0 0", borderTop: "1px solid rgba(246,24,135,0.12)", paddingTop: 20 }}>
+              <p style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.7, margin: "24px 0 0", borderTop: "1px solid rgba(246,24,135,0.12)", paddingTop: 20 }}>
                 This is not a story about rural India or poor India. This is about the girl studying at an engineering college in Lucknow.
                 The woman managing a team at a startup in Bangalore. The 20-year-old in a Pune hostel with an iPhone and 4G — who has still
                 never had a real conversation about what&rsquo;s happening in her own body.
@@ -182,11 +182,11 @@ export default function StoryPage() {
               &ldquo;I truly cared. And I had nothing real to offer.
               Not because I didn&rsquo;t want to help — but because I had no way in.&rdquo;
             </p>
-            <p style={{ fontSize: 16, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: "0 0 16px" }}>
+            <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: "0 0 16px" }}>
               Her mother senses something is off. She calls every Sunday. Hears &ldquo;fine.&rdquo; Worries quietly.
               There is a 7-percentage-point gap between how sick daughters actually are and how sick their mothers believe them to be.
             </p>
-            <p style={{ fontSize: 16, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: 0 }}>
+            <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: 0 }}>
               Her partner wants to help. He doesn&rsquo;t know how.
               Her best friend would show up if she knew. She doesn&rsquo;t know.
               This is the loneliest part — not the pain itself, but managing it surrounded by people who love her and cannot reach her.
@@ -237,7 +237,7 @@ export default function StoryPage() {
                   {/* Content */}
                   <div style={{ paddingBottom: 8, paddingLeft: entry.highlight ? 14 : 0, borderLeft: entry.highlight ? "2px solid rgba(246,24,135,0.3)" : "none" }}>
                     <h3 style={{ fontSize: 18, fontWeight: 500, color: "#1A1A1A", margin: "0 0 8px", lineHeight: 1.3 }}>{entry.title}</h3>
-                    <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>{entry.body}</p>
+                    <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>{entry.body}</p>
                   </div>
                 </div>
               </AnimatedSection>
@@ -266,7 +266,7 @@ export default function StoryPage() {
               ].map((s, i, arr) => (
                 <div key={i} style={{ padding: "0 28px", paddingLeft: i === 0 ? 0 : 28, borderRight: i < arr.length - 1 ? "1px solid rgba(246,24,135,0.15)" : "none" }}>
                   <div style={{ fontSize: 24, fontWeight: 300, color: "#F61887", letterSpacing: "-0.5px", lineHeight: 1.2 }}>{s.num}</div>
-                  <div style={{ fontSize: 12, fontWeight: 400, color: "#B0889A", marginTop: 4 }}>{s.label}</div>
+                  <div style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0", marginTop: 4 }}>{s.label}</div>
                 </div>
               ))}
             </div>

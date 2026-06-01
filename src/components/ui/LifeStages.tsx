@@ -29,8 +29,8 @@ const stages: Stage[] = [
     statLabel: "miss school every month because of period pain",
     conditions: ["Dysmenorrhea", "Early PCOD onset", "Anemia", "Menstrual Irregularity"],
     sakhiRole: "Track cycles from the very first one. Understand what's normal for her — not for everyone. Flag patterns that should go to a doctor. Give her language for what she's feeling.",
-    color: "#E8834A",
-    bg: "#FFF5EE",
+    color: "#F61887",
+    bg: "#F8F2F4",
   },
   {
     id: "young",
@@ -43,7 +43,7 @@ const stages: Stage[] = [
     conditions: ["PCOD / PCOS", "PMDD", "Thyroid Disorders", "Hormonal Mental Health", "Anemia"],
     sakhiRole: "Sakhi AI that answers what she'd never Google out loud. Symptom patterns documented for a doctor she's finally ready to see. Be Her Sakhi — so the person she loves most, 500km away, knows when to call.",
     color: "#F61887",
-    bg: "#FFF0F7",
+    bg: "#F8E5EC",
   },
   {
     id: "fertility",
@@ -55,8 +55,8 @@ const stages: Stage[] = [
     statLabel: "of women with infertility have endometriosis",
     conditions: ["Fertility Challenges", "Endometriosis", "Ovarian Cysts", "Thyroid Disorders", "PCOD / PCOS"],
     sakhiRole: "Detailed cycle tracking for fertility windows. Three months of documented symptoms for a specialist consultation — the evidence that makes a 10-minute appointment count. Not a fertility tool. A health record that makes the right conversation possible.",
-    color: "#3AB795",
-    bg: "#EDFAF5",
+    color: "#F61887",
+    bg: "#F8F2F4",
   },
   {
     id: "postpartum",
@@ -68,8 +68,8 @@ const stages: Stage[] = [
     statLabel: "of Indian women experience postpartum depression",
     conditions: ["Postpartum Depression", "Hormonal Mental Health", "Anemia", "Thyroid Disorders"],
     sakhiRole: "Mood and symptom tracking through the postpartum window. PPD awareness before the moment of crisis. Be Her Sakhi — so someone sees when she's having a hard week, before she has to say it herself.",
-    color: "#6B6BF5",
-    bg: "#F0F0FF",
+    color: "#F61887",
+    bg: "#F8E5EC",
   },
   {
     id: "midlife",
@@ -81,8 +81,8 @@ const stages: Stage[] = [
     statLabel: "mean age of menopause in India (vs. 51 in the West)",
     conditions: ["Bone Health", "Hormonal Mental Health", "Thyroid Disorders", "Menorrhagia", "Amenorrhea"],
     sakhiRole: "Track cycle changes through perimenopause. Recognise the early window for bone health conversations. Understand the hormonal mental health connection — so her low weeks have a name, not a blame.",
-    color: "#C86DD4",
-    bg: "#FBF0FC",
+    color: "#F61887",
+    bg: "#F8F2F4",
   },
 ];
 
@@ -114,7 +114,7 @@ export default function LifeStages() {
           Sakhi is with her<br />
           <span style={{ color: "#F61887" }}>through all of it.</span>
         </h2>
-        <p style={{ fontSize: 16, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.7, maxWidth: 500, margin: 0 }}>
+        <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.7, maxWidth: 500, margin: 0 }}>
           Her body changes across a lifetime. Her need for someone who understands her doesn&rsquo;t.
         </p>
       </div>
@@ -135,7 +135,7 @@ export default function LifeStages() {
               borderRadius: 999,
               border: active === i ? `1.5px solid ${s.color}` : "1px solid rgba(0,0,0,0.1)",
               background: active === i ? s.color : "#fff",
-              color: active === i ? "#fff" : "#5A5A5A",
+              color: active === i ? "#fff" : "#6B6B6B",
               fontSize: 13,
               fontWeight: active === i ? 500 : 400,
               cursor: "pointer",
@@ -216,7 +216,7 @@ export default function LifeStages() {
               <p style={{
                 fontSize: 15,
                 fontWeight: 400,
-                color: "#5A5A5A",
+                color: "#6B6B6B",
                 lineHeight: 1.85,
                 margin: "0 0 32px",
                 maxWidth: 520,
@@ -245,7 +245,7 @@ export default function LifeStages() {
                 <p style={{
                   fontSize: 14,
                   fontWeight: 400,
-                  color: "#5A5A5A",
+                  color: "#6B6B6B",
                   lineHeight: 1.75,
                   margin: 0,
                 }}>
@@ -278,7 +278,7 @@ export default function LifeStages() {
                 <div style={{
                   fontSize: 13,
                   fontWeight: 400,
-                  color: "#7A7A7A",
+                  color: "#6B6B6B",
                   lineHeight: 1.5,
                   maxWidth: 200,
                 }}>
@@ -291,7 +291,7 @@ export default function LifeStages() {
                 <div style={{
                   fontSize: 10,
                   fontWeight: 600,
-                  color: "#9A9A9A",
+                  color: "#A0A0A0",
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   marginBottom: 14,
@@ -315,7 +315,7 @@ export default function LifeStages() {
                       <span style={{
                         fontSize: 13,
                         fontWeight: 400,
-                        color: "#3A3A3A",
+                        color: "#1A1A1A",
                       }}>
                         {c}
                       </span>

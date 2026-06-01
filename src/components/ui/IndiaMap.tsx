@@ -119,7 +119,7 @@ export default function IndiaMap() {
             <div style={{ fontSize: 13, fontWeight: 600, color: "#1A1A1A", marginBottom: 5 }}>
               {activeCity.name}
             </div>
-            <div style={{ fontSize: 12, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.6 }}>
+            <div style={{ fontSize: 12, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.6 }}>
               {activeCity.story}
             </div>
           </motion.div>
@@ -141,9 +141,9 @@ export default function IndiaMap() {
                 key={geo.rsmKey}
                 geography={geo}
                 style={{
-                  default: { fill: "#FDF0F5", stroke: "#F0C8D8", strokeWidth: 0.8, outline: "none" },
-                  hover:   { fill: "#FAE4EF", stroke: "#F0C8D8", strokeWidth: 0.8, outline: "none" },
-                  pressed: { fill: "#FAE4EF", stroke: "#F0C8D8", strokeWidth: 0.8, outline: "none" },
+                  default: { fill: "#F8E5EC", stroke: "#EAD8E0", strokeWidth: 0.8, outline: "none" },
+                  hover:   { fill: "#F8E5EC", stroke: "#EAD8E0", strokeWidth: 0.8, outline: "none" },
+                  pressed: { fill: "#F8E5EC", stroke: "#EAD8E0", strokeWidth: 0.8, outline: "none" },
                 }}
               />
             ))
@@ -207,15 +207,15 @@ export default function IndiaMap() {
       <div style={{ display: "flex", gap: 16, paddingTop: 12, paddingLeft: 4 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#F61887" }} />
-          <span style={{ fontSize: 11, color: "#9A9A9A" }}>Origin</span>
+          <span style={{ fontSize: 11, color: "#A0A0A0" }}>Origin</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#F61887" }} />
-          <span style={{ fontSize: 11, color: "#9A9A9A" }}>Key cities</span>
+          <span style={{ fontSize: 11, color: "#A0A0A0" }}>Key cities</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(246,24,135,0.6)" }} />
-          <span style={{ fontSize: 11, color: "#9A9A9A" }}>Growing reach</span>
+          <span style={{ fontSize: 11, color: "#A0A0A0" }}>Growing reach</span>
         </div>
       </div>
     </div>

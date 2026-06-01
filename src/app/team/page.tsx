@@ -49,7 +49,7 @@ export default function TeamPage() {
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={100}>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, maxWidth: 540, margin: 0 }}>
+            <p style={{ fontSize: 18, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 540, margin: 0 }}>
               Sakhi began as Team 07. A university bootcamp. One assignment. Something that became impossible to walk away from.
             </p>
           </AnimatedSection>
@@ -65,7 +65,7 @@ export default function TeamPage() {
               <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 12px" }}>
                 The people building Sakhi.
               </h2>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, margin: 0 }}>Small team. Deep conviction.</p>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>Small team. Deep conviction.</p>
             </div>
           </AnimatedSection>
 
@@ -109,14 +109,14 @@ export default function TeamPage() {
                   {/* Quote */}
                   <p style={{
                     fontSize: 15, fontWeight: 400, fontStyle: "italic",
-                    color: "#5A5A5A", lineHeight: 1.65, margin: 0,
+                    color: "#6B6B6B", lineHeight: 1.65, margin: 0,
                     paddingLeft: 14, borderLeft: "2px solid rgba(246,24,135,0.3)",
                   }}>
                     &ldquo;{member.quote}&rdquo;
                   </p>
 
                   {/* Bio */}
-                  <p style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
+                  <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
                     {member.bio}
                   </p>
                 </div>
@@ -134,7 +134,7 @@ export default function TeamPage() {
             <h2 style={{ fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 24px" }}>
               January 9, 2024. Galgotias University.
             </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
+            <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
               The ISDP Bootcamp assigned Team 07 a problem. They chose women&rsquo;s health — not because they were told to, but because it felt unaddressed. 49 user interviews. Gynaecologist consultations. A gap so large it couldn&rsquo;t be ignored. Sakhi was the answer.
             </p>
           </AnimatedSection>
@@ -149,7 +149,7 @@ export default function TeamPage() {
             <h2 style={{ fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 24px" }}>
               Galgotias University
             </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
+            <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
               Sakhi exists because of Galgotias University — not as a customer, but as a founding patron. The ISDP program, the campus, the Apple Developer Program enrollment, the institutional credibility — all of it comes from GU. We carry that forward in everything we build.
             </p>
           </AnimatedSection>

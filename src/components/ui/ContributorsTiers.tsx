@@ -22,7 +22,7 @@ function Avatar({ initials, large, highlight }: { initials: string; large?: bool
   return (
     <div style={{
       width: size, height: size, borderRadius: "50%", flexShrink: 0,
-      background: highlight ? "linear-gradient(135deg, #F61887 0%, #C80F70 100%)" : "rgba(246,24,135,0.08)",
+      background: highlight ? "linear-gradient(135deg, #F61887 0%, #D4006E 100%)" : "rgba(246,24,135,0.08)",
       border: highlight ? "none" : "1.5px solid rgba(246,24,135,0.18)",
       display: "flex", alignItems: "center", justifyContent: "center",
       fontSize: large ? 20 : 15, fontWeight: 400,
@@ -38,7 +38,7 @@ function TierDivider({ label, color }: { label: string; color: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24, marginTop: 8 }}>
       <div style={{ width: 8, height: 8, borderRadius: "50%", background: color, flexShrink: 0 }} />
-      <span style={{ fontSize: 11, fontWeight: 400, color: "#9A9A9A", letterSpacing: "0.12em", textTransform: "uppercase" as const, whiteSpace: "nowrap" as const }}>
+      <span style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", letterSpacing: "0.12em", textTransform: "uppercase" as const, whiteSpace: "nowrap" as const }}>
         {label}
       </span>
       <div style={{ flex: 1, height: 1, background: "rgba(246,24,135,0.1)" }} />
@@ -56,7 +56,7 @@ function FounderCard({ c }: { c: Contributor }) {
       transition={{ duration: 0.45, ease: "easeOut" }}
       whileHover={{ y: -3 }}
       style={{
-        background: "linear-gradient(135deg, #FFF0F7 0%, #FDF8FA 100%)",
+        background: "#F8E5EC",
         border: "1.5px solid rgba(246,24,135,0.18)",
         borderRadius: 24,
         padding: "36px 36px",
@@ -73,10 +73,10 @@ function FounderCard({ c }: { c: Contributor }) {
         <div>
           <div style={{ fontSize: 20, fontWeight: 500, color: "#1A1A1A", lineHeight: 1.25 }}>{c.name}</div>
           <div style={{ fontSize: 13, fontWeight: 400, color: "#F61887", marginTop: 3 }}>{c.role}</div>
-          <div style={{ fontSize: 11, fontWeight: 400, color: "#B0889A", marginTop: 2 }}>Since {c.since}</div>
+          <div style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", marginTop: 2 }}>Since {c.since}</div>
         </div>
       </div>
-      <p style={{ fontSize: 14, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
+      <p style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
         {c.contributions}
       </p>
       <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 6 }}>
@@ -121,14 +121,14 @@ function ContributorCard({ c, delay = 0 }: { c: Contributor; delay?: number }) {
           <div style={{ fontSize: 15, fontWeight: 500, color: "#1A1A1A", lineHeight: 1.3, whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis" }}>{c.name}</div>
           <div style={{ fontSize: 12, fontWeight: 400, color: "#F61887", marginTop: 2 }}>{c.role}</div>
         </div>
-        <div style={{ fontSize: 10, fontWeight: 400, color: "#C0A0B0", flexShrink: 0, whiteSpace: "nowrap" as const }}>
+        <div style={{ fontSize: 10, fontWeight: 400, color: "#A0A0A0", flexShrink: 0, whiteSpace: "nowrap" as const }}>
           Since {c.since}
         </div>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 5 }}>
         {c.contributions.split(", ").slice(0, 4).map(t => (
           <span key={t} style={{
-            fontSize: 10, fontWeight: 400, color: "#9A7A8A",
+            fontSize: 10, fontWeight: 400, color: "#A0A0A0",
             background: "#F8F2F4",
             padding: "3px 9px", borderRadius: 999,
           }}>
@@ -162,7 +162,7 @@ function CommunityBlock() {
         <div style={{ fontSize: 24, fontWeight: 300, color: "#F61887", letterSpacing: "-0.5px", marginBottom: 6 }}>
           Every woman who trusted Sakhi.
         </div>
-        <p style={{ fontSize: 14, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, margin: 0, maxWidth: 560 }}>
+        <p style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0, maxWidth: 560 }}>
           Early App Store users, beta testers, campus ambassadors, B2B partners, and supporters who believed from day one — every one of them is part of what Sakhi is.
         </p>
       </div>

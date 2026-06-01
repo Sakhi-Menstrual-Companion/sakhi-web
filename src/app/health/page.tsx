@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function HealthPage() {
   return (
-    <main style={{ background: "#fff", minHeight: "100vh" }}>
+    <main style={{ background: "#F8F2F4", minHeight: "100vh" }}>
       {/* Hero */}
       <section style={{
         padding: "120px 40px 80px",
@@ -40,7 +40,7 @@ export default function HealthPage() {
           <p style={{
             fontSize: 16,
             fontWeight: 400,
-            color: "#5A5A5A",
+            color: "#6B6B6B",
             lineHeight: 1.8,
             margin: "0 0 32px",
             maxWidth: 560,
@@ -61,8 +61,8 @@ export default function HealthPage() {
             maxWidth: 520,
           }}>
             <div style={{ fontSize: 16, flexShrink: 0, marginTop: 1 }}>🔒</div>
-            <p style={{ fontSize: 13, fontWeight: 400, color: "#7A5A6A", lineHeight: 1.65, margin: 0 }}>
-              <strong style={{ color: "#3A1A2A", fontWeight: 600 }}>Sakhi does not diagnose.</strong>{" "}
+            <p style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.65, margin: 0 }}>
+              <strong style={{ color: "#1A1A1A", fontWeight: 600 }}>Sakhi does not diagnose.</strong>{" "}
               It tracks your patterns and tells you when to see a doctor.
               Everything here is educational — not a substitute for medical care.
             </p>

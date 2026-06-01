@@ -224,8 +224,8 @@ export default function ContributorsTree({ contributors }: { contributors: Contr
                     >
                       <div style={{ fontSize: 13, fontWeight: 600, color: "#1A1A1A", marginBottom: 2 }}>{c.name}</div>
                       <div style={{ fontSize: 11, color: "#F61887", marginBottom: 4 }}>{c.role}</div>
-                      <div style={{ fontSize: 10, color: "#B0889A", marginBottom: 7 }}>Since {c.since}</div>
-                      <div style={{ fontSize: 11, color: "#5A5A5A", lineHeight: 1.6 }}>{c.contributions}</div>
+                      <div style={{ fontSize: 10, color: "#A0A0A0", marginBottom: 7 }}>Since {c.since}</div>
+                      <div style={{ fontSize: 11, color: "#6B6B6B", lineHeight: 1.6 }}>{c.contributions}</div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -248,7 +248,7 @@ export default function ContributorsTree({ contributors }: { contributors: Contr
                   transition={{ delay: c.level === "founder" ? 0.5 : 1 + idx * 0.1 }}
                 >
                   <div style={{ fontSize: 11, fontWeight: 500, color: "#1A1A1A", lineHeight: 1.4 }}>{c.name}</div>
-                  <div style={{ fontSize: 9, color: "#B0889A" }}>{c.role}</div>
+                  <div style={{ fontSize: 9, color: "#A0A0A0" }}>{c.role}</div>
                 </motion.div>
               )}
             </div>

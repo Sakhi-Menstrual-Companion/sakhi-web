@@ -55,7 +55,7 @@ export default function ContributePage() {
               style={{
                 fontSize: 18,
                 fontWeight: 300,
-                color: "#5A5A5A",
+                color: "#6B6B6B",
                 lineHeight: 1.75,
                 margin: 0,
               }}
@@ -166,7 +166,7 @@ export default function ContributePage() {
                       style={{
                         fontSize: 15,
                         fontWeight: 300,
-                        color: "#5A5A5A",
+                        color: "#6B6B6B",
                         lineHeight: 1.75,
                         margin: 0,
                         flex: 1,
@@ -226,7 +226,7 @@ export default function ContributePage() {
               style={{
                 fontSize: 17,
                 fontWeight: 300,
-                color: "#5A5A5A",
+                color: "#6B6B6B",
                 lineHeight: 1.75,
                 margin: "0 0 36px",
               }}
@@ -276,7 +276,7 @@ export default function ContributePage() {
               style={{
                 fontSize: 17,
                 fontWeight: 300,
-                color: "#5A5A5A",
+                color: "#6B6B6B",
                 lineHeight: 1.75,
                 margin: "0 0 36px",
               }}
@@ -312,7 +312,7 @@ export default function ContributePage() {
               style={{
                 fontSize: 15,
                 fontWeight: 300,
-                color: "#9A9A9A",
+                color: "#A0A0A0",
                 margin: "0 0 16px",
               }}
             >
@@ -335,7 +335,7 @@ export default function ContributePage() {
               style={{
                 fontSize: 14,
                 fontWeight: 300,
-                color: "#9A9A9A",
+                color: "#A0A0A0",
                 margin: 0,
               }}
             >

@@ -46,7 +46,7 @@ export default function VisionPage() {
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={100}>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, maxWidth: 560, margin: 0 }}>
+            <p style={{ fontSize: 18, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 560, margin: 0 }}>
               We&rsquo;re building a relationship between a woman and her health. 252 million Indian women deserve a companion — not just a tracker. This is what we&rsquo;re working toward.
             </p>
           </AnimatedSection>
@@ -63,7 +63,7 @@ export default function VisionPage() {
                 <h3 style={{ fontSize: "clamp(22px, 2.5vw, 30px)", fontWeight: 300, color: "#1A1A1A", lineHeight: 1.3, margin: "0 0 16px" }}>
                   To be the health companion every Indian woman deserves.
                 </h3>
-                <p style={{ fontSize: 16, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, margin: 0 }}>
+                <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
                   Every feature we build, every decision we make, every trade-off we accept — it starts with this. Are we genuinely helping the user?
                 </p>
               </div>
@@ -93,7 +93,7 @@ export default function VisionPage() {
               <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 12px" }}>
                 The journey ahead.
               </h2>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, margin: 0 }}>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
                 Where we are and where we&rsquo;re going — transparently.
               </p>
             </div>
@@ -112,7 +112,7 @@ export default function VisionPage() {
                   </div>
                   <div style={{ padding: "28px 28px" }}>
                     <div style={{ fontSize: 16, fontWeight: 500, color: "#1A1A1A", marginBottom: 8, lineHeight: 1.4 }}>{item.headline}</div>
-                    <div style={{ fontSize: 14, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.7 }}>{item.detail}</div>
+                    <div style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.7 }}>{item.detail}</div>
                   </div>
                 </div>
               </AnimatedSection>
@@ -130,7 +130,7 @@ export default function VisionPage() {
               <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 12px" }}>
                 Five things that never change.
               </h2>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, maxWidth: 560, margin: 0 }}>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 560, margin: 0 }}>
                 When features conflict, when revenue tempts, when growth pressures — these are what we come back to.
               </p>
             </div>
@@ -149,7 +149,7 @@ export default function VisionPage() {
                   </div>
                   <div style={{ padding: "28px 28px" }}>
                     <div style={{ fontSize: 17, fontWeight: 500, color: "#1A1A1A", marginBottom: 8 }}>{v.title}</div>
-                    <div style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8 }}>{v.body}</div>
+                    <div style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8 }}>{v.body}</div>
                   </div>
                 </div>
               </AnimatedSection>
@@ -166,7 +166,7 @@ export default function VisionPage() {
             <h2 style={{ fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.25, margin: "0 0 24px" }}>
               3 billion downloads. 1 billion MAU. 100+ languages.
             </h2>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.85, margin: 0 }}>
+            <p style={{ fontSize: 18, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: 0 }}>
               But the goal was never the number. The goal was that no woman faces her body alone. The number is just how we know we got there.
             </p>
           </AnimatedSection>

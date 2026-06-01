@@ -49,7 +49,7 @@ export default function FeaturesPage() {
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={100}>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, maxWidth: 560, margin: 0 }}>
+            <p style={{ fontSize: 18, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 560, margin: 0 }}>
               Not just a period tracker. A complete health companion that understands your body, learns from your data, and helps the people who love you support you better.
             </p>
           </AnimatedSection>
@@ -75,7 +75,7 @@ export default function FeaturesPage() {
                   <div style={{ fontSize: 11, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 14 }}>{f.num}</div>
                   <div style={{ borderTop: "2px solid #F61887", paddingTop: 16 }}>
                     <h3 style={{ fontSize: 18, fontWeight: 500, color: "#1A1A1A", margin: "0 0 10px" }}>{f.title}</h3>
-                    <p style={{ fontSize: 14, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.75, margin: 0 }}>{f.desc}</p>
+                    <p style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>{f.desc}</p>
                   </div>
                 </div>
               </AnimatedSection>
@@ -93,7 +93,7 @@ export default function FeaturesPage() {
               <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 20px" }}>
                 Your privacy comes first. Always.
               </h2>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.8, maxWidth: 560, margin: "0 auto" }}>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 560, margin: "0 auto" }}>
                 Sakhi was designed from day one with privacy as a core value, not a feature. You control your data. Always.
               </p>
             </div>
@@ -109,7 +109,7 @@ export default function FeaturesPage() {
                   </svg>
                 </div>
                 <h3 style={{ fontSize: 18, fontWeight: 600, color: "#F61887", margin: "0 0 10px" }}>Back up securely</h3>
-                <p style={{ fontSize: 14, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.7, margin: "0 0 20px" }}>
+                <p style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.7, margin: "0 0 20px" }}>
                   Create an account to safely back up your health data and access it across devices. Encrypted.
                 </p>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 400, color: "#F61887", background: "rgba(246,24,135,0.08)", padding: "4px 12px", borderRadius: 999 }}>
@@ -120,14 +120,14 @@ export default function FeaturesPage() {
               <div style={{ background: "#FFFFFF", border: "1px solid rgba(0,0,0,0.07)", borderRadius: 20, padding: "32px 28px" }}>
                 <div style={{ marginBottom: 20 }}>
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <rect x="8" y="4" width="16" height="24" rx="3" fill="rgba(90,90,90,0.08)" stroke="#9A9A9A" strokeWidth="1.5"/>
-                    <circle cx="16" cy="20" r="2" fill="#9A9A9A"/>
-                    <line x1="11" y1="10" x2="21" y2="10" stroke="#9A9A9A" strokeWidth="1.5" strokeLinecap="round"/>
-                    <line x1="11" y1="14" x2="21" y2="14" stroke="#9A9A9A" strokeWidth="1.5" strokeLinecap="round"/>
+                    <rect x="8" y="4" width="16" height="24" rx="3" fill="rgba(90,90,90,0.08)" stroke="#A0A0A0" strokeWidth="1.5"/>
+                    <circle cx="16" cy="20" r="2" fill="#A0A0A0"/>
+                    <line x1="11" y1="10" x2="21" y2="10" stroke="#A0A0A0" strokeWidth="1.5" strokeLinecap="round"/>
+                    <line x1="11" y1="14" x2="21" y2="14" stroke="#A0A0A0" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
                 </div>
-                <h3 style={{ fontSize: 18, fontWeight: 600, color: "#5A5A5A", margin: "0 0 10px" }}>Stay on device only</h3>
-                <p style={{ fontSize: 14, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.7, margin: 0 }}>
+                <h3 style={{ fontSize: 18, fontWeight: 600, color: "#6B6B6B", margin: "0 0 10px" }}>Stay on device only</h3>
+                <p style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.7, margin: 0 }}>
                   Your data stays on this device. Never leaves. Won&rsquo;t be available if you change phones.
                 </p>
               </div>
@@ -145,7 +145,7 @@ export default function FeaturesPage() {
               <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 12px" }}>
                 What&rsquo;s coming.
               </h2>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#7A7A7A", lineHeight: 1.8, margin: 0 }}>Sakhi is just getting started.</p>
+              <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>Sakhi is just getting started.</p>
             </div>
           </AnimatedSection>
 
@@ -156,7 +156,7 @@ export default function FeaturesPage() {
                   <span style={{ fontSize: 16, color: "#F61887", fontWeight: 400, flexShrink: 0, marginTop: 2 }}>→</span>
                   <div>
                     <div style={{ fontSize: 17, fontWeight: 500, color: "#1A1A1A", marginBottom: 4 }}>{item.title}</div>
-                    <div style={{ fontSize: 15, fontWeight: 400, color: "#5A5A5A", lineHeight: 1.6 }}>{item.desc}</div>
+                    <div style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.6 }}>{item.desc}</div>
                   </div>
                 </div>
               </AnimatedSection>
