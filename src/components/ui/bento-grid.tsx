@@ -16,7 +16,11 @@ export function BentoGrid({
   return (
     <div
       className={cn(
-        "grid grid-flow-row-dense grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[16rem]",
+        // 8rem base track: half the original 16rem row. row-span-2 reproduces
+        // that original row exactly, row-span-4 reproduces the old row-span-2
+        // tile, and row-span-3 is what gets a genuine "1.5 rows" (24rem) out
+        // of a unit system that otherwise only has whole rows to work with.
+        "grid grid-flow-row-dense grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[8rem]",
         className
       )}
     >
@@ -41,16 +45,21 @@ export function BentoGridItem({
   return (
     <div
       className={cn(
-        "group/bento relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-6",
-        "transition-[border-color,box-shadow,transform] duration-300 ease-(--ease-out-soft) will-change-transform",
-        "hover:-translate-y-1 hover:border-transparent hover:shadow-card-hover",
+        "relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6",
+        // With a header, the header (flex-1) already claims the leftover
+        // height, so justify-between just pins the text block under it. A
+        // header-less tile has only the text block as a flex child, and
+        // justify-between degenerates to flex-start for a single child —
+        // that pushed all the leftover height below the text instead of
+        // above it once these tiles grew taller than their content.
+        header ? "justify-between" : "justify-end",
         className
       )}
     >
       {header && <div className="mb-4 flex-1 overflow-hidden rounded-xl">{header}</div>}
       <div>
         {icon && (
-          <div className="mb-3 inline-flex size-9 items-center justify-center rounded-lg bg-accent-faint text-secondary transition-colors duration-300 group-hover/bento:bg-secondary group-hover/bento:text-white">
+          <div className="mb-3 inline-flex size-9 items-center justify-center rounded-lg bg-accent-faint text-secondary">
             {icon}
           </div>
         )}

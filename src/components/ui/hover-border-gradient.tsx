@@ -32,6 +32,7 @@ export function HoverBorderGradient<C extends React.ElementType = "button">({
   className,
   duration = 1200,
   clockwise = true,
+  animate = true,
   ...props
 }: {
   as?: C;
@@ -40,6 +41,8 @@ export function HoverBorderGradient<C extends React.ElementType = "button">({
   className?: string;
   duration?: number;
   clockwise?: boolean;
+  /** Set false to keep the border static (no ambient rotation) until hovered. */
+  animate?: boolean;
 } & Omit<React.ComponentPropsWithoutRef<C>, "as" | "className" | "children">) {
   const Tag = (as || "button") as React.ElementType;
   const [hovered, setHovered] = useState(false);
@@ -54,10 +57,11 @@ export function HoverBorderGradient<C extends React.ElementType = "button">({
   };
 
   useEffect(() => {
+    if (!animate) return;
     intervalRef.current = setInterval(() => setDirection((d) => next(d)), duration);
     return () => clearInterval(intervalRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [duration, clockwise]);
+  }, [duration, clockwise, animate]);
 
   return (
     // The border thickness is the container's own padding (p-[1.5px]): the

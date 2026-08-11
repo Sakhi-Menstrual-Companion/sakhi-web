@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 
-import { Container, DotGrid, GradientText, Section, SectionHeading } from "@/components/ui/section";
+import { Container, GradientText, PageHero, Section, SectionHeading } from "@/components/ui/section";
 import { FinalCTA } from "@/components/ui/final-cta";
 import { Timeline } from "@/components/ui/timeline";
-import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 export const metadata: Metadata = {
   title: "Press, Sakhi",
@@ -36,30 +35,15 @@ const pressItems = [
 export default function PressPage() {
   return (
     <div>
-      {/* Hero, variant: "as seen in" marquee (Stripe / Notion trusted-by
-          style) — the outlets that covered Sakhi scroll past directly under
-          the claim, standing in for logos we don't have image rights to
-          reproduce here. */}
-      <section className="relative overflow-hidden border-b border-border bg-background px-6 pb-16 sm:px-8 sm:pb-20">
-        <DotGrid />
-        <Container className="relative z-10 flex flex-col items-center pt-[calc(var(--nav-clearance)+3.5rem)] text-center sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
-          <span className="eyebrow">Press</span>
-          <h1 className="text-h1 mt-5 max-w-[16ch] text-foreground">
+      <PageHero
+        eyebrow="Press"
+        title={
+          <>
             Sakhi in <GradientText>the world</GradientText>
-          </h1>
-          <p className="text-lead mt-6 max-w-[40rem] text-muted-foreground">
-            We didn&rsquo;t chase press. We built something worth talking about. Here&rsquo;s where
-            the world has noticed.
-          </p>
-        </Container>
-        <div className="relative z-10 mt-12">
-          <InfiniteMovingCards
-            tone="light"
-            speed="normal"
-            items={pressItems.map((item) => ({ label: item.publication }))}
-          />
-        </div>
-      </section>
+          </>
+        }
+        lead={<>We didn&rsquo;t chase press. We built something worth talking about. Here&rsquo;s where the world has noticed.</>}
+      />
 
       {/* -------------------------------------------------------------- coverage */}
       <Section>

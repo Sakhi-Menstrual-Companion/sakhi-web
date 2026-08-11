@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Mail } from "lucide-react";
 
-import { Container, DotGrid, GradientText, Section, SectionHeading } from "@/components/ui/section";
+import { Container, GradientText, PageHero, Section, SectionHeading } from "@/components/ui/section";
+import { HeroTagRow } from "@/components/ui/page-hero-variants";
 import { Spotlight } from "@/components/ui/spotlight";
 
 export const metadata: Metadata = {
@@ -118,40 +119,17 @@ function RuleList({ items }: { items: string[] }) {
 export default function BrandPage() {
   return (
     <div>
-      {/* Hero, variant: "swatch ribbon" (design-system-doc style, à la Radix
-          Themes / shadcn docs) — the palette itself is the hero art, laid
-          out as a strip of real fills rather than described in prose. */}
-      <section className="relative overflow-hidden border-b border-border bg-background px-6 pb-16 sm:px-8 sm:pb-20">
-        <DotGrid />
-        <Container className="relative z-10 pt-[calc(var(--nav-clearance)+3.5rem)] sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
-          <span className="eyebrow">Brand system</span>
-          <h1 className="text-h1 mt-5 max-w-[20ch] text-foreground">
+      <PageHero
+        eyebrow="Brand system"
+        title={
+          <>
             Built on clear design. <GradientText>Guided by honest voice.</GradientText>
-          </h1>
-          <p className="text-lead mt-6 max-w-[42rem] text-muted-foreground">
-            Every color, every word, every decision in Sakhi&rsquo;s design comes from one place,
-            making a woman feel understood, not processed. This page documents how we do that.
-          </p>
-
-          <div className="mt-10 flex flex-wrap gap-2.5">
-            {["Warm", "Honest", "Calm", "Direct", "Intimate"].map((t) => (
-              <span key={t} className="rounded-full bg-accent-faint px-3.5 py-1.5 text-[12px] font-medium text-secondary">
-                {t}
-              </span>
-            ))}
-          </div>
-        </Container>
-
-        <div className="relative z-10 mt-12 flex h-16 w-full border-y border-border sm:h-20">
-          {colors.map((c) => (
-            <div key={c.hex} className="group relative flex-1" style={{ background: c.bg }}>
-              <span className="absolute inset-x-0 bottom-0 translate-y-full bg-ink px-2 py-1 text-center font-mono text-[10px] text-white opacity-0 transition-[transform,opacity] duration-200 group-hover:translate-y-0 group-hover:opacity-100">
-                {c.hex}
-              </span>
-            </div>
-          ))}
-        </div>
-      </section>
+          </>
+        }
+        lead={<>Every color, every word, every decision in Sakhi&rsquo;s design comes from one place, making a woman feel understood, not processed. This page documents how we do that.</>}
+      >
+        <HeroTagRow tags={["Warm", "Honest", "Calm", "Direct", "Intimate"]} />
+      </PageHero>
 
       {/* --------------------------------------------------------- color palette */}
       <Section>

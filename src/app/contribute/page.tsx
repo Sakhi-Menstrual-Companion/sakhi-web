@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Download, Handshake, Mail, Megaphone } from "lucide-react";
 
-import { Container, DotGrid, GradientText, Section, SectionHeading } from "@/components/ui/section";
+import { Container, GradientText, PageHero, Section, SectionHeading } from "@/components/ui/section";
+import { HeroPillLinks } from "@/components/ui/page-hero-variants";
 import { Spotlight } from "@/components/ui/spotlight";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
@@ -46,35 +47,17 @@ const ways = [
 export default function ContributePage() {
   return (
     <div>
-      {/* Hero, variant: "segmented wayfinding" (pricing-page-tabs style) —
-          the three options are pill quick-links right in the hero, so a
-          visitor picks a lane before they even scroll instead of after. */}
-      <section className="relative overflow-hidden border-b border-border bg-background px-6 pb-20 sm:px-8 sm:pb-24">
-        <DotGrid />
-        <Spotlight className="-top-32 left-1/2 -translate-x-1/2" fill="var(--primary)" />
-        <Container className="relative z-10 flex flex-col items-center pt-[calc(var(--nav-clearance)+3.5rem)] text-center sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
-          <span className="eyebrow">Join the mission</span>
-          <h1 className="text-h1 mt-5 max-w-[18ch] text-foreground">
+      <PageHero
+        eyebrow="Join the mission"
+        title={
+          <>
             Join the <GradientText>Sakhi mission</GradientText>
-          </h1>
-          <p className="text-lead mt-6 max-w-[40rem] text-muted-foreground">
-            Three ways to be part of something that genuinely matters, for women across India.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            {ways.map((w) => (
-              <a
-                key={w.id}
-                href={`#${w.id}`}
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-[13.5px] font-semibold text-foreground no-underline transition-colors duration-200 hover:border-secondary/40 hover:text-secondary"
-              >
-                <w.icon className="size-4 text-secondary" aria-hidden="true" />
-                {w.title}
-              </a>
-            ))}
-          </div>
-        </Container>
-      </section>
+          </>
+        }
+        lead="Three ways to be part of something that genuinely matters, for women across India."
+      >
+        <HeroPillLinks links={ways} />
+      </PageHero>
 
       {/* -------------------------------------------------------------- three ways */}
       <Section>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Container, GradientText, Section, SectionHeading } from "@/components/ui/section";
+import { Container, GradientText, PageHero, Section, SectionHeading } from "@/components/ui/section";
 import { FinalCTA } from "@/components/ui/final-cta";
 import { Timeline } from "@/components/ui/timeline";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
@@ -35,40 +35,15 @@ const northStar = [
 export default function VisionPage() {
   return (
     <div>
-      {/* Hero, variant: "mesh gradient minimal" (Linear style) — no dot-grid,
-          no card, no stat row: three soft overlapping colour fields behind
-          nothing but an eyebrow, a headline and a lead line. The confidence
-          is in the emptiness, not in what's added. */}
-      <section className="relative overflow-hidden border-b border-border bg-background px-6 py-32 sm:px-8 sm:py-40">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(38% 45% at 22% 15%, rgba(246,24,135,0.16), transparent 65%)," +
-              "radial-gradient(32% 40% at 82% 20%, rgba(212,0,110,0.13), transparent 60%)," +
-              "radial-gradient(45% 50% at 50% 100%, rgba(109,23,67,0.08), transparent 65%)",
-          }}
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-multiply"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          }}
-        />
-        <Container className="relative z-10 flex flex-col items-center text-center">
-          <span className="eyebrow">The vision</span>
-          <h1 className="text-h1 mt-7 max-w-[18ch] text-foreground">
+      <PageHero
+        eyebrow="The vision"
+        title={
+          <>
             We&rsquo;re not building <GradientText>an app</GradientText>
-          </h1>
-          <p className="text-lead mx-auto mt-7 max-w-[38rem] text-muted-foreground">
-            We&rsquo;re building a relationship between a woman and her health. 252 million Indian
-            women deserve a companion, not just a tracker. This is what we&rsquo;re working toward.
-          </p>
-        </Container>
-      </section>
+          </>
+        }
+        lead={<>We&rsquo;re building a relationship between a woman and her health. 252 million Indian women deserve a companion, not just a tracker. This is what we&rsquo;re working toward.</>}
+      />
 
       {/* ------------------------------------------------------ mission & vision */}
       <Section>

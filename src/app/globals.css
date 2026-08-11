@@ -225,7 +225,11 @@
     -webkit-text-size-adjust: 100%;
   }
 
-  ::-webkit-scrollbar { width: 4px; }
+  /* `width` alone only thins the vertical scrollbar. A horizontal one is sized
+     by `height`, and without it any sideways overflow renders a full-thickness
+     bar in the blush track colour, which reads as a stray pink stripe stuck to
+     the bottom of the page. */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
   ::-webkit-scrollbar-track { background: var(--background-blush); }
   ::-webkit-scrollbar-thumb { background: rgba(246, 24, 135, 0.3); border-radius: 2px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
@@ -366,11 +370,14 @@
   animation: spotlight 2s var(--ease-out-soft) forwards;
 }
 
-/* Infinite Moving Cards: the track holds two copies of the item list back to
-   back, so translating exactly -50% - the row's own gap loops seamlessly. */
+/* Infinite Moving Cards: the track holds `--marquee-copies` equal-width groups,
+   each one a full pass of the item list (trailing gap included as padding, so
+   the track itself carries no gap). Shifting by -100%/copies is therefore
+   exactly one group wide, which is what makes the reset invisible and the loop
+   genuinely endless rather than a belt that runs out on a wide screen. */
 @keyframes scroll {
   to {
-    transform: translate(calc(-50% - 0.75rem));
+    transform: translateX(calc(-100% / var(--marquee-copies, 8)));
   }
 }
 .animate-scroll {

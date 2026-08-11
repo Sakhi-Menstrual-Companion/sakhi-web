@@ -3,6 +3,7 @@ import { Lato, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { DesignSystemLauncher } from "@/components/design/design-system-launcher";
 
 // Body: neutral, highly legible. Correct register for health copy.
 const body = Inter({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -67,8 +68,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // suppressHydrationWarning below because revealBootstrap deliberately adds
+  // `js-reveal` to <html> before React hydrates, so the class attribute is
+  // always expected to differ from the server HTML. It covers only that one
+  // element's own attributes, not the tree under it, so a genuine mismatch
+  // anywhere else is still reported.
   return (
-    <html lang="en" className={`${lato.variable} ${body.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${lato.variable} ${body.variable} h-full antialiased`}
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: revealBootstrap }} />
       </head>
@@ -84,6 +94,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <DesignSystemLauncher />
       </body>
     </html>
   );

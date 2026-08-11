@@ -13,11 +13,9 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 
-import { Container, DotGrid, GradientText, Section, SectionHeading } from "@/components/ui/section";
+import { Container, GradientText, PageHero, Section, SectionHeading } from "@/components/ui/section";
 import { FinalCTA } from "@/components/ui/final-cta";
 import { Timeline } from "@/components/ui/timeline";
-import { Spotlight } from "@/components/ui/spotlight";
-import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 export const metadata: Metadata = {
   title: "Features, Sakhi",
@@ -51,33 +49,15 @@ const coming = [
 export default function FeaturesPage() {
   return (
     <div>
-      {/* Hero, variant: "live feature strip" (Superhuman / Arc style) — a
-          centred claim, then the actual feature set scrolling past directly
-          underneath as proof, rather than a single static side panel. */}
-      <section className="relative overflow-hidden border-b border-border bg-background px-6 pb-20 sm:px-8 sm:pb-24">
-        <DotGrid />
-        <Spotlight className="-top-32 left-1/2 -translate-x-1/2" fill="var(--primary)" />
-        <Container className="relative z-10 flex flex-col items-center pt-[calc(var(--nav-clearance)+3.5rem)] text-center sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
-          <span className="eyebrow">The app</span>
-          <h1 className="text-h1 mt-5 max-w-[18ch] text-foreground">
+      <PageHero
+        eyebrow="The app"
+        title={
+          <>
             Built for the way women <GradientText>actually live</GradientText>
-          </h1>
-          <p className="text-lead mt-6 max-w-[42rem] text-muted-foreground">
-            Not just a period tracker. A complete health companion that understands her body, learns
-            from her logs, and helps the people who love her support her better.
-          </p>
-        </Container>
-        <div className="relative z-10 mt-14">
-          <InfiniteMovingCards
-            tone="light"
-            speed="slow"
-            items={features.map((f) => ({
-              label: f.title,
-              icon: <f.icon className="size-3.5 text-secondary" aria-hidden="true" />,
-            }))}
-          />
-        </div>
-      </section>
+          </>
+        }
+        lead="Not just a period tracker. A complete health companion that understands her body, learns from her logs, and helps the people who love her support her better."
+      />
 
       {/* ------------------------------------------------------------ features */}
       <Section>

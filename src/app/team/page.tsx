@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-import { Container, DotGrid, GradientText, Section } from "@/components/ui/section";
+import { Container, GradientText, PageHero, Section } from "@/components/ui/section";
+import { HeroAvatarCluster } from "@/components/ui/page-hero-variants";
 import { FinalCTA } from "@/components/ui/final-cta";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
@@ -55,43 +56,17 @@ function TeamCardBody({ member }: { member: (typeof teamMembers)[number] }) {
 export default function TeamPage() {
   return (
     <div>
-      {/* Hero, variant: "avatar cluster" (Ramp / Notion team-page style) —
-          the faces come before the words: an overlapping stack of initials,
-          then the claim underneath it, rather than a full-width visual. */}
-      <section className="relative overflow-hidden border-b border-border bg-background px-6 pb-20 sm:px-8 sm:pb-24">
-        <DotGrid />
-        <Container className="relative z-10 flex flex-col items-center pt-[calc(var(--nav-clearance)+3.5rem)] text-center sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
-          <div className="flex items-center -space-x-4">
-            {teamMembers.map((m, i) => (
-              <div
-                key={m.initials}
-                className={`grid size-16 place-items-center rounded-full border-4 border-background text-[16px] font-semibold shadow-card ${
-                  m.highlight ? "bg-secondary text-secondary-foreground" : "bg-card text-secondary"
-                }`}
-                style={{ transform: `rotate(${i % 2 === 0 ? -6 : 6}deg)`, zIndex: teamMembers.length - i }}
-              >
-                {m.initials}
-              </div>
-            ))}
-            <div
-              className="grid size-16 place-items-center rounded-full border-4 border-background bg-muted text-[20px] font-semibold text-muted-foreground shadow-card"
-              style={{ transform: "rotate(-4deg)", zIndex: 0 }}
-              aria-label="and more contributors"
-            >
-              &middot;&middot;&middot;
-            </div>
-          </div>
-
-          <span className="eyebrow mt-8">The team</span>
-          <h1 className="text-h1 mt-5 max-w-[18ch] text-foreground">
+      <PageHero
+        eyebrow="The team"
+        title={
+          <>
             Built by people <GradientText>who care</GradientText>
-          </h1>
-          <p className="text-lead mx-auto mt-6 max-w-[42rem] text-muted-foreground">
-            Sakhi began as Team 07. A university bootcamp. One assignment. Something that became
-            impossible to walk away from.
-          </p>
-        </Container>
-      </section>
+          </>
+        }
+        lead="Sakhi began as Team 07. A university bootcamp. One assignment. Something that became impossible to walk away from."
+      >
+        <HeroAvatarCluster people={teamMembers} className="justify-center" />
+      </PageHero>
 
       {/* -------------------------------------------------------------- people */}
       <Section>
