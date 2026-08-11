@@ -107,7 +107,6 @@ export default function IndiaMap() {
               top: 12,
               left: 12,
               background: "#fff",
-              border: "1px solid rgba(246,24,135,0.18)",
               borderRadius: 14,
               padding: "14px 18px",
               maxWidth: 220,

@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import * as kit from "@/components/ui/pageKit";
 
 export const metadata: Metadata = {
-  title: "Join Us — Sakhi",
-  description: "Three ways to support Sakhi — download and use, become a campus ambassador, or partner with us.",
+  title: "Join Us, Sakhi",
+  description: "Three ways to support Sakhi, download and use, become a campus ambassador, or partner with us.",
 };
 
-const container: React.CSSProperties = { maxWidth: 1200, margin: "0 auto" };
-const sectionPad: React.CSSProperties = { padding: "96px 24px" };
+const container = kit.container;
+const sectionPad = kit.sectionPad;
 
 const pill: React.CSSProperties = {
   background: "rgba(246,24,135,0.08)",
-  color: "#F61887",
+  color: "var(--primary)",
   padding: "6px 16px",
   borderRadius: 999,
-  fontSize: 11,
-  fontWeight: 500,
-  letterSpacing: "0.06em",
-  textTransform: "uppercase",
+  fontSize: 16,
+  fontWeight: 600,
+  letterSpacing: "-0.008em",
   display: "inline-block",
-  marginBottom: 28,
+  marginBottom: 22,
 };
 
 export default function ContributePage() {
@@ -29,20 +29,19 @@ export default function ContributePage() {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section
         style={{
-          backgroundColor: "#F8F2F4",
-          padding: "160px 24px 96px",
+          background: "var(--background)", borderBottom: "1px solid var(--border)",
+          padding: "160px 0 96px",
           textAlign: "center",
         }}
       >
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+        <div style={kit.container}>
           <AnimatedSection delay={0}>
             <span style={pill}>Join the Mission</span>
             <h1
               style={{
                 fontSize: "clamp(48px, 6vw, 80px)",
-                fontWeight: 300,
-                color: "#1A1A1A",
-                letterSpacing: "-1px",
+                color: "var(--foreground)",
+                letterSpacing: 0,
                 lineHeight: 1.1,
                 margin: "0 0 24px",
               }}
@@ -54,29 +53,28 @@ export default function ContributePage() {
             <p
               style={{
                 fontSize: 18,
-                fontWeight: 300,
-                color: "#6B6B6B",
+                fontWeight: 400,
+                color: "var(--muted-foreground)",
                 lineHeight: 1.75,
                 margin: 0,
               }}
             >
-              Three ways to be part of something that genuinely matters — for women across India.
+              Three ways to be part of something that genuinely matters, for women across India.
             </p>
           </AnimatedSection>
         </div>
       </section>
 
       {/* ── THREE WAYS ────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
+      <section style={{ ...sectionPad, backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)" }}>
         <div style={container}>
           <AnimatedSection delay={0}>
             <div style={{ textAlign: "center", marginBottom: 52 }}>
               <h2
                 style={{
                   fontSize: "clamp(32px, 4vw, 52px)",
-                  fontWeight: 300,
-                  color: "#1A1A1A",
-                  letterSpacing: "-0.5px",
+                  color: "var(--foreground)",
+                  letterSpacing: 0,
                   lineHeight: 1.15,
                   margin: 0,
                 }}
@@ -90,7 +88,6 @@ export default function ContributePage() {
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              border: "1px solid rgba(0,0,0,0.07)",
             }}
           >
             {[
@@ -134,8 +131,8 @@ export default function ContributePage() {
                   <div
                     style={{
                       fontSize: 11,
-                      fontWeight: 300,
-                      color: "#F61887",
+                      fontWeight: 400,
+                      color: "var(--primary)",
                       letterSpacing: "0.06em",
                       marginBottom: 16,
                     }}
@@ -144,7 +141,6 @@ export default function ContributePage() {
                   </div>
                   <div
                     style={{
-                      borderTop: "2px solid #F61887",
                       paddingTop: 20,
                       flex: 1,
                       display: "flex",
@@ -156,7 +152,7 @@ export default function ContributePage() {
                       style={{
                         fontSize: 20,
                         fontWeight: 400,
-                        color: "#1A1A1A",
+                        color: "var(--foreground)",
                         margin: 0,
                       }}
                     >
@@ -165,7 +161,7 @@ export default function ContributePage() {
                     <p
                       style={{
                         fontSize: 15,
-                        fontWeight: 300,
+                        fontWeight: 400,
                         color: "#6B6B6B",
                         lineHeight: 1.75,
                         margin: 0,
@@ -180,8 +176,8 @@ export default function ContributePage() {
                       rel={col.external ? "noopener noreferrer" : undefined}
                       style={{
                         fontSize: 14,
-                        fontWeight: 300,
-                        color: "#F61887",
+                        fontWeight: 400,
+                        color: "var(--primary)",
                         textDecoration: "none",
                       }}
                     >
@@ -196,16 +192,15 @@ export default function ContributePage() {
       </section>
 
       {/* ── CAMPUS BLOCK ──────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#F8F2F4" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
+      <section style={{ ...sectionPad, backgroundColor: "#fbf9fb" }}>
+        <div style={kit.container}>
           <AnimatedSection delay={0}>
             <span style={pill}>For Universities</span>
             <h2
               style={{
                 fontSize: "clamp(32px, 4vw, 52px)",
-                fontWeight: 300,
-                color: "#1A1A1A",
-                letterSpacing: "-0.5px",
+                color: "var(--foreground)",
+                letterSpacing: 0,
                 lineHeight: 1.15,
                 margin: "0 0 8px",
               }}
@@ -215,17 +210,17 @@ export default function ContributePage() {
             <p
               style={{
                 fontSize: 15,
-                fontWeight: 300,
-                color: "#F61887",
+                fontWeight: 400,
+                color: "var(--primary)",
                 margin: "0 0 20px",
               }}
             >
-              ₹50,000 – ₹1,00,000 per year
+              ₹50,000 - ₹1,00,000 per year
             </p>
             <p
               style={{
                 fontSize: 17,
-                fontWeight: 300,
+                fontWeight: 400,
                 color: "#6B6B6B",
                 lineHeight: 1.75,
                 margin: "0 0 36px",
@@ -240,8 +235,8 @@ export default function ContributePage() {
               href="mailto:contact@sakhiapp.in"
               style={{
                 display: "inline-block",
-                backgroundColor: "#F61887",
-                color: "#FFFFFF",
+                backgroundColor: "var(--background-blush)",
+                color: "var(--foreground)",
                 padding: "14px 28px",
                 borderRadius: 999,
                 textDecoration: "none",
@@ -256,16 +251,15 @@ export default function ContributePage() {
       </section>
 
       {/* ── CORPORATE BLOCK ───────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
+      <section style={{ ...sectionPad, backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)" }}>
+        <div style={kit.container}>
           <AnimatedSection delay={0}>
             <span style={pill}>For Companies</span>
             <h2
               style={{
                 fontSize: "clamp(32px, 4vw, 52px)",
-                fontWeight: 300,
-                color: "#1A1A1A",
-                letterSpacing: "-0.5px",
+                color: "var(--foreground)",
+                letterSpacing: 0,
                 lineHeight: 1.15,
                 margin: "0 0 20px",
               }}
@@ -275,7 +269,7 @@ export default function ContributePage() {
             <p
               style={{
                 fontSize: 17,
-                fontWeight: 300,
+                fontWeight: 400,
                 color: "#6B6B6B",
                 lineHeight: 1.75,
                 margin: "0 0 36px",
@@ -289,8 +283,7 @@ export default function ContributePage() {
               href="mailto:contact@sakhiapp.in"
               style={{
                 display: "inline-block",
-                border: "1px solid #F61887",
-                color: "#F61887",
+                color: "var(--primary)",
                 padding: "14px 28px",
                 borderRadius: 999,
                 textDecoration: "none",
@@ -305,13 +298,13 @@ export default function ContributePage() {
       </section>
 
       {/* ── CONTACT ───────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#F8F2F4" }}>
-        <div style={{ maxWidth: 680, margin: "0 auto", textAlign: "center", padding: "0 24px" }}>
+      <section style={{ ...sectionPad, backgroundColor: "#fbf9fb" }}>
+        <div style={{ ...kit.container, textAlign: "center" }}>
           <AnimatedSection delay={0}>
             <p
               style={{
                 fontSize: 15,
-                fontWeight: 300,
+                fontWeight: 400,
                 color: "#A0A0A0",
                 margin: "0 0 16px",
               }}
@@ -323,8 +316,8 @@ export default function ContributePage() {
               style={{
                 display: "block",
                 fontSize: "clamp(22px, 3vw, 28px)",
-                fontWeight: 300,
-                color: "#F61887",
+                fontWeight: 400,
+                color: "var(--primary)",
                 textDecoration: "none",
                 marginBottom: 12,
               }}
@@ -334,7 +327,7 @@ export default function ContributePage() {
             <p
               style={{
                 fontSize: 14,
-                fontWeight: 300,
+                fontWeight: 400,
                 color: "#A0A0A0",
                 margin: 0,
               }}

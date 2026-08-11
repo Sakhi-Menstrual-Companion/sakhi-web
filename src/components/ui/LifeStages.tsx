@@ -179,13 +179,11 @@ export default function LifeStages() {
                 display: "inline-block",
                 padding: "4px 12px",
                 borderRadius: 999,
-                background: `${stage.color}15`,
-                border: `1px solid ${stage.color}30`,
-                fontSize: 11,
-                fontWeight: 500,
+                background: `${stage.color}18`,
+                fontSize: 12.5,
+                fontWeight: 600,
                 color: stage.color,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
+                letterSpacing: "-0.006em",
                 marginBottom: 20,
               }}>
                 {stage.age}

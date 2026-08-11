@@ -3,9 +3,10 @@ import AnimatedSection from "@/components/ui/AnimatedSection";
 import ContributorsTiers, { type Contributor } from "@/components/ui/ContributorsTiers";
 import JourneyTimeline from "@/components/ui/JourneyTimeline";
 import IndiaMap from "@/components/ui/IndiaMap";
+import * as kit from "@/components/ui/pageKit";
 
 export const metadata: Metadata = {
-  title: "Contributors — Sakhi",
+  title: "Contributors, Sakhi",
   description: "The people who built Sakhi and everyone who contributes to the mission of making women's health accessible in India.",
 };
 
@@ -115,32 +116,28 @@ export default function ContributorsPage() {
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section style={{
-        background: "linear-gradient(160deg, #FDF0F5 0%, #F8F2F4 50%, #FFF5F8 100%)",
-        padding: "140px 24px 80px",
+        background: "var(--background)", borderBottom: "1px solid var(--border)",
+        padding: "140px 0 80px",
         position: "relative",
         overflow: "hidden",
       }}>
-        {/* Decorative orbs */}
-        <div style={{ position: "absolute", top: -60, left: -60, width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle, rgba(246,24,135,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: -60, right: "30%", width: 260, height: 260, borderRadius: "50%", background: "radial-gradient(circle, rgba(246,24,135,0.04) 0%, transparent 70%)", pointerEvents: "none" }} />
-
-        <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
+        <div style={{ ...kit.container, position: "relative" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 420px", gap: 72, alignItems: "center" }}>
 
-            {/* Left — text */}
+            {/* Left, text */}
             <div>
               <AnimatedSection delay={0}>
-                <span style={{ fontSize: 12, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 20, display: "block" }}>
+                <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginBottom: 20, display: "block" }}>
                   The People Behind Sakhi
                 </span>
-                <h1 style={{ fontSize: "clamp(40px, 5vw, 70px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-1.5px", lineHeight: 1.06, margin: "0 0 28px" }}>
+                <h1 style={{ fontSize: "clamp(40px, 5vw, 70px)", color: "var(--foreground)", letterSpacing: "-0.02em", lineHeight: 1.06, margin: "0 0 28px" }}>
                   Every great thing is built<br />
-                  <span style={{ color: "#F61887" }}>by people who care.</span>
+                  <span style={{ color: "var(--primary)" }}>by people who care.</span>
                 </h1>
               </AnimatedSection>
               <AnimatedSection delay={120}>
-                <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, maxWidth: 480, margin: "0 0 40px" }}>
-                  Sakhi began in Lucknow and reached every corner of India — because the problem it solves lives everywhere. From classrooms to boardrooms, from mothers to daughters.
+                <p style={{ fontSize: 17, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.85, maxWidth: 480, margin: "0 0 40px" }}>
+                  Sakhi began in Lucknow and reached every corner of India, because the problem it solves lives everywhere. From classrooms to boardrooms, from mothers to daughters.
                 </p>
               </AnimatedSection>
               <AnimatedSection delay={220}>
@@ -152,7 +149,7 @@ export default function ContributorsPage() {
                     { n: "252M",      l: "Women we build for" },
                   ].map((s, i, arr) => (
                     <div key={i} style={{ paddingRight: i < arr.length - 1 ? 28 : 0, borderRight: i < arr.length - 1 ? "1px solid rgba(246,24,135,0.12)" : "none" }}>
-                      <div style={{ fontSize: 20, fontWeight: 400, color: "#F61887", letterSpacing: "-0.5px", lineHeight: 1.2 }}>{s.n}</div>
+                      <div style={{ fontSize: 20, fontWeight: 700, color: "var(--primary)", letterSpacing: 0, lineHeight: 1.2 }}>{s.n}</div>
                       <div style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", marginTop: 3 }}>{s.l}</div>
                     </div>
                   ))}
@@ -165,7 +162,7 @@ export default function ContributorsPage() {
               </AnimatedSection>
             </div>
 
-            {/* Right — India map */}
+            {/* Right, India map */}
             <AnimatedSection delay={200}>
               <IndiaMap />
             </AnimatedSection>
@@ -175,16 +172,16 @@ export default function ContributorsPage() {
       </section>
 
       {/* ── CONTRIBUTORS ──────────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: "#FFFFFF", padding: "96px 24px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+      <section style={{ backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)", padding: "96px 0" }}>
+        <div style={kit.container}>
           <AnimatedSection delay={0}>
             <div style={{ marginBottom: 56 }}>
-              <span style={{ fontSize: 12, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12, display: "block" }}>Everyone who made this</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 14px" }}>
+              <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginBottom: 12, display: "block" }}>Everyone who made this</span>
+              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 14px" }}>
                 From a classroom to India.
               </h2>
               <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 480, margin: 0 }}>
-                Every person who contributed to Sakhi — organized by role and depth of involvement.
+                Every person who contributed to Sakhi, organized by role and depth of involvement.
               </p>
             </div>
           </AnimatedSection>
@@ -194,22 +191,22 @@ export default function ContributorsPage() {
       </section>
 
       {/* ── CORE TEAM ─────────────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: "#F8F2F4", padding: "96px 24px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section style={{ backgroundColor: "#fbf9fb", padding: "96px 0" }}>
+        <div style={kit.container}>
           <AnimatedSection delay={0}>
             <div style={{ marginBottom: 56 }}>
-              <span style={{ fontSize: 12, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12, display: "block" }}>Core Team</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: 0 }}>
+              <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginBottom: 12, display: "block" }}>Core Team</span>
+              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: 0 }}>
                 The people who built it.
               </h2>
             </div>
           </AnimatedSection>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16, maxWidth: 920 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
             {teamDetailed.map((member, i) => (
               <AnimatedSection key={member.id} delay={i * 100}>
                 <div style={{
-                  background: "#FFFFFF",
+                  background: "var(--card)",
                   borderRadius: 24,
                   padding: "40px 36px",
                   height: "100%",
@@ -229,7 +226,7 @@ export default function ContributorsPage() {
                     background: member.highlight
                       ? "linear-gradient(90deg, #F61887, rgba(246,24,135,0.3))"
                       : "linear-gradient(90deg, rgba(246,24,135,0.15), rgba(246,24,135,0.04))",
-                    borderRadius: "24px 24px 0 0",
+                    borderRadius: "8px 8px 0 0",
                   }} />
 
                   {/* Avatar + name */}
@@ -240,13 +237,13 @@ export default function ContributorsPage() {
                       border: member.highlight ? "none" : "1.5px solid rgba(246,24,135,0.2)",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       fontSize: 18, fontWeight: 400,
-                      color: member.highlight ? "#FFFFFF" : "#F61887",
+                      color: member.highlight ? "#FFFFFF" : "var(--primary)",
                     }}>
                       {member.initials}
                     </div>
                     <div>
-                      <div style={{ fontSize: 18, fontWeight: 500, color: "#1A1A1A", lineHeight: 1.3 }}>{member.name}</div>
-                      <div style={{ fontSize: 12, fontWeight: 400, color: "#F61887", marginTop: 2 }}>{member.role}</div>
+                      <div style={{ fontSize: 18, fontWeight: 500, color: "var(--foreground)", lineHeight: 1.3 }}>{member.name}</div>
+                      <div style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginTop: 2 }}>{member.role}</div>
                       <div style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", marginTop: 1 }}>Since {member.since}</div>
                     </div>
                   </div>
@@ -270,9 +267,8 @@ export default function ContributorsPage() {
                   <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 6, marginTop: "auto" }}>
                     {member.contributions.map(c => (
                       <span key={c} style={{
-                        fontSize: 11, fontWeight: 400, color: "#F61887",
+                        fontSize: 11, fontWeight: 400, color: "var(--primary)",
                         background: "rgba(246,24,135,0.07)",
-                        border: "1px solid rgba(246,24,135,0.12)",
                         padding: "4px 10px", borderRadius: 999,
                       }}>
                         {c}
@@ -287,17 +283,17 @@ export default function ContributorsPage() {
       </section>
 
       {/* ── FOUNDING PARTNER ──────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: "#FFFFFF", padding: "96px 24px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+      <section style={{ backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)", padding: "96px 0" }}>
+        <div style={kit.container}>
           <AnimatedSection delay={0}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center" }}>
               <div>
-                <span style={{ fontSize: 12, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12, display: "block" }}>Founding Partner</span>
-                <h2 style={{ fontSize: "clamp(24px, 3vw, 38px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", margin: "0 0 20px", lineHeight: 1.2 }}>
+                <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginBottom: 12, display: "block" }}>Founding Partner</span>
+                <h2 style={{ fontSize: "clamp(24px, 3vw, 38px)", color: "var(--foreground)", letterSpacing: "-0.018em", margin: "0 0 20px", lineHeight: 1.2 }}>
                   Galgotias University
                 </h2>
                 <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: "0 0 16px" }}>
-                  Sakhi exists because of Galgotias University — not as a customer, but as a founding patron. The ISDP Bootcamp gave Sakhi its first moment. The campus gave it its first users.
+                  Sakhi exists because of Galgotias University, not as a customer, but as a founding patron. The ISDP Bootcamp gave Sakhi its first moment. The campus gave it its first users.
                 </p>
                 <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: 0 }}>
                   We carry that support forward in everything we build.
@@ -305,22 +301,22 @@ export default function ContributorsPage() {
               </div>
               <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
                 {[
-                  { label: "ISDP Bootcamp",           desc: "Where Sakhi was born — Jan 2024" },
-                  { label: "Apple Developer Program",  desc: "University-custodian model — May 2024" },
-                  { label: "Campus Promotion",         desc: "v2 launch partner — Jun 2026" },
-                  { label: "B2B Pathway",              desc: "First institutional partner — Nov 2026" },
+                  { label: "ISDP Bootcamp",           desc: "Where Sakhi was born, Jan 2024" },
+                  { label: "Apple Developer Program",  desc: "University-custodian model, May 2024" },
+                  { label: "Campus Promotion",         desc: "v2 launch partner, Jun 2026" },
+                  { label: "B2B Pathway",              desc: "First institutional partner, Nov 2026" },
                 ].map((item, i) => (
                   <div key={i} style={{
                     background: "#F8F2F4",
-                    borderRadius: 14,
+                    borderRadius: 24,
                     padding: "16px 20px",
                     display: "flex",
                     alignItems: "flex-start",
                     gap: 14,
                   }}>
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#F61887", flexShrink: 0, marginTop: 5 }} />
+                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--primary)", flexShrink: 0, marginTop: 5 }} />
                     <div>
-                      <div style={{ fontSize: 14, fontWeight: 500, color: "#1A1A1A", marginBottom: 3 }}>{item.label}</div>
+                      <div style={{ fontSize: 14, fontWeight: 500, color: "var(--foreground)", marginBottom: 3 }}>{item.label}</div>
                       <div style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0" }}>{item.desc}</div>
                     </div>
                   </div>
@@ -332,16 +328,16 @@ export default function ContributorsPage() {
       </section>
 
       {/* ── JOURNEY TIMELINE ──────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: "#F8F2F4", padding: "96px 24px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+      <section style={{ backgroundColor: "#fbf9fb", padding: "96px 0" }}>
+        <div style={kit.container}>
           <AnimatedSection delay={0}>
             <div style={{ textAlign: "center" as const, marginBottom: 64 }}>
-              <span style={{ fontSize: 12, fontWeight: 400, color: "#F61887", letterSpacing: "0.12em", textTransform: "uppercase" as const, marginBottom: 12, display: "block" }}>The Journey</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: "0 0 16px" }}>
+              <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginBottom: 12, display: "block" }}>The Journey</span>
+              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 16px" }}>
                 From idea to India.
               </h2>
               <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 420, margin: "0 auto" }}>
-                Every milestone in Sakhi&rsquo;s story — from a bootcamp classroom to the App Store.
+                Every milestone in Sakhi&rsquo;s story, from a bootcamp classroom to the App Store.
               </p>
             </div>
           </AnimatedSection>
@@ -351,18 +347,14 @@ export default function ContributorsPage() {
       </section>
 
       {/* ── CTA ───────────────────────────────────────────────────────────── */}
-      <section style={{ background: "linear-gradient(160deg, #F61887 0%, #D4127A 100%)", padding: "96px 24px", textAlign: "center" as const, position: "relative" as const, overflow: "hidden" as const }}>
-        {/* Decorative blobs */}
-        <div style={{ position: "absolute" as const, top: -60, right: -60, width: 320, height: 320, borderRadius: "50%", background: "rgba(255,255,255,0.06)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute" as const, bottom: -80, left: -80, width: 280, height: 280, borderRadius: "50%", background: "rgba(255,255,255,0.04)", pointerEvents: "none" }} />
-
-        <div style={{ maxWidth: 520, margin: "0 auto", position: "relative" as const }}>
+      <section style={{ background: "var(--background-blush)", borderTop: "1px solid var(--border)", padding: "96px 0", textAlign: "center" as const, position: "relative" as const, overflow: "hidden" as const }}>
+        <div style={{ ...kit.container, position: "relative" as const }}>
           <AnimatedSection delay={0}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 52px)", fontWeight: 300, color: "#FFFFFF", letterSpacing: "-1px", lineHeight: 1.1, margin: "0 0 20px" }}>
+            <h2 style={{ fontSize: "clamp(28px, 4vw, 52px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.1, margin: "0 0 20px" }}>
               Add your leaf to the tree.
             </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "rgba(255,255,255,0.8)", lineHeight: 1.8, margin: "0 0 40px" }}>
-              Every download, every share, every conversation — you become part of this.
+            <p style={{ fontSize: 17, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.8, margin: "0 0 40px" }}>
+              Every download, every share, every conversation, you become part of this.
             </p>
             <a
               href="https://apps.apple.com/app/id6742219623"
@@ -370,13 +362,12 @@ export default function ContributorsPage() {
               rel="noopener noreferrer"
               style={{
                 display: "inline-flex", alignItems: "center", gap: 10,
-                backgroundColor: "#FFFFFF", color: "#F61887",
-                padding: "16px 36px", borderRadius: 999,
+                backgroundColor: "var(--secondary)", color: "var(--secondary-foreground)", padding: "0 22px", height: 44, borderRadius: 8,
                 textDecoration: "none", fontSize: 15, fontWeight: 600,
                 boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#F61887">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--primary)">
                 <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
               </svg>
               Download Sakhi

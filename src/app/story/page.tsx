@@ -1,298 +1,437 @@
 import type { Metadata } from "next";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import { Button } from "@/components/ui/button";
+import { Container, Section } from "@/components/ui/section";
 
 export const metadata: Metadata = {
-  title: "Our Story — Sakhi",
-  description: "From a university bootcamp to the App Store. The honest story of how Sakhi came to be.",
+  title: "Our Story, Sakhi",
+  description:
+    "From a friend's bad cramps to the App Store. The honest, sourced story of how and why Sakhi was built.",
 };
 
-const container: React.CSSProperties = { maxWidth: 1160, margin: "0 auto" };
-const sectionPad: React.CSSProperties = { padding: "96px 24px" };
-const label = (mb = 16): React.CSSProperties => ({
-  fontSize: 13, fontWeight: 400, color: "#F61887",
-  letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: mb, display: "block",
-});
+const appStoreUrl = "https://apps.apple.com/app/id6742219623";
 
+/* ---------------------------------------------------------------------------
+   This page follows design-reference/DESIGN-LANGUAGE.md.
+
+   The rules that shape everything below, and that are easy to undo by accident:
+
+   - Display type is weight 400, never 700. globals.css sets `h1, h2` to 700 in
+     @layer base, so every heading here carries `font-normal` to win from
+     @layer utilities. Removing that class is the single fastest way to make
+     this page look generic again.
+   - One accent, on almost nothing: inline links, the closing button, and four
+     timeline dots. Not on eyebrows, not on icons, not as a surface tint.
+   - Eyebrows are plain 11px uppercase grey text. No pill, no border, no
+     sparkles icon.
+   - Photo frames are flat: one hairline, 8px radius, no gradient, no icon.
+   - Two surfaces only, white and Background Blush, plus one ink band.
+   --------------------------------------------------------------------------- */
+
+function AppleMark({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+    </svg>
+  );
+}
+
+/** 11px uppercase grey. The section eyebrow, in place of a badge pill. */
+function Label({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[11px] leading-4 font-medium tracking-[0.5px] text-muted-foreground uppercase">
+      {children}
+    </p>
+  );
+}
+
+/**
+ * Marks where a real photograph belongs. Flat fill, one hairline, 8px radius.
+ * The caption sits outside the frame in 14px grey, which is how a real photo
+ * will be captioned once it lands, so nothing shifts when it does.
+ */
+function Photo({
+  caption,
+  aspect = "aspect-[16/9]",
+}: {
+  caption: string;
+  aspect?: string;
+}) {
+  return (
+    <figure>
+      <div
+        className={`flex ${aspect} w-full items-center justify-center rounded-[8px] border border-border bg-muted`}
+      >
+        <span className="text-[11px] font-medium tracking-[0.5px] text-muted-foreground uppercase">
+          Photo
+        </span>
+      </div>
+      <figcaption className="mt-3 max-w-[520px] text-[14px] leading-6 tracking-[0.15px] text-muted-foreground">
+        {caption}
+      </figcaption>
+    </figure>
+  );
+}
+
+/** Large number at weight 400, then a plain label. No card, no border, no icon. */
+function Stat({
+  value,
+  label,
+  note,
+}: {
+  value: string;
+  label: string;
+  note?: string;
+}) {
+  return (
+    <div>
+      <div className="text-[36px] leading-[44px] font-normal tracking-[-0.25px] text-foreground tabular-nums sm:text-[44px] sm:leading-[52px]">
+        {value}
+      </div>
+      <p className="mt-3 text-[16px] leading-6 tracking-[0.1px] text-foreground">{label}</p>
+      {note && (
+        <p className="mt-1.5 text-[14px] leading-6 tracking-[0.15px] text-muted-foreground">
+          {note}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* Dates and events cross-checked against 01-AI/Timeline.md. The most sensitive
+   stretch of that record (Aug 2025 exit, IP transfer) is deliberately left out:
+   it names someone who is no longer on the team and does not belong on a
+   public page, per this repo's standing rule. */
 const timelineEntries = [
   {
     date: "Jan 9, 2024",
-    title: "A Spark in a Bootcamp",
-    body: "Team 07 forms at the ISDP Bootcamp, Galgotias University. The team is assigned a problem statement. They choose women's health — not because they were told to, but because it felt unaddressed.",
-    highlight: false,
+    title: "A spark in a bootcamp",
+    body: "Team 07 forms at the ISDP Bootcamp, Galgotias University. Handed a problem statement, the team chooses women's health, not because they were told to, but because it felt unaddressed.",
+    pivotal: false,
   },
   {
-    date: "Jan – Apr 2024",
-    title: "49 Women. One Clear Gap.",
-    body: "The team conducts 49 user interviews across campuses, homes, and communities. They consult gynaecologists. The finding: most women had never tracked their health with intention. PCOD was widespread and massively underdiagnosed. Women weren't managing their health — they were surviving it.",
-    highlight: true,
+    date: "Jan to Apr 2024",
+    title: "49 interviews, one clear gap",
+    body: "The team talks to 49 women across campuses, homes and communities, and consults gynaecologists. Most had never tracked their health with intention. They weren't managing it. They were surviving it.",
+    pivotal: true,
   },
   {
     date: "May 2024",
     title: "Apple Developer Program",
-    body: "Sakhi is accepted into the Apple Developer Program under a university-custodian model. Galgotias University becomes the founding institutional partner. The tools to build natively on iOS are now in hand.",
-    highlight: false,
+    body: "Sakhi is accepted into the Apple Developer Program under a university-custodian model, with Galgotias University as founding institutional partner.",
+    pivotal: false,
   },
   {
     date: "Mid 2024",
-    title: "Going Native — The Critical Pivot",
-    body: "Flutter is abandoned. The team moves to Swift and SwiftUI — full native iOS. The decision is deliberate: native performance, native feel, native privacy. HealthKit integration. This is the Sakhi that women would actually use.",
-    highlight: false,
+    title: "Going native",
+    body: "Flutter is dropped for Swift and SwiftUI, full native iOS, with HealthKit integration. Native performance, native feel, native privacy.",
+    pivotal: false,
   },
   {
     date: "Q4 2024",
-    title: "The World Notices",
-    body: "Times of India features Sakhi. The team presents at the UP International Trade Show. Then, the moment that still feels unreal: Sakhi is presented to Greg Joswiak, Apple's Senior Vice President. A student-built app from UP, in front of one of the most powerful people in tech.",
-    highlight: true,
+    title: "The world notices",
+    body: "The Times of India covers Sakhi. The team presents at the UP International Trade Show. Then Sakhi is presented to seven Apple delegates, including Greg Joswiak, Apple's Senior Vice President of Worldwide Marketing.",
+    pivotal: true,
   },
   {
-    date: "March 2025",
-    title: "First Real Users",
-    body: "TestFlight opens. The first women outside the team use Sakhi for real. Real period logs. Real questions to Sakhi AI. Real moments of 'I've never felt understood like this before.' The feedback is honest, detailed, and deeply motivating.",
-    highlight: false,
+    date: "Mar 2025",
+    title: "First real users",
+    body: "TestFlight opens. Women outside the team log real cycles and ask Sakhi AI real questions. The feedback is honest, detailed, and hard to ignore.",
+    pivotal: false,
   },
   {
-    date: "June 14, 2025",
-    title: "She's Live.",
-    body: "Sakhi launches on the App Store. App ID: 6742219623. Years of research, 49 interviews, countless builds — for this moment. Women download Sakhi not because they know the team, but because they need it.",
-    highlight: true,
+    date: "Jun 14, 2025",
+    title: "She's live",
+    body: "Sakhi launches on the App Store. After a year and a half of research and rebuilds, women start downloading it because they need it, not because they know the team.",
+    pivotal: true,
   },
   {
-    date: "September 2025",
-    title: "Apple's Story",
-    body: "Apple selects Sakhi for a Success Story feature. The photoshoot takes place on the Galgotias campus. The team that started in a bootcamp is now being featured by the world's most valuable company.",
-    highlight: false,
+    date: "Sep 2025",
+    title: "Apple's Success Story",
+    body: "Apple selects Sakhi for its College Students: Success Stories feature and runs a full-day photoshoot on the Galgotias campus.",
+    pivotal: false,
   },
   {
-    date: "May 10, 2026",
-    title: "A New Chapter",
-    body: "Karan returns to lead the product full-time. With v2 to build and the product's future demanding attention, there was only one direction: forward.",
-    highlight: true,
+    date: "May 2026",
+    title: "Back to build v2",
+    body: "With Galgotias University's continued backing, Karan returns to lead the product full-time. There is a lot still to build.",
+    pivotal: true,
   },
   {
-    date: "June 2, 2026",
-    title: "v2 is Coming",
-    body: "Android support, premium subscription, Doctor Report PDF export, and the full relationship layer — all coming in v2. The work continues.",
-    highlight: false,
+    date: "2026",
+    title: "v2 is underway",
+    body: "Android support, a Doctor Report PDF export, and the full Be Her Sakhi relationship layer are all in progress.",
+    pivotal: false,
   },
+];
+
+const closingStats = [
+  { value: "49", label: "Interviews conducted" },
+  { value: "16", label: "Conditions researched" },
+  { value: "Jun 2025", label: "App Store launch" },
+  { value: "Free", label: "No subscription required" },
 ];
 
 export default function StoryPage() {
   return (
-    <div style={{ overflowX: "hidden", fontFamily: "var(--font-lato), Lato, sans-serif" }}>
-
-      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
-      <section style={{
-        background: "linear-gradient(160deg, #FDF0F5 0%, #F8F2F4 50%, #FFF5F8 100%)",
-        padding: "160px 24px 96px",
-      }}>
-        <div style={{ ...container, maxWidth: 760 }}>
+    <div>
+      {/* ---------------------------------------------------------- masthead */}
+      {/* A dateline, the thesis line as the headline, then a rule and a byline.
+          This is how an essay opens. It is deliberately not the site's usual
+          eyebrow-pill hero. pt clears the fixed navbar at y=18..68. */}
+      <header className="bg-background px-4 pt-32 pb-16 sm:px-6 sm:pt-40 sm:pb-20">
+        <Container>
           <AnimatedSection delay={0}>
-            <span style={label(20)}>Origin Story</span>
-            <h1 style={{ fontSize: "clamp(48px, 6vw, 76px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-1.5px", lineHeight: 1.05, margin: "0 0 28px" }}>
-              The Story<br />of Sakhi.
+            <Label>Origin story</Label>
+
+            <h1 className="mt-6 max-w-[15ch] text-[28px] leading-[40px] font-normal tracking-[-0.25px] text-foreground sm:max-w-[20ch] sm:text-[48px] sm:leading-[56px] sm:tracking-[-0.5px] lg:text-[60px] lg:leading-[72px]">
+              She was in pain, and I had nothing real to give her.
             </h1>
+
+            <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-border pt-6 text-[14px] leading-6 tracking-[0.15px] text-muted-foreground">
+              <span className="text-foreground">Karan Kumar</span>
+              <span aria-hidden="true">·</span>
+              <span>Founder</span>
+              <span aria-hidden="true">·</span>
+              <span>January 2024 to today</span>
+            </div>
           </AnimatedSection>
-          <AnimatedSection delay={100}>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: "0 0 16px", maxWidth: 580 }}>
-              What began as a university assignment became something none of us could walk away from. This is the honest account of how Sakhi came to be.
-            </p>
-            <p style={{ fontSize: 13, fontWeight: 400, color: "#A0A0A0", letterSpacing: "0.03em", margin: 0 }}>
-              January 2024 — Present · Galgotias University, Greater Noida
-            </p>
+        </Container>
+      </header>
+
+      {/* ------------------------------------------------------------- essay */}
+      {/* Not <Section>: this continues the masthead's white zone, so it carries
+          the bottom padding and the divider but no top padding. */}
+      <section className="border-b border-border bg-background px-4 pb-24 sm:px-6">
+        <Container>
+          <AnimatedSection delay={0}>
+            <div className="max-w-[640px] space-y-6 text-[18px] leading-[28px] text-foreground">
+              <p>
+                When I was in college, one of my close friends was having really bad period
+                cramps. She had already taken medicine that morning, but by the middle of the day
+                the pain still hadn&rsquo;t gone, and she was thinking about taking another one.
+              </p>
+              <p>
+                I didn&rsquo;t even know if that was safe. I told her the few things I knew, rest
+                a little, use a hot water bag, try to eat something. But deep down I knew I was
+                just giving generic advice. I didn&rsquo;t really know what would help her.
+              </p>
+              <p>
+                That stayed with me. Every girl experiences these things differently. What feels
+                normal for one person may not feel normal for someone else. And most of the time,
+                they are figuring it out completely alone.
+              </p>
+              <p className="text-muted-foreground">That is where Sakhi began.</p>
+            </div>
           </AnimatedSection>
-        </div>
+
+          <AnimatedSection delay={80} className="mt-14 sm:mt-20">
+            <Photo caption="Team 07 at the ISDP Bootcamp, Galgotias University, early 2024." />
+          </AnimatedSection>
+        </Container>
       </section>
 
-      {/* ── THE MOMENT ───────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
+      {/* --------------------------------------------------------- the numbers */}
+      <Section tone="blush">
+        <Container>
           <AnimatedSection delay={0}>
-            <span style={label()}>Where it began</span>
-            <h2 style={{ fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.2, margin: "0 0 40px" }}>
-              A friend. Bad cramps.<br />A moment I couldn&rsquo;t shake.
+            <Label>The measured version</Label>
+            <h2 className="mt-4 max-w-[20ch] text-[24px] leading-[32px] font-normal tracking-[-0.25px] text-foreground sm:text-[32px] sm:leading-[40px] lg:text-[36px] lg:leading-[44px]">
+              What I saw in one friend turned out to be the norm.
             </h2>
           </AnimatedSection>
 
           <AnimatedSection delay={80}>
-            <div style={{
-              borderLeft: "2px solid rgba(246,24,135,0.25)",
-              paddingLeft: 28,
-              display: "flex",
-              flexDirection: "column" as const,
-              gap: 20,
-              marginBottom: 48,
-            }}>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#1A1A1A", lineHeight: 1.85, margin: 0 }}>
-                When I was in college, one of my close friends was having really bad period cramps.
-                She had already taken a medicine in the morning, but by the middle of the day, the pain was still not going away —
-                and she was thinking about taking another one.
-              </p>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#1A1A1A", lineHeight: 1.85, margin: 0 }}>
-                I didn&rsquo;t even know if that was right or not. I told her the few things I knew —
-                rest a little, use a hot water bag, try to eat something.
-                But deep down, I knew I was just giving generic advice.
-                I didn&rsquo;t really know what would actually help her.
-              </p>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#1A1A1A", lineHeight: 1.85, margin: 0 }}>
-                And that stayed with me. Because later I realised that every girl experiences these things differently.
-                What feels normal for one person may not feel normal for someone else.
-                And most of the time, they&rsquo;re figuring it out completely alone.
-              </p>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#F61887", fontStyle: "italic", lineHeight: 1.75, margin: 0 }}>
-                That&rsquo;s where Sakhi began.
-              </p>
+            <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-12 sm:mt-16 lg:grid-cols-4 lg:gap-x-12">
+              <Stat value="70.2%" label="Have disruptive period pain" />
+              <Stat value="14.2%" label="Have told a doctor about it" />
+              <Stat value="56pt" label="The gap between those two numbers" />
+              <Stat value="1 in 5" label="Have PCOD or PCOS" />
             </div>
           </AnimatedSection>
 
-          {/* The gap */}
-          <AnimatedSection delay={160}>
-            <div style={{
-              background: "#F8F2F4",
-              borderRadius: 20,
-              padding: "36px 40px",
-              marginBottom: 48,
-            }}>
-              <p style={{ fontSize: 14, fontWeight: 500, color: "#F61887", letterSpacing: "0.08em", textTransform: "uppercase" as const, margin: "0 0 20px" }}>
-                The reality behind that moment
+          <AnimatedSection delay={120}>
+            <p className="mt-14 border-t border-border pt-6 text-[14px] leading-6 tracking-[0.15px] text-muted-foreground">
+              Sources:{" "}
+              <a
+                href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5016343/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary underline underline-offset-2"
+              >
+                PMC, 1,000 Indian students
+              </a>
+              ,{" "}
+              <a
+                href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9826643/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary underline underline-offset-2"
+              >
+                PMC meta-analysis, 2023
+              </a>
+              , and the Indian Journal of Medical Research, 2019.
+            </p>
+          </AnimatedSection>
+        </Container>
+      </Section>
+
+      {/* ---------------------------------------------------------- reflection */}
+      <Section tone="white">
+        <Container>
+          <AnimatedSection delay={0}>
+            <div className="max-w-[640px] space-y-6 text-[18px] leading-[28px] text-muted-foreground">
+              <p>
+                This is not a story about rural India or poor India. This is the girl at an
+                engineering college in Lucknow. The woman managing a team at a startup in
+                Bangalore. The student in a Pune hostel with an iPhone and 4G, who has still
+                never had a real conversation about what is happening in her own body.
               </p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px 40px" }}>
-                {[
-                  { stat: "252M", desc: "menstruating women in India" },
-                  { stat: "70.2%", desc: "have period pain severe enough to disrupt their day" },
-                  { stat: "14.2%", desc: "have ever spoken to a doctor about it" },
-                  { stat: "1 in 5", desc: "has PCOD — and 70% of them don't know it" },
-                ].map(s => (
-                  <div key={s.stat}>
-                    <div style={{ fontSize: 32, fontWeight: 300, color: "#F61887", letterSpacing: "-0.5px", lineHeight: 1, marginBottom: 6 }}>{s.stat}</div>
-                    <div style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.5 }}>{s.desc}</div>
-                  </div>
-                ))}
-              </div>
-              <p style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.7, margin: "24px 0 0", borderTop: "1px solid rgba(246,24,135,0.12)", paddingTop: 20 }}>
-                This is not a story about rural India or poor India. This is about the girl studying at an engineering college in Lucknow.
-                The woman managing a team at a startup in Bangalore. The 20-year-old in a Pune hostel with an iPhone and 4G — who has still
-                never had a real conversation about what&rsquo;s happening in her own body.
+              <p className="text-foreground">
+                I truly cared. And I had nothing real to offer. Not because I didn&rsquo;t want
+                to help, but because I had no way in.
+              </p>
+              <p>
+                Her mother senses something is off, calls every Sunday, and hears
+                &ldquo;fine.&rdquo; Her partner wants to help and doesn&rsquo;t know how. Her
+                best friend would show up if she knew. The loneliest part isn&rsquo;t the pain
+                itself. It is managing it surrounded by people who love her and cannot reach her.
               </p>
             </div>
           </AnimatedSection>
+        </Container>
+      </Section>
 
-          {/* The gap between her and people who love her */}
-          <AnimatedSection delay={200}>
-            <p style={{ fontSize: "clamp(18px, 2vw, 24px)", fontWeight: 300, color: "#1A1A1A", lineHeight: 1.7, margin: "0 0 24px", fontStyle: "italic" }}>
-              &ldquo;I truly cared. And I had nothing real to offer.
-              Not because I didn&rsquo;t want to help — but because I had no way in.&rdquo;
-            </p>
-            <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: "0 0 16px" }}>
-              Her mother senses something is off. She calls every Sunday. Hears &ldquo;fine.&rdquo; Worries quietly.
-              There is a 7-percentage-point gap between how sick daughters actually are and how sick their mothers believe them to be.
-            </p>
-            <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: 0 }}>
-              Her partner wants to help. He doesn&rsquo;t know how.
-              Her best friend would show up if she knew. She doesn&rsquo;t know.
-              This is the loneliest part — not the pain itself, but managing it surrounded by people who love her and cannot reach her.
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* ── OPENING STATEMENT ────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#F61887" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
+      {/* ------------------------------------------------------------ ink band */}
+      {/* The one dark passage. All the boldness on the page is spent here, on
+          the line that carries the most weight, rather than scattered as
+          decoration across the piece. */}
+      <section className="bg-ink px-4 py-28 sm:px-6 sm:py-32">
+        <Container>
           <AnimatedSection delay={0}>
-            <p style={{ fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 300, color: "#FFFFFF", lineHeight: 1.6, margin: "0 0 24px", fontStyle: "italic" }}>
-              &ldquo;Period is not a taboo. Not here.&rdquo;
-            </p>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "rgba(255,255,255,0.8)", lineHeight: 1.85, margin: 0 }}>
-              We built Sakhi because the silence around women&rsquo;s health in India is deafening. 49 interviews. Dozens of gynaecologist conversations. One consistent finding: women weren&rsquo;t being heard. We decided to build the thing that would hear them.
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* ── TIMELINE ─────────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#FFFFFF" }}>
-        <div style={{ ...container, padding: "0 24px" }}>
-          <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 64 }}>
-              <span style={label()}>The Journey</span>
-              <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 300, color: "#1A1A1A", letterSpacing: "-0.5px", lineHeight: 1.15, margin: 0 }}>
-                From bootcamp to App Store.
-              </h2>
+            <div className="max-w-[760px]">
+              <p className="text-[28px] leading-[40px] font-normal tracking-[-0.25px] text-ink-foreground sm:text-[40px] sm:leading-[52px] sm:tracking-[-0.5px]">
+                Period is not a taboo. Not here.
+              </p>
+              <p className="mt-8 max-w-[560px] text-[18px] leading-[28px] text-ink-muted">
+                We built Sakhi because the silence around women&rsquo;s health in India is
+                deafening. 49 interviews. Dozens of conversations with gynaecologists. One
+                consistent finding: women weren&rsquo;t being heard. So we built the thing that
+                would hear them.
+              </p>
             </div>
           </AnimatedSection>
-
-          <div style={{ maxWidth: 720, display: "flex", flexDirection: "column" as const }}>
-            {timelineEntries.map((entry, i) => (
-              <AnimatedSection key={i} delay={i * 60}>
-                <div style={{ display: "grid", gridTemplateColumns: "140px 20px 1fr", gap: "0 16px", paddingBottom: 40 }}>
-                  {/* Date */}
-                  <div style={{ paddingTop: 4, textAlign: "right" }}>
-                    <span style={{ fontSize: 13, fontWeight: 400, color: "#F61887", letterSpacing: "0.02em" }}>{entry.date}</span>
-                  </div>
-                  {/* Line + dot */}
-                  <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "center" }}>
-                    <div style={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: entry.highlight ? "#F61887" : "rgba(246,24,135,0.3)", marginTop: 6, flexShrink: 0 }} />
-                    <div style={{ flex: 1, width: 1, backgroundColor: "rgba(246,24,135,0.15)", marginTop: 4 }} />
-                  </div>
-                  {/* Content */}
-                  <div style={{ paddingBottom: 8, paddingLeft: entry.highlight ? 14 : 0, borderLeft: entry.highlight ? "2px solid rgba(246,24,135,0.3)" : "none" }}>
-                    <h3 style={{ fontSize: 18, fontWeight: 500, color: "#1A1A1A", margin: "0 0 8px", lineHeight: 1.3 }}>{entry.title}</h3>
-                    <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>{entry.body}</p>
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
+        </Container>
       </section>
 
-      {/* ── WHAT IT MEANS ────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#F8F2F4" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
+      {/* ------------------------------------------------------------ timeline */}
+      <Section tone="white">
+        <Container>
           <AnimatedSection delay={0}>
-            <span style={label()}>What we learned</span>
-            <p style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 300, color: "#1A1A1A", fontStyle: "italic", lineHeight: 1.6, margin: "0 0 48px" }}>
-              &ldquo;A girl&rsquo;s health is not just her data. It is something her people want to understand, and act on.&rdquo;
-            </p>
+            <Label>The journey</Label>
+            <h2 className="mt-4 text-[24px] leading-[32px] font-normal tracking-[-0.25px] text-foreground sm:text-[32px] sm:leading-[40px] lg:text-[36px] lg:leading-[44px]">
+              2024 to 2026
+            </h2>
           </AnimatedSection>
 
-          <AnimatedSection delay={100}>
-            <div style={{ display: "flex", flexWrap: "wrap" as const, borderTop: "1px solid rgba(246,24,135,0.15)", paddingTop: 40, gap: 0 }}>
-              {[
-                { num: "49",        label: "Interviews" },
-                { num: "12+",       label: "Conditions Researched" },
-                { num: "June 2025", label: "App Store Launch" },
-                { num: "281+",      label: "Downloads" },
-              ].map((s, i, arr) => (
-                <div key={i} style={{ padding: "0 28px", paddingLeft: i === 0 ? 0 : 28, borderRight: i < arr.length - 1 ? "1px solid rgba(246,24,135,0.15)" : "none" }}>
-                  <div style={{ fontSize: 24, fontWeight: 300, color: "#F61887", letterSpacing: "-0.5px", lineHeight: 1.2 }}>{s.num}</div>
-                  <div style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0", marginTop: 4 }}>{s.label}</div>
-                </div>
+          <div className="mt-14 border-l border-border pl-8 sm:mt-16 sm:pl-10">
+            <div className="space-y-12">
+              {timelineEntries.map((entry, i) => (
+                <AnimatedSection key={entry.date} delay={i * 30} className="relative">
+                  <span
+                    aria-hidden="true"
+                    className={`absolute top-[5px] -left-[35px] size-[7px] rounded-full sm:-left-[43px] ${
+                      entry.pivotal ? "bg-primary" : "bg-border"
+                    }`}
+                  />
+                  <p className="text-[11px] leading-4 font-medium tracking-[0.5px] text-muted-foreground uppercase">
+                    {entry.date}
+                  </p>
+                  <h3 className="mt-2.5 text-[20px] leading-[28px] font-normal text-foreground">
+                    {entry.title}
+                  </h3>
+                  <p className="mt-2 max-w-[560px] text-[16px] leading-6 tracking-[0.1px] text-muted-foreground">
+                    {entry.body}
+                  </p>
+                </AnimatedSection>
               ))}
             </div>
-          </AnimatedSection>
-        </div>
-      </section>
+          </div>
 
-      {/* ── CTA ──────────────────────────────────────────────────────────────── */}
-      <section style={{ background: "linear-gradient(160deg, #F61887 0%, #D4127A 100%)", padding: "80px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 520, margin: "0 auto" }}>
+          <AnimatedSection delay={0} className="mt-16">
+            <Photo caption="Karan presenting to Greg Joswiak and the Apple delegation, Q4 2024." />
+          </AnimatedSection>
+        </Container>
+      </Section>
+
+      {/* -------------------------------------------------------- what it means */}
+      <Section tone="blush">
+        <Container>
+          <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_300px] lg:gap-20">
+            <div>
+              <AnimatedSection delay={0}>
+                <Label>What we learned</Label>
+                <p className="mt-4 max-w-[22ch] text-[24px] leading-[34px] font-normal tracking-[-0.25px] text-foreground sm:text-[32px] sm:leading-[44px]">
+                  A girl&rsquo;s health is not just her data. It is something her people want to
+                  understand, and act on.
+                </p>
+              </AnimatedSection>
+
+              <AnimatedSection delay={100}>
+                <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-border pt-10 sm:grid-cols-4">
+                  {closingStats.map((s) => (
+                    <div key={s.label}>
+                      <div className="text-[28px] leading-[36px] font-normal tracking-[-0.25px] text-foreground tabular-nums">
+                        {s.value}
+                      </div>
+                      <p className="mt-2 text-[14px] leading-6 tracking-[0.15px] text-muted-foreground">
+                        {s.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </AnimatedSection>
+            </div>
+
+            <AnimatedSection
+              delay={140}
+              className="border-t border-border pt-10 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-12"
+            >
+              <div className="size-16 rounded-full border border-border bg-muted" aria-hidden="true" />
+              <p className="mt-5 text-[16px] leading-6 tracking-[0.1px] text-foreground">
+                Karan Kumar
+              </p>
+              <p className="mt-1.5 text-[14px] leading-6 tracking-[0.15px] text-muted-foreground">
+                Founder. Started this in a bootcamp in January 2024. Back building v2.
+              </p>
+            </AnimatedSection>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ----------------------------------------------------------------- cta */}
+      {/* The one high-emphasis button on the page. */}
+      <Section tone="white" divided={false}>
+        <Container>
           <AnimatedSection delay={0}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 300, color: "#FFFFFF", letterSpacing: "-1px", lineHeight: 1.1, margin: "0 0 20px" }}>
-              Be part of the story.
-            </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "rgba(255,255,255,0.8)", lineHeight: 1.8, margin: "0 0 36px" }}>
-              Download Sakhi and add your chapter to this journey.
-            </p>
-            <a href="https://apps.apple.com/app/id6742219623" target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: 10, backgroundColor: "#FFFFFF", color: "#F61887", padding: "16px 36px", borderRadius: 999, textDecoration: "none", fontSize: 15, fontWeight: 600 }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#F61887"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-              Download Free
-            </a>
+            <div className="max-w-[560px]">
+              <h2 className="text-[24px] leading-[32px] font-normal tracking-[-0.25px] text-foreground sm:text-[32px] sm:leading-[40px]">
+                Add your chapter to this one.
+              </h2>
+              <p className="mt-4 text-[18px] leading-[28px] text-muted-foreground">
+                Sakhi is free, has no ads, and never sells your data.
+              </p>
+              <div className="mt-8">
+                <Button asChild size="lg" className="h-12 rounded-[8px] px-6 text-[16px]">
+                  <a href={appStoreUrl} target="_blank" rel="noopener noreferrer">
+                    <AppleMark /> Download on the App Store
+                  </a>
+                </Button>
+              </div>
+            </div>
           </AnimatedSection>
-        </div>
-      </section>
-
+        </Container>
+      </Section>
     </div>
   );
 }

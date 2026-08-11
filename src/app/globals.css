@@ -1,39 +1,180 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   Semantic token layer (shadcn/ui convention, Tailwind v4).
+   Components reference roles (bg-primary, text-muted-foreground) and never raw
+   hex, so a surface or brand change is one edit here instead of a sweep across
+   the stylesheet. Values are Sakhi's documented palette.
+   --------------------------------------------------------------------------- */
 :root {
-  --sakhi-pink: #F61887;
-  --sakhi-bg: #F8F2F4;
-  --sakhi-text: #1A1A1A;
-  --sakhi-text-secondary: #6B6B6B;
-  --sakhi-border: #F0E8EC;
-  --sakhi-border-dark: rgba(0,0,0,0.08);
+  --radius: 0.75rem;
+
+  --background: #ffffff;
+  /* Background Blush, from the documented palette */
+  --background-blush: #f8f2f4;
+  /* The app shell ground behind every page */
+  --background-shell: #fbf9fb;
+  --foreground: #1d1d1f;
+  /* The lighter grey the emphasised clause of a headline resolves into.
+     #a6a09c read at only 2.58:1 on white, below even the large-text bar. */
+  --headline-muted: #726c75;
+
+  --card: #ffffff;
+  --card-foreground: #1d1d1f;
+
+  /* Primary Pink — the brand accent */
+  --primary: #f61887;
+  --primary-foreground: #ffffff;
+
+  /* Deep Pink — hover/pressed, and text on light surfaces where 4.5:1 matters */
+  --secondary: #d4006e;
+  --secondary-foreground: #ffffff;
+
+  /* Panels and media surfaces, the ladder that keeps white UI legible */
+  --muted: #f1ecf0;
+  /* #6e6e73 hit only 4.35:1 on the --muted card fill, just under AA. Darkened
+     six steps to clear 4.5 on both --muted (4.75:1) and white (5.54:1). */
+  --muted-foreground: #68686d;
+  --surface-sunken: #e9e2e7;
+
+  --accent: #f8e5ec;
+  --accent-foreground: #6b3a52;
+  /* The faintest blush, for icon chips sitting on a muted card */
+  --accent-soft: #fdeaf3;
+  /* A hair cooler, for label pills on white */
+  --accent-faint: #fdeff6;
+
+  /* Neutral chip, for metadata that should not read as brand */
+  --chip: #f2eef2;
+  --chip-foreground: #4a4a4f;
+
+  /* Light pink for accent text on dark fills, where --primary fails contrast */
+  --primary-soft: #ff77b9;
+
+  --destructive: #dc2626;
+  --border: #ece7ea;
+  --input: #ece7ea;
+  --ring: #f61887;
+
+  /* Dark sections */
+  --ink: #050406;
+  --ink-foreground: #ffffff;
+  --ink-muted: rgba(255, 255, 255, 0.6);
+  /* A dark card lifted off a light section, not the full-bleed hero black */
+  --ink-raised: #1d1219;
+  --ink-raised-hover: #2a1b25;
+
+  /* Elevation. Tinted toward deep pink so shadows read warm, never grey.
+     Named --elevation-* not --shadow-*: Tailwind v4 owns the --shadow-*
+     namespace, so a raw var of that name would self-reference in @theme. */
+  --elevation-card:
+    0 12px 34px rgba(163, 22, 84, 0.1),
+    0 2px 6px rgba(163, 22, 84, 0.05);
+  --elevation-card-hover:
+    0 16px 40px rgba(163, 22, 84, 0.13),
+    0 2px 6px rgba(163, 22, 84, 0.06);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@theme inline {
+  --color-background: var(--background);
+  --color-background-blush: var(--background-blush);
+  --color-background-shell: var(--background-shell);
+  --color-headline-muted: var(--headline-muted);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-faint: var(--accent-faint);
+  --color-chip: var(--chip);
+  --color-chip-foreground: var(--chip-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-raised: var(--ink-raised);
+  --color-ink-raised-hover: var(--ink-raised-hover);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 8px);
+  /* The site's own card radii, larger than shadcn's default scale */
+  --radius-card: 24px;
+  --radius-panel: 32px;
+
+  --shadow-card: var(--elevation-card);
+  --shadow-card-hover: var(--elevation-card-hover);
+
+/* tailwind.config.ts is not auto-loaded in Tailwind v4, so the font has to be
+   mapped here. Without this, body.font-sans wins over the body rule below and
+   the whole site silently falls back to system-ui instead of Lato. */  --font-sans: var(--font-body), var(--font-lato), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-lato), ui-sans-serif, system-ui, sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ---------------------------------------------------------------------------
+   Everything below is @layer base ON PURPOSE. Do not un-layer it.
+
+   Tailwind v4 emits utilities into @layer utilities. Unlayered CSS beats
+   layered CSS whatever the specificity, so a bare `* { margin: 0; padding: 0 }`
+   silently defeats every mx-auto, px-6 and py-24 on the site. That is exactly
+   what happened here: the homepage lost all centring and section padding.
+
+   There is also no custom `*` reset any more. Tailwind's preflight already
+   applies box-sizing: border-box and zeroes margin/padding on every element,
+   so the old one was redundant as well as harmful.
+   --------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    color: var(--foreground);
+    font-family: var(--font-body), var(--font-lato), 'Lato', sans-serif;
+    line-height: 1.6;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--background-blush); }
+  ::-webkit-scrollbar-thumb { background: rgba(246, 24, 135, 0.3); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+  ::selection { background: rgba(246, 24, 135, 0.12); color: var(--foreground); }
+
+  /* Lato on headlines. Type selector so every page inherits one treatment.
+     Lato is already the body face on the inner pages, so this puts the whole
+     site on a single typeface rather than a serif display face on top. */
+  h1, h2 {
+    font-family: var(--font-lato), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.022em;
+  }
 }
 
-body {
-  background: #ffffff;
-  color: #1A1A1A;
-  font-family: 'Lato', sans-serif;
-  line-height: 1.6;
+@layer components {
+  /* The emphasised clause in a headline. Lighter grey, same weight, no italic:
+     at Lato 700 an italic clause reads as a different voice, not an accent.
+     Layered so a text-* utility on the span can still override it. */
+  .hl-em { color: var(--headline-muted); }
 }
-
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #F8F2F4; }
-::-webkit-scrollbar-thumb { background: rgba(246,24,135,0.3); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: #F61887; }
-
-::selection { background: rgba(246,24,135,0.12); color: #1A1A1A; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -45,14 +186,11 @@ body {
   to { opacity: 1; }
 }
 
-.animate-fade-up { animation: fadeUp 0.6s ease-out forwards; }
-.animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
-
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
+* { animation: none !important; transition: none !important; }
 }
 
 @media (max-width: 768px) {
-  .sakhi-desktop-nav { display: none !important; }
-  .sakhi-hamburger { display: flex !important; }
+.sakhi-desktop-nav { display: none !important; }
+.sakhi-hamburger { display: flex !important; }
 }

@@ -189,7 +189,6 @@ export default function ContributorsTree({ contributors }: { contributors: Contr
                       position: "absolute",
                       inset: -6,
                       borderRadius: "50%",
-                      border: "1.5px solid rgba(246,24,135,0.35)",
                       pointerEvents: "none",
                     }}
                     animate={{ scale: [1, 1.45, 1], opacity: [0.6, 0, 0.6] }}
@@ -208,7 +207,6 @@ export default function ContributorsTree({ contributors }: { contributors: Contr
                         right: tooltipRight,
                         transform: tooltipTransform,
                         background: "#fff",
-                        border: "1px solid rgba(246,24,135,0.15)",
                         borderRadius: 12,
                         padding: "12px 14px",
                         width: 188,
@@ -236,8 +234,7 @@ export default function ContributorsTree({ contributors }: { contributors: Contr
                 <motion.div
                   style={{
                     background: "#fff",
-                    border: "1px solid rgba(246,24,135,0.12)",
-                    borderRadius: 8,
+                    borderRadius: 20,
                     padding: "4px 10px",
                     textAlign: "center",
                     whiteSpace: "nowrap",

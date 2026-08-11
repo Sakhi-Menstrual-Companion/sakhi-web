@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Lato } from "next/font/google";
+import { Lato, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+
+// Body: neutral, highly legible. Correct register for health copy.
+const body = Inter({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 const lato = Lato({
   subsets: ["latin"],
@@ -13,12 +16,12 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "Sakhi — Your Health Companion",
+  title: "Sakhi, Your Health Companion",
   description:
     "Sakhi is the female health companion every Indian woman deserves. Log your health, get AI-powered insights, and share with one trusted person who cares for you.",
   keywords: ["period tracker", "menstrual health", "women's health", "PCOD", "PCOS", "India", "Sakhi"],
   openGraph: {
-    title: "Sakhi — Your Health Companion",
+    title: "Sakhi, Your Health Companion",
     description:
       "A girl's health is not just her data. It is something her people want to understand, and act on.",
     type: "website",
@@ -27,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sakhi — Your Health Companion",
+    title: "Sakhi, Your Health Companion",
     description: "The female health companion every Indian woman deserves.",
   },
 };
@@ -38,8 +41,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lato.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#F8F2F4] font-sans">
+    <html lang="en" className={`${lato.variable} ${body.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-background-shell font-sans">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

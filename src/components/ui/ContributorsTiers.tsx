@@ -22,8 +22,7 @@ function Avatar({ initials, large, highlight }: { initials: string; large?: bool
   return (
     <div style={{
       width: size, height: size, borderRadius: "50%", flexShrink: 0,
-      background: highlight ? "linear-gradient(135deg, #F61887 0%, #D4006E 100%)" : "rgba(246,24,135,0.08)",
-      border: highlight ? "none" : "1.5px solid rgba(246,24,135,0.18)",
+      background: highlight ? "linear-gradient(135deg, #F61887 0%, #D4006E 100%)" : "rgba(246,24,135,0.12)",
       display: "flex", alignItems: "center", justifyContent: "center",
       fontSize: large ? 20 : 15, fontWeight: 400,
       color: highlight ? "#fff" : "#F61887",
@@ -38,7 +37,7 @@ function TierDivider({ label, color }: { label: string; color: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24, marginTop: 8 }}>
       <div style={{ width: 8, height: 8, borderRadius: "50%", background: color, flexShrink: 0 }} />
-      <span style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", letterSpacing: "0.12em", textTransform: "uppercase" as const, whiteSpace: "nowrap" as const }}>
+      <span style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", whiteSpace: "nowrap" as const }}>
         {label}
       </span>
       <div style={{ flex: 1, height: 1, background: "rgba(246,24,135,0.1)" }} />
@@ -57,8 +56,7 @@ function FounderCard({ c }: { c: Contributor }) {
       whileHover={{ y: -3 }}
       style={{
         background: "#F8E5EC",
-        border: "1.5px solid rgba(246,24,135,0.18)",
-        borderRadius: 24,
+        borderRadius: 20,
         padding: "36px 36px",
         display: "flex",
         flexDirection: "column" as const,
@@ -83,7 +81,7 @@ function FounderCard({ c }: { c: Contributor }) {
         {c.contributions.split(", ").slice(0, 5).map(t => (
           <span key={t} style={{
             fontSize: 11, fontWeight: 400, color: "#F61887",
-            background: "rgba(246,24,135,0.08)", border: "1px solid rgba(246,24,135,0.14)",
+            background: "rgba(246,24,135,0.08)",
             padding: "4px 11px", borderRadius: 999,
           }}>
             {t}
@@ -105,7 +103,6 @@ function ContributorCard({ c, delay = 0 }: { c: Contributor; delay?: number }) {
       whileHover={{ y: -3 }}
       style={{
         background: "#fff",
-        border: "1px solid rgba(246,24,135,0.1)",
         borderRadius: 20,
         padding: "28px",
         display: "flex",
@@ -150,7 +147,6 @@ function CommunityBlock() {
       transition={{ duration: 0.45, ease: "easeOut" }}
       style={{
         background: "#F8F2F4",
-        border: "1px solid rgba(246,24,135,0.08)",
         borderRadius: 20,
         padding: "36px",
         display: "flex",
@@ -159,18 +155,18 @@ function CommunityBlock() {
       }}
     >
       <div>
-        <div style={{ fontSize: 24, fontWeight: 300, color: "#F61887", letterSpacing: "-0.5px", marginBottom: 6 }}>
+        <div style={{ fontSize: 24, fontWeight: 700, color: "#F61887", letterSpacing: 0, marginBottom: 6 }}>
           Every woman who trusted Sakhi.
         </div>
         <p style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0, maxWidth: 560 }}>
-          Early App Store users, beta testers, campus ambassadors, B2B partners, and supporters who believed from day one — every one of them is part of what Sakhi is.
+          Early App Store users, beta testers, campus ambassadors, B2B partners, and supporters who believed from day one, every one of them is part of what Sakhi is.
         </p>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 8 }}>
         {["Early App Store Users", "TestFlight Beta Testers", "Campus Ambassadors", "B2B Partners", "Community Supporters"].map(label => (
           <span key={label} style={{
             fontSize: 12, fontWeight: 400, color: "#F61887",
-            background: "#fff", border: "1px solid rgba(246,24,135,0.15)",
+            background: "#fff",
             padding: "6px 14px", borderRadius: 999,
           }}>
             {label}
