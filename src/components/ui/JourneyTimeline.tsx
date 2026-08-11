@@ -63,8 +63,8 @@ export default function JourneyTimeline() {
                 {isLeft && (
                   <>
                     <div style={{ fontSize: 13, fontWeight: 600, color: "#D4006E", letterSpacing: "-0.006em", marginBottom: 6 }}>{m.date}</div>
-                    <div style={{ fontSize: 16, fontWeight: 500, color: "#1A1A1A", marginBottom: 6, lineHeight: 1.3 }}>{m.label}</div>
-                    <div style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.65 }}>{m.desc}</div>
+                    <div style={{ fontSize: 16, fontWeight: 500, color: "var(--foreground)", marginBottom: 6, lineHeight: 1.3 }}>{m.label}</div>
+                    <div style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.65 }}>{m.desc}</div>
                   </>
                 )}
               </div>
@@ -92,8 +92,8 @@ export default function JourneyTimeline() {
                 {!isLeft && (
                   <>
                     <div style={{ fontSize: 13, fontWeight: 600, color: "#D4006E", letterSpacing: "-0.006em", marginBottom: 6 }}>{m.date}</div>
-                    <div style={{ fontSize: 16, fontWeight: 500, color: "#1A1A1A", marginBottom: 6, lineHeight: 1.3 }}>{m.label}</div>
-                    <div style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.65 }}>{m.desc}</div>
+                    <div style={{ fontSize: 16, fontWeight: 500, color: "var(--foreground)", marginBottom: 6, lineHeight: 1.3 }}>{m.label}</div>
+                    <div style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.65 }}>{m.desc}</div>
                   </>
                 )}
               </div>

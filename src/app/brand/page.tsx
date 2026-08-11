@@ -1,52 +1,53 @@
 import type { Metadata } from "next";
-import AnimatedSection from "@/components/ui/AnimatedSection";
-import * as kit from "@/components/ui/pageKit";
+import { Mail } from "lucide-react";
+
+import { Container, DotGrid, GradientText, Section, SectionHeading } from "@/components/ui/section";
+import { Spotlight } from "@/components/ui/spotlight";
 
 export const metadata: Metadata = {
   title: "Brand, Sakhi",
   description: "Sakhi's brand system: colors, typography, voice, and design principles. Everything that makes Sakhi feel like Sakhi.",
 };
 
-const sectionPad = kit.sectionPad;
-const container = kit.container;
-const label: React.CSSProperties = {
-  fontSize: 12, fontWeight: 400, color: "var(--primary)",
-  marginBottom: 12, display: "block",
-};
-
+/**
+ * Reference data, not styling. `hex` is printed on the page as the swatch's
+ * label, so every value here has to stay a literal colour — a `var(--token)`
+ * would render the page showing the string "var(--foreground)" where a hex
+ * code belongs. Do not fold these into the semantic tokens.
+ */
 const colors = [
-  { name: "Primary Pink",    hex: "var(--primary)", rgb: "246 · 24 · 135",  bg: "var(--primary)", text: "#fff",    usage: "CTA buttons, active states, key icons. The color of action and care." },
-  { name: "Deep Pink",       hex: "#D4006E", rgb: "187 · 41 · 104",  bg: "#D4006E", text: "#fff",    usage: "Hover states, pressed buttons, gradient endpoints." },
-  { name: "Deep Burgundy",   hex: "#D4006E", rgb: "109 · 23 · 67",   bg: "#D4006E", text: "#fff",    usage: "Rich dark accents, bold headings, brand identity moments." },
-  { name: "Background Blush",hex: "#F8F2F4", rgb: "248 · 242 · 244", bg: "#F8F2F4", text: "#1A1A1A", usage: "Primary background. Warm near-white that gives Sakhi its warmth." },
-  { name: "Soft Blush",      hex: "#F8E5EC", rgb: "248 · 229 · 236", bg: "#F8E5EC", text: "#1A1A1A", usage: "Card surfaces, modal backgrounds, secondary highlights." },
-  { name: "Text Black",      hex: "#1A1A1A", rgb: "28 · 28 · 30",    bg: "#1A1A1A", text: "#fff",    usage: "All headings, primary body text." },
-  { name: "Body Gray",       hex: "#6B6B6B", rgb: "107 · 107 · 122", bg: "#6B6B6B", text: "#fff",    usage: "Subtext, labels, secondary information, captions." },
-  { name: "Light Gray",      hex: "#EAD8E0", rgb: "229 · 228 · 234", bg: "#EAD8E0", text: "#1A1A1A", usage: "Inactive UI states, dividers, unselected backgrounds." },
+  { name: "Primary Pink", hex: "#F61887", rgb: "246 · 24 · 135", bg: "#F61887", text: "#fff", usage: "CTA buttons, active states, key icons. The color of action and care." },
+  { name: "Deep Pink", hex: "#D4006E", rgb: "212 · 0 · 110", bg: "#D4006E", text: "#fff", usage: "Hover states, pressed buttons, and any pink carrying white text." },
+  { name: "Deep Burgundy", hex: "#6D1743", rgb: "109 · 23 · 67", bg: "#6D1743", text: "#fff", usage: "Rich dark accents, bold headings, brand identity moments." },
+  { name: "Background Blush", hex: "#F8F2F4", rgb: "248 · 242 · 244", bg: "#F8F2F4", text: "#1D1D1F", usage: "Primary background. Warm near-white that gives Sakhi its warmth." },
+  { name: "Soft Blush", hex: "#F8E5EC", rgb: "248 · 229 · 236", bg: "#F8E5EC", text: "#1D1D1F", usage: "Card surfaces, modal backgrounds, secondary highlights." },
+  { name: "Text Black", hex: "#1D1D1F", rgb: "29 · 29 · 31", bg: "#1D1D1F", text: "#fff", usage: "All headings, primary body text." },
+  { name: "Body Gray", hex: "#68686D", rgb: "104 · 104 · 109", bg: "#68686D", text: "#fff", usage: "Subtext, labels, secondary information, captions." },
+  { name: "Light Gray", hex: "#EAD8E0", rgb: "234 · 216 · 224", bg: "#EAD8E0", text: "#1D1D1F", usage: "Inactive UI states, dividers, unselected backgrounds." },
 ];
 
 const typeScale = [
-  { role: "Display / Screen Title", weight: "Semibold or Bold", size: "28-34pt",  usage: "Main heading on each screen. Make it large and direct." },
-  { role: "Section Heading",        weight: "Semibold",         size: "20-22pt",  usage: "Section labels, modal titles." },
-  { role: "Body",                   weight: "Regular",          size: "15-17pt",  usage: "All body copy and subtitles." },
-  { role: "Label",                  weight: "Medium",           size: "13-15pt",  usage: "Button text, navigation labels, captions." },
-  { role: "Caption",                weight: "Regular",          size: "11-13pt",  usage: "Fine print, timestamps, helper text." },
+  { role: "Display / Screen Title", weight: "Semibold or Bold", size: "28-34pt", usage: "Main heading on each screen. Make it large and direct." },
+  { role: "Section Heading", weight: "Semibold", size: "20-22pt", usage: "Section labels, modal titles." },
+  { role: "Body", weight: "Regular", size: "15-17pt", usage: "All body copy and subtitles." },
+  { role: "Label", weight: "Medium", size: "13-15pt", usage: "Button text, navigation labels, captions." },
+  { role: "Caption", weight: "Regular", size: "11-13pt", usage: "Fine print, timestamps, helper text." },
 ];
 
 const voiceTraits = [
-  { trait: "Warm",     desc: "Speaks like a person, not a product.", example: "\"That sounds really rough. Your body has been dealing with a lot this week.\"" },
-  { trait: "Honest",   desc: "Does not overclaim. Says clearly when something needs a doctor.", example: "\"You have logged cramps for 5 days in a row. That is worth mentioning to your doctor.\"" },
-  { trait: "Calm",     desc: "No exclamation marks when things are okay. No alarm when uncertain.", example: "\"Late periods can have many causes. Worth keeping an eye on.\"" },
-  { trait: "Direct",   desc: "One clear sentence is always better than three vague ones.", example: "\"Your report is ready. Hand it to your doctor before the appointment.\"" },
+  { trait: "Warm", desc: "Speaks like a person, not a product.", example: "\"That sounds really rough. Your body has been dealing with a lot this week.\"" },
+  { trait: "Honest", desc: "Does not overclaim. Says clearly when something needs a doctor.", example: "\"You have logged cramps for 5 days in a row. That is worth mentioning to your doctor.\"" },
+  { trait: "Calm", desc: "No exclamation marks when things are okay. No alarm when uncertain.", example: "\"Late periods can have many causes. Worth keeping an eye on.\"" },
+  { trait: "Direct", desc: "One clear sentence is always better than three vague ones.", example: "\"Your report is ready. Hand it to your doctor before the appointment.\"" },
   { trait: "Intimate", desc: "Responds from what you actually logged, not a generic script.", example: "\"You usually log lower energy in your luteal phase, that fits what you are feeling now.\"" },
 ];
 
 const taglines = [
-  { line: "She knows your body.",               context: "Primary headline, hero, App Store" },
+  { line: "She knows your body.", context: "Primary headline, hero, App Store" },
   { line: "Because she has been paying attention.", context: "Italic sub-headline paired with the above" },
   { line: "The conversation that was never had.", context: "For the relationship / Be Her Sakhi layer" },
   { line: "Some questions are too personal to Google.", context: "For Sakhi AI marketing" },
-  { line: "Period is not a taboo. Not here.",    context: "Brand manifesto, pink sections" },
+  { line: "Period is not a taboo. Not here.", context: "Brand manifesto, pink sections" },
   { line: "A world where no Indian woman manages her health alone.", context: "Vision statement" },
 ];
 
@@ -68,362 +69,339 @@ const donts = [
   "\"Wellness\", \"Empowering\", \"Holistic\", \"AI-powered\" as a lead.",
 ];
 
+const colorRules = [
+  "Never use purple. That is Flo's color.",
+  "Never use dark backgrounds as default. That is Clue.",
+  "Red is for errors only, never decorative.",
+  "No gradients as the primary visual device.",
+  "Primary Pink never on large background blocks.",
+  "All text on Blush must be Text Black or Body Gray.",
+];
+
+const typeRules = [
+  "One dominant heading per screen. Make it large and direct.",
+  "Never more than two weights on a single screen.",
+  "No italic except for Hindi/foreign terms or pull quotes.",
+  "Line height: 1.4x for body, 1.1x for headings.",
+  "Never use thin weights for headings, they undercut the brand.",
+  "Letter spacing: none for headings, 0.02em for small caps only.",
+];
+
+const logoUsage = [
+  "Clear space: minimum equal to the height of the 'S' on all four sides.",
+  "Approved colors: Primary Pink on Blush, White on dark, Black on white.",
+  "Never stretch, rotate, recolor, or add effects.",
+  "Never place on a busy background or photo without a clear container.",
+  "SVG is the master format. Export PNG or PDF from SVG.",
+  "Never add drop shadows, glows, or outlines to the logo.",
+];
+
+const logoSwatches = [
+  { bg: "var(--background-blush)", label: "On Blush, preferred", textColor: "var(--primary)" },
+  { bg: "#FFFFFF", label: "On White, acceptable", textColor: "var(--primary)" },
+  { bg: "var(--primary)", label: "On Pink, reversed white", textColor: "#FFFFFF" },
+];
+
+function RuleList({ items }: { items: string[] }) {
+  return (
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {items.map((r) => (
+        <div key={r} className="flex items-start gap-2.5">
+          <div className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
+          <span className="text-[13px] leading-relaxed text-muted-foreground">{r}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function BrandPage() {
   return (
-    <div style={{ overflowX: "hidden", fontFamily: "var(--font-lato), Lato, sans-serif" }}>
+    <div>
+      {/* Hero, variant: "swatch ribbon" (design-system-doc style, à la Radix
+          Themes / shadcn docs) — the palette itself is the hero art, laid
+          out as a strip of real fills rather than described in prose. */}
+      <section className="relative overflow-hidden border-b border-border bg-background px-6 pb-16 sm:px-8 sm:pb-20">
+        <DotGrid />
+        <Container className="relative z-10 pt-[calc(var(--nav-clearance)+3.5rem)] sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
+          <span className="eyebrow">Brand system</span>
+          <h1 className="text-h1 mt-5 max-w-[20ch] text-foreground">
+            Built on clear design. <GradientText>Guided by honest voice.</GradientText>
+          </h1>
+          <p className="text-lead mt-6 max-w-[42rem] text-muted-foreground">
+            Every color, every word, every decision in Sakhi&rsquo;s design comes from one place,
+            making a woman feel understood, not processed. This page documents how we do that.
+          </p>
 
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section style={{
-        background: "var(--background)", borderBottom: "1px solid var(--border)",
-        padding: "160px 0 100px",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        <div style={{ ...kit.container, position: "relative" }}>
-          <AnimatedSection delay={0}>
-            <span style={label}>Brand System</span>
-            <h1 style={{ fontSize: "clamp(44px, 6vw, 74px)", color: "var(--foreground)", letterSpacing: "-0.02em", lineHeight: 1.06, margin: "0 0 28px" }}>
-              Built on clear design.<br />
-              <span style={{ color: "var(--primary)" }}>Guided by honest voice.</span>
-            </h1>
-          </AnimatedSection>
-          <AnimatedSection delay={120}>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.85, maxWidth: 520, margin: "0 0 40px" }}>
-              Every color, every word, every decision in Sakhi&rsquo;s design comes from one place, making a woman feel understood, not processed. This page documents how we do that.
-            </p>
-          </AnimatedSection>
-          <AnimatedSection delay={200}>
-            <div style={{ display: "flex", gap: 24, flexWrap: "wrap" as const }}>
-              {["Warm", "Honest", "Calm", "Direct", "Intimate"].map(t => (
-                <span key={t} style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", background: "rgba(246,24,135,0.08)", padding: "5px 14px", borderRadius: 999 }}>
-                  {t}
-                </span>
-              ))}
+          <div className="mt-10 flex flex-wrap gap-2.5">
+            {["Warm", "Honest", "Calm", "Direct", "Intimate"].map((t) => (
+              <span key={t} className="rounded-full bg-accent-faint px-3.5 py-1.5 text-[12px] font-medium text-secondary">
+                {t}
+              </span>
+            ))}
+          </div>
+        </Container>
+
+        <div className="relative z-10 mt-12 flex h-16 w-full border-y border-border sm:h-20">
+          {colors.map((c) => (
+            <div key={c.hex} className="group relative flex-1" style={{ background: c.bg }}>
+              <span className="absolute inset-x-0 bottom-0 translate-y-full bg-ink px-2 py-1 text-center font-mono text-[10px] text-white opacity-0 transition-[transform,opacity] duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+                {c.hex}
+              </span>
             </div>
-          </AnimatedSection>
+          ))}
         </div>
       </section>
 
-      {/* ── COLOR PALETTE ─────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)" }}>
-        <div style={container}>
-          <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 52 }}>
-              <span style={label}>Color Palette</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 14px" }}>
-                The palette of care.
-              </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 520, margin: 0 }}>
-                Never purple, that&rsquo;s Flo. Never dark backgrounds by default, that&rsquo;s Clue. Sakhi owns warm, pink, and human.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
-            {colors.map((c, i) => (
-              <AnimatedSection key={c.hex} delay={i * 50}>
-                <div style={{ borderRadius: 24, overflow: "hidden" }}>
-                  <div style={{ height: 72, background: c.bg }} />
-                  <div style={{ padding: "16px 18px", background: "#F8F2F4" }}>
-                    <div style={{ fontSize: 13, fontWeight: 500, color: "var(--foreground)", marginBottom: 3 }}>{c.name}</div>
-                    <div style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", fontFamily: "monospace", marginBottom: 8 }}>{c.hex}</div>
-                    <div style={{ fontSize: 10, fontWeight: 400, color: "#A0A0A0", marginBottom: 8 }}>RGB {c.rgb}</div>
-                    <div style={{ fontSize: 11, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.5 }}>{c.usage}</div>
-                  </div>
+      {/* --------------------------------------------------------- color palette */}
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="Color palette"
+            title="The palette of care"
+            lead="Never purple, that's Flo. Never dark backgrounds by default, that's Clue. Sakhi owns warm, pink, and human."
+            align="left"
+          />
+          <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {colors.map((c) => (
+              <div key={c.hex} className="overflow-hidden rounded-2xl border border-border transition-transform duration-300 ease-(--ease-out-soft) hover:-translate-y-1">
+                <div className="h-16" style={{ background: c.bg }} />
+                <div className="bg-card p-4">
+                  <div className="text-[13px] font-medium text-foreground">{c.name}</div>
+                  <div className="mt-0.5 font-mono text-[12px] text-secondary">{c.hex}</div>
+                  <div className="mt-1.5 text-[10px] text-muted-foreground">RGB {c.rgb}</div>
+                  <div className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{c.usage}</div>
                 </div>
-              </AnimatedSection>
+              </div>
             ))}
           </div>
 
-          <AnimatedSection delay={0}>
-            <div style={{ marginTop: 32, background: "#F8F2F4", borderRadius: 24, padding: "24px 28px" }}>
-              <div style={{ fontSize: 13, fontWeight: 500, color: "var(--foreground)", marginBottom: 12 }}>Color rules, never break these</div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
-                {[
-                  "Never use purple. That is Flo's color.",
-                  "Never use dark backgrounds as default. That is Clue.",
-                  "Red is for errors only, never decorative.",
-                  "No gradients as the primary visual device.",
-                  "Primary Pink never on large background blocks.",
-                  "All text on Blush must be Text Black or Body Gray.",
-                ].map((r, i) => (
-                  <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                    <div style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--primary)", flexShrink: 0, marginTop: 5 }} />
-                    <span style={{ fontSize: 13, color: "#6B6B6B", lineHeight: 1.5 }}>{r}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
+          <div className="mt-8 rounded-2xl border border-border bg-background-blush p-7">
+            <div className="mb-4 text-[13px] font-medium text-foreground">Color rules, never break these</div>
+            <RuleList items={colorRules} />
+          </div>
+        </Container>
+      </Section>
 
-      {/* ── TYPOGRAPHY ────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#fbf9fb" }}>
-        <div style={container}>
-          <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 52 }}>
-              <span style={label}>Typography</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 14px" }}>
-                General Sans.
-              </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 540, margin: 0 }}>
-                Clean, geometric, warm. Not clinical. Not cute. It pairs confidence with enough roundness to feel approachable. Free for commercial use via{" "}
-                <a href="https://www.fontshare.com/fonts/general-sans" target="_blank" rel="noopener noreferrer" style={{ color: "var(--primary)", textDecoration: "none" }}>fontshare.com</a>.
-              </p>
-            </div>
-          </AnimatedSection>
+      {/* ------------------------------------------------------------ typography */}
+      <Section tone="blush">
+        <Container>
+          <SectionHeading
+            eyebrow="Typography"
+            title="General Sans"
+            align="left"
+            lead={
+              <>
+                Clean, geometric, warm. Not clinical. Not cute. It pairs confidence with enough
+                roundness to feel approachable. Free for commercial use via{" "}
+                <a
+                  href="https://www.fontshare.com/fonts/general-sans"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-secondary underline underline-offset-2"
+                >
+                  fontshare.com
+                </a>
+                .
+              </>
+            }
+          />
 
-          {/* Type specimen */}
-          <AnimatedSection delay={80}>
-            <div style={{ background: "#fff", borderRadius: 24, padding: "48px", marginBottom: 24 }}>
-              <div style={{ fontSize: 14, color: "#6e6e73", fontWeight: 600, letterSpacing: "-0.008em", marginBottom: 32 }}>Type specimen</div>
-              <div style={{ borderBottom: "1px solid rgba(246,24,135,0.1)", paddingBottom: 24, marginBottom: 24 }}>
-                <p style={{ fontSize: 42, fontWeight: 700, color: "var(--foreground)", lineHeight: 1.1, margin: 0 }}>Tell me your cycle length.</p>
-                <p style={{ fontSize: 13, color: "#A0A0A0", marginTop: 8 }}>Display / 42pt Semibold</p>
-              </div>
-              <div style={{ borderBottom: "1px solid rgba(246,24,135,0.1)", paddingBottom: 24, marginBottom: 24 }}>
-                <p style={{ fontSize: 22, fontWeight: 600, color: "var(--foreground)", lineHeight: 1.2, margin: 0 }}>You have been logging cramps for 5 days.</p>
-                <p style={{ fontSize: 13, color: "#A0A0A0", marginTop: 8 }}>Section Heading / 22pt Semibold</p>
-              </div>
-              <div style={{ borderBottom: "1px solid rgba(246,24,135,0.1)", paddingBottom: 24, marginBottom: 24 }}>
-                <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>That sounds really rough. Your body has been dealing with a lot this week. Looking at what you have logged, you are on day 26, which is often the hardest part of the cycle for mood.</p>
-                <p style={{ fontSize: 13, color: "#A0A0A0", marginTop: 8 }}>Body / 16pt Regular</p>
+          <div className="mt-14 rounded-2xl border border-border bg-card p-8 sm:p-12">
+            <div className="mb-8 text-[13px] font-semibold text-muted-foreground">Type specimen</div>
+            <div className="space-y-6 divide-y divide-border [&>div]:pt-6 [&>div]:first:pt-0">
+              <div>
+                <p className="text-[32px] leading-tight font-semibold text-foreground sm:text-[42px]">
+                  Tell me your cycle length.
+                </p>
+                <p className="mt-2 text-[13px] text-muted-foreground">Display / 42pt Semibold</p>
               </div>
               <div>
-                <p style={{ fontSize: 13, fontWeight: 500, color: "var(--primary)", margin: 0, letterSpacing: "0.02em" }}>OVULATION PHASE · DAY 14</p>
-                <p style={{ fontSize: 13, color: "#A0A0A0", marginTop: 8 }}>Label / 13pt Medium · loose tracking</p>
+                <p className="text-[20px] leading-snug font-semibold text-foreground sm:text-[22px]">
+                  You have been logging cramps for 5 days.
+                </p>
+                <p className="mt-2 text-[13px] text-muted-foreground">Section Heading / 22pt Semibold</p>
+              </div>
+              <div>
+                <p className="text-[15px] leading-relaxed text-muted-foreground sm:text-[16px]">
+                  That sounds really rough. Your body has been dealing with a lot this week. Looking at
+                  what you have logged, you are on day 26, which is often the hardest part of the cycle
+                  for mood.
+                </p>
+                <p className="mt-2 text-[13px] text-muted-foreground">Body / 16pt Regular</p>
+              </div>
+              <div>
+                <p className="text-[13px] font-medium tracking-[0.02em] text-secondary">
+                  OVULATION PHASE · DAY 14
+                </p>
+                <p className="mt-2 text-[13px] text-muted-foreground">Label / 13pt Medium · loose tracking</p>
               </div>
             </div>
-          </AnimatedSection>
+          </div>
 
-          {/* Type scale table */}
-          <AnimatedSection delay={100}>
-            <div style={{ display: "flex", flexDirection: "column" as const, gap: 2 }}>
-              {typeScale.map((t, i) => (
-                <div key={i} style={{
-                  background: "#fff",
-                  borderRadius: i === 0 ? "14px 14px 0 0" : i === typeScale.length - 1 ? "0 0 14px 14px" : 0,
-                  display: "grid", gridTemplateColumns: "220px 120px 80px 1fr", gap: 0,
-                  padding: "18px 0", alignItems: "center",
-                }}>
-                  <div style={{ fontSize: 13, fontWeight: 500, color: "var(--foreground)" }}>{t.role}</div>
-                  <div style={{ fontSize: 12, color: "#A0A0A0" }}>{t.weight}</div>
-                  <div style={{ fontSize: 12, color: "var(--primary)", fontFamily: "monospace" }}>{t.size}</div>
-                  <div style={{ fontSize: 12, color: "#6B6B6B" }}>{t.usage}</div>
+          {/* A real table: the four columns line up across rows and that alignment
+              is the information. Scrolls inside its own container so the page
+              itself never scrolls sideways. */}
+          <div className="mt-6 overflow-x-auto">
+            <div className="flex min-w-[620px] flex-col divide-y divide-border rounded-2xl border border-border bg-card">
+              {typeScale.map((t) => (
+                <div
+                  key={t.role}
+                  className="grid grid-cols-[minmax(150px,220px)_110px_80px_minmax(200px,1fr)] items-center gap-0 px-5 py-4"
+                >
+                  <div className="text-[13px] font-medium text-foreground">{t.role}</div>
+                  <div className="text-[12px] text-muted-foreground">{t.weight}</div>
+                  <div className="font-mono text-[12px] text-secondary">{t.size}</div>
+                  <div className="text-[12px] text-muted-foreground">{t.usage}</div>
                 </div>
               ))}
             </div>
-          </AnimatedSection>
+          </div>
 
-          <AnimatedSection delay={0}>
-            <div style={{ marginTop: 24, background: "#fff", borderRadius: 24, padding: "24px 28px" }}>
-              <div style={{ fontSize: 13, fontWeight: 500, color: "var(--foreground)", marginBottom: 12 }}>Typography rules</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                {[
-                  "One dominant heading per screen. Make it large and direct.",
-                  "Never more than two weights on a single screen.",
-                  "No italic except for Hindi/foreign terms or pull quotes.",
-                  "Line height: 1.4x for body, 1.1x for headings.",
-                  "Never use thin weights for headings, they undercut the brand.",
-                  "Letter spacing: none for headings, 0.02em for small caps only.",
-                ].map((r, i) => (
-                  <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                    <div style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--primary)", flexShrink: 0, marginTop: 5 }} />
-                    <span style={{ fontSize: 13, color: "#6B6B6B", lineHeight: 1.5 }}>{r}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
+          <div className="mt-6 rounded-2xl border border-border bg-card p-7">
+            <div className="mb-4 text-[13px] font-medium text-foreground">Typography rules</div>
+            <RuleList items={typeRules} />
+          </div>
+        </Container>
+      </Section>
 
-      {/* ── VOICE & TONE ──────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)" }}>
-        <div style={container}>
-          <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 52 }}>
-              <span style={label}>Voice & Tone</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 14px" }}>
-                One voice. Five traits.
-              </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 520, margin: 0 }}>
-                Sakhi is the friend who is always honest with you. Warm but not soft. Direct but not cold. She never judges. She remembers everything you told her and brings it up at the right moment.
-              </p>
-            </div>
-          </AnimatedSection>
+      {/* ----------------------------------------------------------- voice & tone */}
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="Voice & tone"
+            title="One voice. Five traits."
+            lead="Sakhi is the friend who is always honest with you. Warm but not soft. Direct but not cold. She never judges. She remembers everything you told her and brings it up at the right moment."
+            align="left"
+          />
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12, marginBottom: 48 }}>
-            {voiceTraits.map((t, i) => (
-              <AnimatedSection key={t.trait} delay={i * 60}>
-                <div style={{ background: "#F8F2F4", borderRadius: 24, padding: "28px 0", height: "100%", boxSizing: "border-box" as const }}>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: "var(--primary)", marginBottom: 10 }}>{t.trait}</div>
-                  <p style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.7, margin: "0 0 16px" }}>{t.desc}</p>
-                  <p style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>{t.example}</p>
+          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {voiceTraits.map((t) => (
+              <div key={t.trait} className="rounded-2xl border border-border bg-card p-6 transition-[transform,border-color,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-1 hover:border-transparent hover:shadow-card-hover">
+                <div className="bg-gradient-to-br from-primary to-secondary bg-clip-text text-[15px] font-bold text-transparent">
+                  {t.trait}
                 </div>
-              </AnimatedSection>
+                <p className="mt-2.5 text-[13px] leading-relaxed text-muted-foreground">{t.desc}</p>
+                <p className="mt-3 text-[12px] leading-relaxed text-muted-foreground italic">{t.example}</p>
+              </div>
             ))}
           </div>
 
           {/* Do / Don't */}
-          <AnimatedSection delay={0}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-              <div style={{ background: "#F8F2F4", borderRadius: 24, padding: "32px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--primary)" }} />
-                  <span style={{ fontSize: 14, fontWeight: 600, color: "#1d1d1f", letterSpacing: "-0.008em" }}>Sakhi sounds like this</span>
-                </div>
-                <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
-                  {dos.map((d, i) => (
-                    <div key={i} style={{ fontSize: 13, fontWeight: 400, color: "var(--foreground)", lineHeight: 1.6, paddingLeft: 14, borderLeft: "2px solid rgba(246,24,135,0.25)" }}>
-                      {d}
-                    </div>
-                  ))}
-                </div>
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl border border-accent bg-accent-faint p-7">
+              <div className="mb-5 flex items-center gap-2">
+                <div className="size-2 rounded-full bg-primary" />
+                <span className="text-[14px] font-semibold text-foreground">Sakhi sounds like this</span>
               </div>
-              <div style={{ background: "#F8E5EC", borderRadius: 24, padding: "32px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#A0A0A0" }} />
-                  <span style={{ fontSize: 14, fontWeight: 600, color: "#6e6e73", letterSpacing: "-0.008em" }}>Sakhi never sounds like this</span>
-                </div>
-                <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
-                  {donts.map((d, i) => (
-                    <div key={i} style={{ fontSize: 13, fontWeight: 400, color: "#A0A0A0", lineHeight: 1.6, paddingLeft: 14, borderLeft: "2px solid #EAD8E0", textDecoration: i < 4 ? "line-through" : "none" }}>
-                      {d}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection delay={0}>
-            <div style={{ marginTop: 24, background: "#1A1A1A", borderRadius: 24, padding: "28px 32px" }}>
-              <p style={{ fontSize: 18, fontWeight: 500, color: "var(--primary)", fontStyle: "italic", margin: "0 0 8px" }}>
-                The single test for every piece of copy:
-              </p>
-              <p style={{ fontSize: 22, fontWeight: 400, color: "var(--foreground)", margin: 0, lineHeight: 1.4 }}>
-                Would a real friend say this? If no, rewrite it.
-              </p>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* ── TAGLINES ──────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#fbf9fb" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 48 }}>
-              <span style={label}>Key Lines</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 14px" }}>
-                The words that define Sakhi.
-              </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
-                These lines are not taglines written by a copywriter. They came from understanding the problem deeply and saying it honestly.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <div style={{ display: "flex", flexDirection: "column" as const, gap: 2 }}>
-            {taglines.map((t, i) => (
-              <AnimatedSection key={i} delay={i * 60}>
-                <div style={{
-                  background: "#fff",
-                  borderRadius: i === 0 ? "8px 8px 0 0" : i === taglines.length - 1 ? "0 0 8px 8px" : 0,
-                  padding: "24px 28px",
-                  display: "grid",
-                  gridTemplateColumns: "1fr 260px",
-                  gap: 24,
-                  alignItems: "center",
-                }}>
-                  <div style={{ fontSize: 18, fontWeight: 400, color: "var(--foreground)", lineHeight: 1.4, fontStyle: "italic" }}>
-                    &ldquo;{t.line}&rdquo;
-                  </div>
-                  <div style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0", lineHeight: 1.5 }}>
-                    {t.context}
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── LOGO RULES ────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 48 }}>
-              <span style={label}>Logo</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 14px" }}>
-                sakhi. in Primary Pink.
-              </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 480, margin: 0 }}>
-                The logotype is the brand. Clear space, no effects, approved colors only.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 32 }}>
-            {[
-              { bg: "#F8F2F4", label: "On Blush, preferred",     textColor: "var(--primary)" },
-              { bg: "#FFFFFF", label: "On White, acceptable",     textColor: "var(--primary)" },
-              { bg: "var(--primary)", label: "On Pink, reversed white",  textColor: "#FFFFFF" },
-            ].map((v, i) => (
-              <AnimatedSection key={i} delay={i * 60}>
-                <div style={{ background: v.bg, borderRadius: 24, padding: "40px 28px", textAlign: "center" as const, border: v.bg === "#FFFFFF" ? "1px solid rgba(0,0,0,0.06)" : "none" }}>
-                  <div style={{ fontSize: 28, fontWeight: 700, color: v.textColor, letterSpacing: 0, marginBottom: 16 }}>sakhi.</div>
-                  <div style={{ fontSize: 11, fontWeight: 400, color: v.textColor === "#FFFFFF" ? "rgba(255,255,255,0.6)" : "#A0A0A0", letterSpacing: "0.06em" }}>{v.label}</div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          <AnimatedSection delay={0}>
-            <div style={{ background: "#F8F2F4", borderRadius: 24, padding: "24px 28px" }}>
-              <div style={{ fontSize: 13, fontWeight: 500, color: "var(--foreground)", marginBottom: 12 }}>Logo usage rules</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                {[
-                  "Clear space: minimum equal to the height of the 'S' on all four sides.",
-                  "Approved colors: Primary Pink on Blush, White on dark, Black on white.",
-                  "Never stretch, rotate, recolor, or add effects.",
-                  "Never place on a busy background or photo without a clear container.",
-                  "SVG is the master format. Export PNG or PDF from SVG.",
-                  "Never add drop shadows, glows, or outlines to the logo.",
-                ].map((r, i) => (
-                  <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                    <div style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--primary)", flexShrink: 0, marginTop: 5 }} />
-                    <span style={{ fontSize: 13, color: "#6B6B6B", lineHeight: 1.5 }}>{r}</span>
+              <div className="flex flex-col gap-3">
+                {dos.map((d) => (
+                  <div key={d} className="border-l-2 border-secondary/25 pl-3.5 text-[13px] leading-relaxed text-foreground">
+                    {d}
                   </div>
                 ))}
               </div>
             </div>
-          </AnimatedSection>
-        </div>
-      </section>
+            <div className="rounded-2xl border border-border bg-muted p-7">
+              <div className="mb-5 flex items-center gap-2">
+                <div className="size-2 rounded-full bg-muted-foreground" />
+                <span className="text-[14px] font-semibold text-muted-foreground">Sakhi never sounds like this</span>
+              </div>
+              <div className="flex flex-col gap-3">
+                {donts.map((d, i) => (
+                  <div
+                    key={d}
+                    className={`border-l-2 border-border pl-3.5 text-[13px] leading-relaxed text-muted-foreground ${i < 4 ? "line-through" : ""}`}
+                  >
+                    {d}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-      {/* ── PRESS & PARTNERSHIPS ──────────────────────────────────────────── */}
-      <section style={{ background: "var(--background-blush)", borderTop: "1px solid var(--border)", padding: "80px 0", textAlign: "center" as const }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.1, margin: "0 0 20px" }}>
-              For press and partnerships.
-            </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.8, margin: "0 0 40px" }}>
-              Logos, screenshots, founder bios, and the full brand story, ready for media use. Write to us and we&rsquo;ll send everything over.
+          <div className="mt-6 rounded-2xl bg-ink px-8 py-7">
+            <p className="text-[15px] font-semibold tracking-[0.02em] text-primary-soft">
+              The single test for every piece of copy:
             </p>
-            <a
-              href="mailto:contact@sakhiapp.in"
-              style={{ display: "inline-flex", alignItems: "center", gap: 10, backgroundColor: "var(--secondary)", color: "var(--secondary-foreground)", padding: "0 22px", height: 44, borderRadius: 8, textDecoration: "none", fontSize: 15, fontWeight: 600, boxShadow: "0 8px 32px rgba(0,0,0,0.15)" }}
-            >
-              contact@sakhiapp.in →
-            </a>
-          </AnimatedSection>
-        </div>
-      </section>
+            <p className="mt-2.5 text-[20px] leading-snug text-white sm:text-[22px]">
+              Would a real friend say this? If no, rewrite it.
+            </p>
+          </div>
+        </Container>
+      </Section>
 
+      {/* -------------------------------------------------------------- taglines */}
+      <Section tone="blush">
+        <Container className="max-w-[52rem]">
+          <SectionHeading
+            eyebrow="Key lines"
+            title="The words that define Sakhi"
+            lead="These lines are not taglines written by a copywriter. They came from understanding the problem deeply and saying it honestly."
+            align="left"
+          />
+          <div className="mt-14 flex flex-col divide-y divide-border rounded-2xl border border-border bg-card">
+            {taglines.map((t) => (
+              <div key={t.line} className="grid grid-cols-1 items-center gap-2 px-6 py-5 sm:grid-cols-[1fr_240px] sm:gap-6">
+                <div className="text-[17px] leading-snug text-foreground italic">&ldquo;{t.line}&rdquo;</div>
+                <div className="text-[12px] leading-relaxed text-muted-foreground">{t.context}</div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* -------------------------------------------------------------- logo rules */}
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="Logo"
+            title="sakhi. in Primary Pink"
+            lead="The logotype is the brand. Clear space, no effects, approved colors only."
+            align="left"
+          />
+          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3">
+            {logoSwatches.map((v) => (
+              <div key={v.label}>
+                <div
+                  className="flex items-center justify-center rounded-2xl py-11"
+                  style={{ background: v.bg, border: v.bg === "#FFFFFF" ? "1px solid var(--border)" : "none" }}
+                >
+                  <div className="text-[28px] font-bold" style={{ color: v.textColor }}>
+                    sakhi.
+                  </div>
+                </div>
+                <div className="eyebrow mt-2.5 text-center">{v.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-2xl border border-border bg-background-blush p-7">
+            <div className="mb-4 text-[13px] font-medium text-foreground">Logo usage rules</div>
+            <RuleList items={logoUsage} />
+          </div>
+        </Container>
+      </Section>
+
+      {/* --------------------------------------------------- press & partnerships */}
+      <section className="relative overflow-hidden bg-ink px-6 py-24 sm:px-8 sm:py-28">
+        <Spotlight className="top-0 left-1/2 -translate-x-1/2" fill="var(--secondary)" />
+        <Container className="relative z-10 flex flex-col items-center text-center">
+          <h2 className="text-h2 max-w-[22ch] text-white">
+            For press <GradientText tone="ink">and partnerships</GradientText>
+          </h2>
+          <p className="text-lead mx-auto mt-5 max-w-[38ch] text-white/65">
+            Logos, screenshots, founder bios, and the full brand story, ready for media use. Write to
+            us and we&rsquo;ll send everything over.
+          </p>
+          <a
+            href="mailto:contact@sakhiapp.in"
+            className="mt-10 inline-flex items-center gap-2.5 rounded-full bg-secondary px-7 py-3.5 text-[15px] font-semibold text-secondary-foreground no-underline transition-colors duration-200 hover:bg-[#b8005f]"
+          >
+            <Mail className="size-4" aria-hidden="true" /> contact@sakhiapp.in
+          </a>
+        </Container>
+      </section>
     </div>
   );
 }

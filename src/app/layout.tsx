@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Lato, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -15,7 +15,13 @@ const lato = Lato({
   display: "swap",
 });
 
+const siteUrl = "https://sakhiapp.in";
+
 export const metadata: Metadata = {
+  /* Without this, the relative opengraph-image.png / twitter-image.png routes
+     resolve against http://localhost:3000 in the build and every share card
+     points at a dev server. Next warns about it on every build. */
+  metadataBase: new URL(siteUrl),
   title: "Sakhi, Your Health Companion",
   description:
     "Sakhi is the female health companion every Indian woman deserves. Log your health, get AI-powered insights, and share with one trusted person who cares for you.",
@@ -27,6 +33,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     siteName: "Sakhi",
+    url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
@@ -35,6 +42,26 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  /* The navbar is a translucent dark pill over a white page, so the two
+     schemes want different browser chrome behind it. */
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#050406" },
+  ],
+  colorScheme: "light",
+};
+
+/**
+ * Runs before first paint, so scroll-reveal targets are hidden from the very
+ * first frame rather than flashing in and back out at hydration.
+ *
+ * It is also the switch that makes the reveal safe: the CSS that hides those
+ * blocks is scoped to `.js-reveal`, so a browser with JS disabled never hides
+ * anything and reads the page as plain server-rendered HTML.
+ */
+const revealBootstrap = `document.documentElement.classList.add('js-reveal')`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,9 +69,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${lato.variable} ${body.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-background-shell font-sans">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: revealBootstrap }} />
+      </head>
+      <body className="flex min-h-full flex-col bg-background-shell font-sans">
+        <a
+          href="#main"
+          className="sr-only rounded-lg bg-secondary px-4 py-2 text-sm font-semibold text-secondary-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200]"
+        >
+          Skip to content
+        </a>
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

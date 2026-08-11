@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import AnimatedSection from "@/components/ui/AnimatedSection";
-import * as kit from "@/components/ui/pageKit";
+
+import { Container, DotGrid, GradientText, Section, SectionHeading } from "@/components/ui/section";
+import { FinalCTA } from "@/components/ui/final-cta";
+import { Timeline } from "@/components/ui/timeline";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 export const metadata: Metadata = {
   title: "Press, Sakhi",
   description: "Sakhi in the press. Times of India, Apple Success Story, UP International Trade Show, and more.",
 };
-
-const container = kit.container;
-const sectionPad = kit.sectionPad;
-const label = (mb = 16): React.CSSProperties => ({ ...kit.eyebrow(), marginBottom: mb });
 
 const pressItems = [
   {
@@ -36,100 +35,75 @@ const pressItems = [
 
 export default function PressPage() {
   return (
-    <div style={{ overflowX: "hidden", fontFamily: "var(--font-lato), Lato, sans-serif" }}>
-
-      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
-      <section style={{
-        background: "var(--background)", borderBottom: "1px solid var(--border)",
-        padding: "160px 0 96px",
-      }}>
-        <div style={container}>
-          <AnimatedSection delay={0}>
-            <span style={label(20)}>Press</span>
-            <h1 style={{ fontSize: "clamp(48px, 6vw, 76px)", color: "var(--foreground)", letterSpacing: "-0.02em", lineHeight: 1.05, margin: "0 0 28px" }}>
-              Sakhi in<br />the world.
-            </h1>
-          </AnimatedSection>
-          <AnimatedSection delay={100}>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.8, maxWidth: 540, margin: 0 }}>
-              We didn&rsquo;t chase press. We built something worth talking about. Here&rsquo;s where the world has noticed.
-            </p>
-          </AnimatedSection>
+    <div>
+      {/* Hero, variant: "as seen in" marquee (Stripe / Notion trusted-by
+          style) — the outlets that covered Sakhi scroll past directly under
+          the claim, standing in for logos we don't have image rights to
+          reproduce here. */}
+      <section className="relative overflow-hidden border-b border-border bg-background px-6 pb-16 sm:px-8 sm:pb-20">
+        <DotGrid />
+        <Container className="relative z-10 flex flex-col items-center pt-[calc(var(--nav-clearance)+3.5rem)] text-center sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
+          <span className="eyebrow">Press</span>
+          <h1 className="text-h1 mt-5 max-w-[16ch] text-foreground">
+            Sakhi in <GradientText>the world</GradientText>
+          </h1>
+          <p className="text-lead mt-6 max-w-[40rem] text-muted-foreground">
+            We didn&rsquo;t chase press. We built something worth talking about. Here&rsquo;s where
+            the world has noticed.
+          </p>
+        </Container>
+        <div className="relative z-10 mt-12">
+          <InfiniteMovingCards
+            tone="light"
+            speed="normal"
+            items={pressItems.map((item) => ({ label: item.publication }))}
+          />
         </div>
       </section>
 
-      {/* ── PRESS LIST ────────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)" }}>
-        <div style={container}>
-          <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 52 }}>
-              <span style={label()}>Coverage</span>
-              <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: 0 }}>
-                Where we&rsquo;ve been featured.
-              </h2>
-            </div>
-          </AnimatedSection>
-
-          <div style={{ display: "flex", flexDirection: "column" as const, gap: 2 }}>
-            {pressItems.map((item, i) => (
-              <AnimatedSection key={i} delay={i * 80}>
-                <div style={{
-                  background: "#F8F2F4",
-                  borderRadius: i === 0 ? "8px 8px 0 0" : i === pressItems.length - 1 ? "0 0 8px 8px" : 0,
-                  display: "grid", gridTemplateColumns: "200px 1fr", gap: 0,
-                }}>
-                  <div style={{ padding: "28px 0", borderRight: "1px solid rgba(246,24,135,0.1)", display: "flex", flexDirection: "column" as const, gap: 6 }}>
-                    <span style={{ fontSize: 15, fontWeight: 500, color: "var(--foreground)", lineHeight: 1.3 }}>{item.publication}</span>
-                    <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)" }}>{item.date}</span>
+      {/* -------------------------------------------------------------- coverage */}
+      <Section>
+        <Container className="max-w-[52rem]">
+          <SectionHeading eyebrow="Coverage" title="Where we've been featured" align="left" />
+          <div className="mt-14">
+            <Timeline
+              data={pressItems.map((item) => ({
+                title: item.date,
+                content: (
+                  <div>
+                    <h3 className="text-h4 text-foreground">{item.publication}</h3>
+                    <p className="mt-2 max-w-lg text-[14.5px] leading-relaxed text-muted-foreground">
+                      {item.description}
+                    </p>
                   </div>
-                  <div style={{ padding: "28px 28px", display: "flex", alignItems: "center" }}>
-                    <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>{item.description}</p>
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
+                ),
+              }))}
+            />
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      {/* ── PRESS KIT ────────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#fbf9fb" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <span style={label()}>Media</span>
-            <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 20px" }}>
-              For journalists and media.
-            </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: "0 0 36px" }}>
-              Brand assets, product screenshots, founder bios, and the full Sakhi story, ready for press use. Reach out and we&rsquo;ll send everything over.
+      {/* ------------------------------------------------------------- media note */}
+      <Section tone="blush" divided={false}>
+        <Container>
+          <div className="mx-auto max-w-[42rem] text-center">
+            <span className="eyebrow">Media</span>
+            <h2 className="text-h2 mt-4 text-foreground">For journalists and media</h2>
+            <p className="text-lead mx-auto mt-5 max-w-[36rem] text-muted-foreground">
+              Brand assets, product screenshots, founder bios, and the full Sakhi story, ready for press
+              use. Reach out below and we&rsquo;ll send everything over.
             </p>
-            <a href="mailto:contact@sakhiapp.in"
-              style={{ display: "inline-block", color: "var(--primary)", padding: "14px 28px", borderRadius: 999, textDecoration: "none", fontSize: 15, fontWeight: 600 }}>
-              Request Press Kit →
-            </a>
-          </AnimatedSection>
-        </div>
-      </section>
+          </div>
+        </Container>
+      </Section>
 
-      {/* ── CTA ──────────────────────────────────────────────────────────────── */}
-      <section style={{ background: "var(--background-blush)", borderTop: "1px solid var(--border)", padding: "80px 0", textAlign: "center" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.1, margin: "0 0 20px" }}>
-              Try it yourself.
-            </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.8, margin: "0 0 36px" }}>
-              Free. No ads. Your data stays yours.
-            </p>
-            <a href="https://apps.apple.com/app/id6742219623" target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: 10, backgroundColor: "var(--secondary)", color: "var(--secondary-foreground)", padding: "0 22px", height: 44, borderRadius: 8, textDecoration: "none", fontSize: 15, fontWeight: 600 }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--primary)"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-              Download on App Store
-            </a>
-          </AnimatedSection>
-        </div>
-      </section>
-
+      <FinalCTA
+        title="Try it"
+        emphasis="yourself"
+        lead="Free. No ads. Her data stays hers."
+        secondaryLabel="Request press kit"
+        secondaryHref="mailto:contact@sakhiapp.in"
+      />
     </div>
   );
 }

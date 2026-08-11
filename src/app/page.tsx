@@ -1,34 +1,36 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  Activity,
   ArrowRight,
-  BedDouble,
   Check,
   CloudOff,
-  Droplet,
   FileText,
   Heart,
-  Lock,
   LockKeyhole,
   MapPin,
   MessageCircleHeart,
-  Moon,
   NotebookPen,
   ShieldCheck,
-  Smile,
-  Sparkles,
-  UserRound,
-  Zap,
+  Smartphone,
+  Users,
 } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { Container } from "@/components/ui/section";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Spotlight } from "@/components/ui/spotlight";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
 
 const appStoreUrl = "https://apps.apple.com/app/id6742219623";
 
@@ -39,77 +41,47 @@ const appStoreUrl = "https://apps.apple.com/app/id6742219623";
 const playStoreUrl =
   "https://play.google.com/store/apps/details?id=com.galgotiasuniversity.rachnasakhi";
 
-/* Each of these is already claimed elsewhere on the site. Nothing new here. */
-const promises = [
+const trustRow = [
   { icon: NotebookPen, label: "Log your day in one tap" },
   { icon: ShieldCheck, label: "No ads, no data selling" },
   { icon: CloudOff, label: "Works offline" },
   { icon: MapPin, label: "Made in India" },
 ];
 
-/* What the Track screen actually captures, mirrored in the hero mockup. */
-const trackedItems = [
-  { icon: Droplet, label: "Period flow" },
-  { icon: Zap, label: "Cramps & pain" },
-  { icon: Smile, label: "Mood" },
-  { icon: Moon, label: "Sleep" },
-  { icon: BedDouble, label: "Energy" },
-  { icon: Heart, label: "Symptoms" },
-];
-
-const features = [
-  {
-    icon: NotebookPen,
-    title: "Cycle logs",
-    body: "Period, pain, mood, sleep, energy and symptoms in one place, so the pattern becomes visible.",
-  },
-  {
-    icon: MessageCircleHeart,
-    title: "Sakhi AI",
-    body: "Answers drawn from what she has actually logged, not a generic script.",
-  },
-  {
-    icon: FileText,
-    title: "Doctor report",
-    body: "A clean health history to take into the ten-minute appointment.",
-  },
-  {
-    icon: Heart,
-    title: "Be Her Sakhi",
-    body: "One trusted person can understand her better, only if and when she chooses.",
-  },
-  {
-    icon: LockKeyhole,
-    title: "Private by default",
-    body: "No ads. No selling. Sharing stays consent-controlled and can be withdrawn.",
-  },
-  {
-    icon: CloudOff,
-    title: "Works offline",
-    body: "Logging never depends on signal. Her history stays on her device first.",
-  },
+/* Reused from the Health Library page, so the two pages never disagree.
+   Icons are pinned to --secondary rather than inheriting the chip's text
+   colour, so they stay the same warm pink pop whichever tone the marquee
+   band ends up in. */
+const marqueeStats = [
+  { icon: <Users className="size-3.5 text-secondary" aria-hidden="true" />, label: "252M women in Sakhi's India" },
+  { icon: <Activity className="size-3.5 text-secondary" aria-hidden="true" />, label: "16 conditions tracked" },
+  { icon: <ShieldCheck className="size-3.5 text-secondary" aria-hidden="true" />, label: "Zero ads. Ever." },
+  { icon: <CloudOff className="size-3.5 text-secondary" aria-hidden="true" />, label: "100% offline-first" },
+  { icon: <MapPin className="size-3.5 text-secondary" aria-hidden="true" />, label: "Built in India" },
+  { icon: <Smartphone className="size-3.5 text-secondary" aria-hidden="true" />, label: "Live on the App Store" },
 ];
 
 const steps = [
   {
     n: "01",
+    icon: NotebookPen,
     title: "Log what happened today",
     body: "Period days, pain, mood, sleep, energy and notes. One tap is enough for an ordinary day.",
   },
   {
     n: "02",
+    icon: MessageCircleHeart,
     title: "Ask Sakhi what it means",
     body: "Sakhi reads her own logs and answers plainly, including when a doctor should be involved.",
   },
   {
     n: "03",
+    icon: LockKeyhole,
     title: "Share only if she wants to",
     body: "Export a doctor report, or invite one trusted person. Both are her choice, and reversible.",
   },
 ];
 
-// Grouped by the same `category` field each condition already carries in
-// components/ui/HealthConditions.tsx, which powers the /health page.
 const conditionGroups = [
   { group: "Hormonal", note: "When the signal itself is off.", items: ["PCOD / PCOS", "Amenorrhea", "Thyroid Disorders"] },
   { group: "Pain", note: "The pain she was told to expect.", items: ["Endometriosis", "Dysmenorrhea", "Adenomyosis", "Menorrhagia"] },
@@ -218,15 +190,68 @@ function PlayMark({ size = 16 }: { size?: number }) {
   );
 }
 
-function StoreButtons() {
+/** A compact, code-drawn calendar preview for the Cycle Logs bento tile. Not real data. */
+function CalendarPreview() {
+  return (
+    <div className="flex h-full flex-col justify-center rounded-xl bg-ink p-5">
+      <div className="grid grid-cols-7 gap-1.5">
+        {Array.from({ length: 21 }).map((_, i) => (
+          <div
+            key={i}
+            className={
+              i === 13
+                ? "aspect-square rounded-[5px] bg-gradient-to-br from-primary to-secondary"
+                : i > 8 && i < 14
+                  ? "aspect-square rounded-[5px] bg-white/[0.16]"
+                  : "aspect-square rounded-[5px] bg-white/[0.05]"
+            }
+          />
+        ))}
+      </div>
+      <div className="mt-4 flex items-center gap-2 text-[11px] text-white/50">
+        <span className="size-2 rounded-full bg-gradient-to-br from-primary to-secondary" /> Period logged
+        <span className="ml-3 size-2 rounded-full bg-white/[0.16]" /> Symptom noted
+      </div>
+    </div>
+  );
+}
+
+/** A compact, code-drawn chat preview for the Sakhi AI bento tile. Illustrative copy, not a real transcript. */
+function ChatPreview() {
+  return (
+    <div className="flex h-full flex-col justify-end gap-2 rounded-xl bg-ink p-5">
+      <div className="ml-auto max-w-[78%] rounded-2xl rounded-tr-sm bg-white/[0.08] px-3.5 py-2.5 text-[12px] text-white/75">
+        Why do I feel this tired before my period?
+      </div>
+      <div className="mr-auto max-w-[85%] rounded-2xl rounded-tl-sm bg-gradient-to-br from-primary to-secondary px-3.5 py-2.5 text-[12px] text-white">
+        Your logs show lower energy in the luteal phase most months, that is common and usually not a concern.
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Used on both the white hero and the dark closing band, and only ever
+ * styled for the dark one — the Google Play button's border/text/hover were
+ * all white-on-white on the light background, effectively invisible but for
+ * the Play triangle icon. `tone` picks the readable variant for wherever
+ * it's actually placed.
+ */
+function StoreButtons({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
     <div className="flex flex-col items-center gap-3 sm:flex-row">
-      <Button asChild size="lg" className="w-full sm:w-auto">
-        <a href={appStoreUrl} target="_blank" rel="noopener noreferrer">
-          <AppleMark /> App Store
-        </a>
-      </Button>
-      <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+      <HoverBorderGradient as="a" href={appStoreUrl} target="_blank" rel="noopener noreferrer">
+        <AppleMark /> App Store
+      </HoverBorderGradient>
+      <Button
+        asChild
+        size="lg"
+        variant="outline"
+        className={cn(
+          "w-full sm:w-auto",
+          tone === "dark" && "border-white/15 bg-transparent text-white hover:bg-white/10"
+        )}
+      >
         <a href={playStoreUrl} target="_blank" rel="noopener noreferrer">
           <PlayMark /> Google Play
         </a>
@@ -235,147 +260,19 @@ function StoreButtons() {
   );
 }
 
-/** 1120px max including the 24px gutter, so 1072px of content. Site-wide rule. */
-function Container({ className = "", children }: { className?: string; children: React.ReactNode }) {
-  return <div className={`mx-auto w-full max-w-[1120px] ${className}`}>{children}</div>;
-}
-
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="inline-flex items-center gap-1.5 rounded-full border border-accent bg-accent-faint px-3 py-1 text-xs font-semibold text-secondary">
-      <Sparkles className="size-3.5 text-primary" aria-hidden="true" />
-      <span>{children}</span>
-    </div>
-  );
-}
-
-function SectionHeading({
-  eyebrow,
-  title,
-  lead,
-}: {
-  eyebrow: string;
-  title: React.ReactNode;
-  lead: string;
-}) {
-  return (
-    <div className="mx-auto max-w-xl space-y-3 text-center">
-      <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="text-3xl font-bold tracking-tight text-foreground">{title}</h2>
-      <p className="text-base leading-relaxed text-muted-foreground">{lead}</p>
-    </div>
-  );
-}
-
-/** The soft grid the hero sits on, so the white does not read as empty. */
-function HeroPattern() {
+/** The faint dot-grid ambience behind the hero, radially masked so it fades toward the edges. */
+function DotGrid({ className }: { className?: string }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-0 h-full w-full select-none opacity-60"
+      className={`pointer-events-none absolute inset-0 select-none ${className ?? ""}`}
       style={{
-        backgroundImage:
-          "linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)",
-        backgroundSize: "64px 64px",
-        maskImage: "radial-gradient(ellipse 70% 55% at 50% 0%, #000 10%, transparent 75%)",
-        WebkitMaskImage: "radial-gradient(ellipse 70% 55% at 50% 0%, #000 10%, transparent 75%)",
+        backgroundImage: "radial-gradient(var(--border) 1px, transparent 1px)",
+        backgroundSize: "28px 28px",
+        maskImage: "radial-gradient(ellipse 65% 55% at 50% 20%, #000 10%, transparent 75%)",
+        WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 20%, #000 10%, transparent 75%)",
       }}
     />
-  );
-}
-
-/**
- * The hero showpiece: an app window holding a real screenshot, with the
- * things Sakhi actually tracks either side of it. The chrome bar and the
- * 12-column interior follow the reference layout.
- */
-function AppWindow() {
-  return (
-    <div className="relative mx-auto w-full overflow-hidden rounded-[24px] border border-border bg-card shadow-2xl shadow-foreground/10">
-      {/* chrome */}
-      <div className="flex items-center justify-between border-b border-border bg-background-blush/90 px-4 py-3">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
-            <div className="size-3 rounded-full bg-[#EF4444]" />
-            <div className="size-3 rounded-full bg-[#F59E0B]" />
-            <div className="size-3 rounded-full bg-[#10B981]" />
-          </div>
-          <div className="hidden items-center gap-2 border-l border-border pl-3 text-xs text-muted-foreground sm:flex">
-            <Lock className="size-3 text-emerald-600" aria-hidden="true" />
-            <span>Private to her</span>
-          </div>
-        </div>
-        <span className="text-xs font-semibold text-muted-foreground">Sakhi, Summary</span>
-      </div>
-
-      {/* interior */}
-      <div className="grid min-h-[460px] grid-cols-12 bg-background-blush/50">
-        <div className="col-span-3 hidden border-r border-border bg-card p-3 sm:block lg:col-span-3">
-          <div className="px-1 text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
-            What she logs
-          </div>
-          <div className="mt-3 space-y-1">
-            {trackedItems.map(({ icon: Icon, label }, i) => (
-              <div
-                key={label}
-                className={`flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-xs font-medium ${
-                  i === 0 ? "bg-accent-faint text-secondary" : "text-muted-foreground"
-                }`}
-              >
-                <Icon className="size-3.5 shrink-0 text-primary" aria-hidden="true" />
-                <span className="truncate">{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="col-span-12 flex items-end justify-center px-4 pt-6 sm:col-span-9 lg:col-span-6">
-          <Image
-            className="h-auto w-full max-w-[260px] rounded-t-[20px] border border-border border-b-0 shadow-xl"
-            src="/assets/sakhi-app-summary-iphone.png"
-            alt="The Sakhi Summary screen, showing the current cycle day, the current phase, and the month calendar"
-            width={671}
-            height={1321}
-            sizes="(max-width: 640px) 70vw, 260px"
-            priority
-          />
-        </div>
-
-        <div className="col-span-3 hidden border-l border-border bg-card p-3.5 lg:block">
-          <div className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
-            Today
-          </div>
-          <div className="mt-3 space-y-3">
-            <div>
-              <div className="text-[11px] font-medium text-muted-foreground">Cycle day</div>
-              <div className="mt-1 flex h-8 items-center rounded-md border border-border bg-background-blush px-2.5 text-xs font-bold text-foreground">
-                Day 2
-              </div>
-            </div>
-            <div>
-              <div className="text-[11px] font-medium text-muted-foreground">Current phase</div>
-              <div className="mt-1 flex h-8 items-center rounded-md border border-border bg-card px-2.5 text-xs text-muted-foreground">
-                Menstrual
-              </div>
-            </div>
-            <div className="flex items-center justify-between pt-1">
-              <span className="text-xs font-medium text-foreground">Share with Maa</span>
-              <div className="flex h-4 w-8 justify-end rounded-full bg-primary p-0.5">
-                <div className="size-3 rounded-full bg-white" />
-              </div>
-            </div>
-            <div className="space-y-1.5 border-t border-border pt-3">
-              <div className="flex items-center gap-1 text-[11px] font-bold text-secondary">
-                <Sparkles className="size-3" aria-hidden="true" /> Sakhi
-              </div>
-              <div className="text-[11px] leading-tight text-muted-foreground">
-                Rest is worth prioritising today.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -383,288 +280,311 @@ export default function HomePage() {
   return (
     <div className="bg-background">
       {/* ---------------------------------------------------------------- hero */}
-      {/* The navbar is position:fixed over y=18..68, so the hero needs real top
-          clearance rather than the reference's in-flow pt-20. */}
-      <section className="relative overflow-hidden border-b border-border bg-background px-4 pt-32 pb-20 sm:px-6 sm:pt-40">
-        <HeroPattern />
-        <Container className="relative z-10 flex flex-col items-center space-y-8 text-center">
-          <Eyebrow>More than a period tracker</Eyebrow>
+      <section className="relative overflow-hidden border-b border-border bg-background">
+        <DotGrid className="opacity-70" />
+        <Spotlight className="-top-40 left-0 lg:-top-24 lg:left-40" fill="var(--primary)" />
+        <Spotlight className="top-10 right-0 lg:top-0 lg:right-20" fill="var(--secondary)" />
 
-          <h1 className="max-w-4xl text-5xl leading-[1.06] font-bold tracking-tight text-foreground sm:text-6xl md:text-7xl">
-            Sakhi knows <span className="text-primary">your body</span>
+        <Container className="relative z-10 flex flex-col items-center pt-[calc(var(--nav-clearance)+3.5rem)] pb-20 text-center sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-1.5 text-[13px] font-medium text-muted-foreground backdrop-blur-sm">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
+              <span className="relative inline-flex size-2 rounded-full bg-primary" />
+            </span>
+            Live on the App Store
+          </div>
+
+          <h1 className="text-display mt-7 max-w-[16ch] text-foreground">
+            Sakhi knows{" "}
+            <span className="animate-gradient-x bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+              your body
+            </span>
           </h1>
 
-          <p className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p className="text-lead mt-7 max-w-[46ch] text-muted-foreground">
             Log your cycle, ask the questions you would never Google, and keep one
             trusted person close when you choose.
           </p>
 
-          <div className="pt-2">
+          <div className="mt-10">
             <StoreButtons />
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-1 text-xs text-muted-foreground">
-            {promises.map(({ icon: Icon, label }) => (
-              <span key={label} className="flex items-center gap-1.5">
-                <Icon className="size-3.5 text-primary" aria-hidden="true" />
+          <ul className="mt-10 flex list-none flex-wrap items-center justify-center gap-x-7 gap-y-3 p-0 text-[13px] text-muted-foreground">
+            {trustRow.map(({ icon: Icon, label }) => (
+              <li key={label} className="flex items-center gap-2">
+                <Icon className="size-4 text-primary" aria-hidden="true" />
                 {label}
-              </span>
+              </li>
             ))}
-          </div>
+          </ul>
 
-          <div className="w-full pt-10 sm:pt-14">
-            <AppWindow />
+          {/* hero visual: the real app on a real phone in a real hand, tilted
+              toward the cursor. No card frame around it — the PNG already
+              carries its own phone bezel and hand silhouette on a transparent
+              background, so a bordered container would just clip the hand.
+
+              The floating chips sit in wrappers positioned at the image's own
+              edge (left-0 / right-0) and pushed fully clear of it with a
+              percentage transform (-translate-x-full, not a fixed px offset):
+              a chip's rendered width varies with its text, and a guessed px
+              value was landing short and leaving the chip sitting on top of
+              the phone screen instead of beside it. The transform lives on
+              this wrapper rather than on CardItem itself, because CardItem
+              drives its own `transform` imperatively for the hover tilt — a
+              transform utility class on that element would just get
+              overwritten every time the pointer moves. */}
+          <div className="mt-20 flex w-full items-center justify-center sm:mt-24">
+            <CardContainer containerClassName="py-0">
+              <CardBody>
+                <CardItem translateZ={60}>
+                  <Image
+                    src="/assets/sakhi-app-hand-mockup.png"
+                    alt="A hand holding an iPhone showing the Sakhi Summary screen: on period, day 2, current phase menstrual, and the June calendar"
+                    width={1200}
+                    height={1732}
+                    priority
+                    className="h-auto w-70 select-none drop-shadow-[0_35px_45px_rgba(163,22,84,0.22)] sm:w-85 lg:w-95"
+                    sizes="(max-width: 640px) 280px, (max-width: 1024px) 340px, 380px"
+                  />
+                </CardItem>
+
+                <div className="absolute top-8 left-0 hidden -translate-x-[calc(100%+2rem)] xl:block">
+                  <CardItem
+                    translateZ={80}
+                    className="rounded-2xl border border-border bg-card/90 px-4 py-3 text-left shadow-card backdrop-blur-sm"
+                  >
+                    <div className="flex items-center gap-2 text-[12px] font-semibold whitespace-nowrap text-foreground">
+                      <LockKeyhole className="size-3.5 text-secondary" aria-hidden="true" /> Private by default
+                    </div>
+                    <div className="mt-0.5 max-w-56 text-[11.5px] text-muted-foreground">
+                      Nothing leaves her device unless she says so
+                    </div>
+                  </CardItem>
+                </div>
+
+                <div className="absolute right-0 bottom-14 hidden translate-x-[calc(100%+2rem)] xl:block">
+                  <CardItem
+                    translateZ={80}
+                    className="rounded-2xl border border-border bg-card/90 px-4 py-3 text-left shadow-card backdrop-blur-sm"
+                  >
+                    <div className="flex items-center gap-2 text-[12px] font-semibold whitespace-nowrap text-foreground">
+                      <CloudOff className="size-3.5 text-secondary" aria-hidden="true" /> Works offline
+                    </div>
+                    <div className="mt-0.5 max-w-56 text-[11.5px] text-muted-foreground">
+                      Logging never waits for signal
+                    </div>
+                  </CardItem>
+                </div>
+              </CardBody>
+            </CardContainer>
           </div>
         </Container>
       </section>
 
+      {/* --------------------------------------------------------------- marquee
+          First pass was a flat --ink black band; second pass swapped that for
+          a painted pastel gradient strip — which was worse, because a solid
+          colour banner isn't how depth reads anywhere else on this site. Every
+          other section gets its depth from a soft blurred glow plus a faint
+          dot-grid behind plain white, with glass-card chips floating on top
+          (exactly what the hero's "Private by default" chip is). This uses
+          that same recipe instead of inventing a new one. */}
+      <section className="relative overflow-hidden border-y border-border bg-background py-4">
+        <DotGrid className="opacity-50" />
+        <Spotlight className="top-1/2 left-1/2 h-64 w-2xl -translate-x-1/2 -translate-y-1/2" fill="var(--primary)" />
+        <div className="relative z-10">
+          <InfiniteMovingCards items={marqueeStats} speed="slow" tone="light" />
+        </div>
+      </section>
+
       {/* ------------------------------------------------------------ features */}
-      <section className="border-b border-border bg-background-blush px-4 py-24 sm:px-6">
-        <Container className="space-y-16">
-          <SectionHeading
-            eyebrow="What Sakhi does"
-            title="Calm, private, and built around her"
-            lead="Six things the app does well, and nothing it does behind her back."
-          />
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {features.map(({ icon: Icon, title, body }) => (
-              <Card key={title} variant="flat" interactive className="gap-4">
-                <span className="flex size-10 items-center justify-center rounded-lg bg-accent-faint">
-                  <Icon className="size-5 text-primary" aria-hidden="true" />
-                </span>
-                <div>
-                  <CardTitle size="sm" className="mb-1.5 text-lg">
-                    {title}
-                  </CardTitle>
-                  <CardDescription size="sm" className="text-[13px] leading-relaxed">
-                    {body}
-                  </CardDescription>
-                </div>
-              </Card>
-            ))}
+      <section className="border-b border-border bg-background px-6 py-24 sm:px-8 sm:py-28">
+        <Container>
+          <div className="mx-auto max-w-[42rem] text-center">
+            <span className="eyebrow">What Sakhi does</span>
+            <h2 className="text-h2 mt-4 text-foreground">Six things done well, nothing done behind her back</h2>
+            <p className="text-lead mx-auto mt-5 max-w-[36rem] text-muted-foreground">
+              A calm, private companion for her cycle, not another app competing for her attention.
+            </p>
           </div>
+
+          <BentoGrid className="mt-16">
+            <BentoGridItem
+              className="sm:col-span-2 lg:col-span-2 lg:row-span-2"
+              header={<CalendarPreview />}
+              icon={<NotebookPen className="size-4" aria-hidden="true" />}
+              title="Cycle logs"
+              description="Period, pain, mood, sleep, energy and symptoms in one place, so the pattern becomes visible."
+            />
+            <BentoGridItem
+              className="sm:col-span-2 lg:col-span-2"
+              header={<ChatPreview />}
+              icon={<MessageCircleHeart className="size-4" aria-hidden="true" />}
+              title="Sakhi AI"
+              description="Answers drawn from what she has actually logged, not a generic script."
+            />
+            <BentoGridItem
+              icon={<FileText className="size-4" aria-hidden="true" />}
+              title="Doctor report"
+              description="A clean health history to take into the ten-minute appointment."
+            />
+            <BentoGridItem
+              icon={<Heart className="size-4" aria-hidden="true" />}
+              title="Be Her Sakhi"
+              description="One trusted person can understand her better, only if and when she chooses."
+            />
+            <BentoGridItem
+              className="lg:col-span-2"
+              icon={<LockKeyhole className="size-4" aria-hidden="true" />}
+              title="Private by default"
+              description="No ads. No selling. Sharing stays consent-controlled and can be withdrawn at any time."
+            />
+            <BentoGridItem
+              className="lg:col-span-2"
+              icon={<CloudOff className="size-4" aria-hidden="true" />}
+              title="Works offline"
+              description="Logging never depends on signal. Her history stays on her device first, always."
+            />
+          </BentoGrid>
         </Container>
       </section>
 
       {/* -------------------------------------------------------- how it works */}
-      <section className="border-b border-border bg-background px-4 py-24 sm:px-6">
-        <Container className="space-y-16">
-          <SectionHeading
-            eyebrow="How it works"
-            title="Three steps, and none of them rush her"
-            lead="Sakhi is built to be opened for thirty seconds a day, not to demand attention."
-          />
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {steps.map(({ n, title, body }) => (
-              <Card key={n} variant="flat" className="gap-3">
-                <span className="text-2xl font-bold tracking-tight text-primary">{n}</span>
-                <CardTitle size="sm" className="mb-0 text-lg">
-                  {title}
-                </CardTitle>
-                <CardDescription size="sm" className="text-[13px] leading-relaxed">
-                  {body}
-                </CardDescription>
-              </Card>
+      <section className="border-b border-border bg-background-blush px-6 py-24 sm:px-8 sm:py-28">
+        <Container>
+          <div className="mx-auto max-w-[42rem] text-center">
+            <span className="eyebrow">How it works</span>
+            <h2 className="text-h2 mt-4 text-foreground">Three steps, and none of them rush her</h2>
+            <p className="text-lead mx-auto mt-5 max-w-[36rem] text-muted-foreground">
+              Sakhi is built to be opened for thirty seconds a day, not to demand attention.
+            </p>
+          </div>
+
+          <div className="relative mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-16 top-[38px] hidden h-px bg-gradient-to-r from-transparent via-border to-transparent md:block"
+            />
+            {steps.map(({ n, icon: Icon, title, body }) => (
+              <div
+                key={n}
+                className="group relative flex flex-col items-center rounded-2xl border border-border bg-card p-8 text-center transition-[transform,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-1 hover:shadow-card-hover"
+              >
+                <div className="relative grid size-14 place-items-center">
+                  <span className="absolute text-[13px] font-bold text-border select-none">{n}</span>
+                  <div className="grid size-11 place-items-center rounded-full bg-gradient-to-br from-primary to-secondary text-white shadow-[0_8px_20px_rgba(246,24,135,0.28)]">
+                    <Icon className="size-5" aria-hidden="true" />
+                  </div>
+                </div>
+                <h3 className="text-h4 mt-5 text-foreground">{title}</h3>
+                <p className="mt-2.5 text-[14.5px] leading-relaxed text-muted-foreground">{body}</p>
+              </div>
             ))}
           </div>
         </Container>
       </section>
 
       {/* ---------------------------------------------------------- conditions */}
-      <section className="border-b border-border bg-background-blush px-4 py-24 sm:px-6">
-        <Container className="space-y-16">
-          <SectionHeading
-            eyebrow="Behind the cycle"
-            title="Built for the conditions behind the cycle"
-            lead="A cycle is rarely just a cycle. Sakhi helps her track the patterns underneath it, so a doctor sees months of evidence instead of one bad day."
-          />
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <section className="border-b border-border bg-background px-6 py-24 sm:px-8 sm:py-28">
+        <Container>
+          <div className="mx-auto max-w-[42rem] text-center">
+            <span className="eyebrow">Behind the cycle</span>
+            <h2 className="text-h2 mt-4 text-foreground">Built for the conditions behind the cycle</h2>
+            <p className="text-lead mx-auto mt-5 max-w-[40rem] text-muted-foreground">
+              A cycle is rarely just a cycle. Sakhi tracks the patterns underneath it, so a doctor sees
+              months of evidence instead of one bad day.
+            </p>
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {conditionGroups.map((g) => (
-              <Card key={g.group} variant="flat" interactive className="gap-3">
-                <CardTitle size="sm" className="mb-0 text-lg">
-                  {g.group}
-                </CardTitle>
-                <CardDescription size="sm" className="text-[13px]">
-                  {g.note}
-                </CardDescription>
-                <ul className="space-y-2 border-t border-border pt-4 text-xs text-muted-foreground">
+              <div
+                key={g.group}
+                className="group flex flex-col gap-3 rounded-2xl border border-border bg-card p-7 transition-[transform,border-color,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-1 hover:border-transparent hover:shadow-card-hover"
+              >
+                <h3 className="text-h4 text-foreground">{g.group}</h3>
+                <p className="text-[13.5px] text-muted-foreground">{g.note}</p>
+                <ul className="mt-1 space-y-2.5 border-t border-border pt-5 text-[13px] text-muted-foreground">
                   {g.items.map((i) => (
                     <li key={i} className="flex items-center gap-2.5">
                       <Check className="size-4 shrink-0 text-primary" aria-hidden="true" /> {i}
                     </li>
                   ))}
                 </ul>
-              </Card>
+              </div>
             ))}
 
-            <Card variant="flat" className="justify-between gap-3 bg-accent-faint">
+            <div className="flex flex-col justify-between gap-4 rounded-2xl border border-border bg-gradient-to-br from-accent-faint to-background p-7">
               <div>
-                <CardTitle size="sm" className="mb-1.5 text-lg">
-                  All 16 conditions
-                </CardTitle>
-                <CardDescription size="sm" className="text-[13px] leading-relaxed">
+                <h3 className="text-h4 text-foreground">All 16 conditions</h3>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-muted-foreground">
                   What each one is, why it gets missed, and how Sakhi helps her track it.
-                </CardDescription>
+                </p>
               </div>
-              <Button asChild variant="outline" block className="mt-6">
-                <Link href="/health">
-                  Read the detail <ArrowRight className="size-4" />
-                </Link>
-              </Button>
-            </Card>
+              <Link
+                href="/health"
+                className="inline-flex items-center gap-1.5 text-[15px] font-semibold text-secondary no-underline underline-offset-[3px] hover:underline"
+              >
+                Read the detail <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </Container>
       </section>
 
       {/* ------------------------------------------------------------- pricing */}
-      <section id="pricing" className="border-b border-border bg-background px-4 py-24 sm:px-6">
-        <Container className="space-y-16">
-          <SectionHeading
-            eyebrow="Pricing"
-            title="Free, and honest about it"
-            lead="Everything a woman needs to understand her own body is free, with no ads and nothing sold on."
-          />
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative flex flex-col justify-between space-y-8 rounded-xl p-8 ${
-                  plan.featured
-                    ? "border-2 border-primary bg-card shadow-xs"
-                    : "border border-border bg-background-blush"
-                }`}
-              >
-                {plan.ribbon && (
-                  <span
-                    /* Deep Pink, not Primary: at 10px this is small text and
-                       needs 4.5:1. White on Primary reaches only 3.89:1. */
-                    className={`absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-0.5 text-[10px] font-bold tracking-wider uppercase ${
-                      plan.featured
-                        ? "bg-secondary text-secondary-foreground"
-                        : "bg-chip text-chip-foreground"
-                    }`}
-                  >
-                    {plan.ribbon}
-                  </span>
-                )}
-
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground">{plan.name}</h3>
-                    <p className="mt-1 text-xs text-muted-foreground">{plan.tagline}</p>
-                    <div className="mt-4 flex items-baseline gap-1.5">
-                      <span className="text-4xl font-bold tracking-tight text-foreground">
-                        {plan.price}
-                      </span>
-                      {plan.unit && (
-                        <span className="text-xs text-muted-foreground">{plan.unit}</span>
-                      )}
-                    </div>
-                  </div>
-
-                  <ul className="space-y-3 border-t border-border pt-6 text-xs text-muted-foreground">
-                    {plan.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2.5">
-                        <Check className="size-4 shrink-0 text-primary" aria-hidden="true" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {plan.cta.href ? (
-                  <Button asChild block variant={plan.cta.variant}>
-                    {plan.cta.href.startsWith("http") ? (
-                      <a href={plan.cta.href} target="_blank" rel="noopener noreferrer">
-                        {plan.cta.label}
-                      </a>
-                    ) : (
-                      <Link href={plan.cta.href}>{plan.cta.label}</Link>
-                    )}
-                  </Button>
-                ) : (
-                  <Button block variant="outline" disabled>
-                    {plan.cta.label}
-                  </Button>
-                )}
-              </div>
-            ))}
+      <section id="pricing" className="border-b border-border bg-background-blush px-6 py-24 sm:px-8 sm:py-28">
+        <Container>
+          <div className="mx-auto max-w-[42rem] text-center">
+            <span className="eyebrow">Pricing</span>
+            <h2 className="text-h2 mt-4 text-foreground">Free, and honest about it</h2>
+            <p className="text-lead mx-auto mt-5 max-w-[38rem] text-muted-foreground">
+              Everything a woman needs to understand her own body is free, with no ads and nothing sold on.
+            </p>
           </div>
 
-          <p className="mx-auto max-w-2xl text-center text-xs leading-relaxed text-muted-foreground">
+          <div className="mt-16 grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
+            {plans.map((plan) =>
+              plan.featured ? (
+                <HoverBorderGradient
+                  key={plan.name}
+                  as="div"
+                  duration={2200}
+                  containerClassName="rounded-2xl p-[1.5px] w-full h-full"
+                  className="flex h-full w-full flex-col items-stretch justify-between gap-8 rounded-2xl bg-card px-8 py-9 text-left"
+                >
+                  <PricingBody plan={plan} />
+                </HoverBorderGradient>
+              ) : (
+                <div
+                  key={plan.name}
+                  className="relative flex flex-col justify-between gap-8 rounded-2xl border border-border bg-card px-8 py-9"
+                >
+                  <PricingBody plan={plan} />
+                </div>
+              )
+            )}
+          </div>
+
+          <p className="mx-auto mt-12 max-w-[52ch] text-center text-[13px] leading-relaxed text-muted-foreground">
             Sakhi Plus is planned, not released. Nothing in the app can be bought today, and the
             free tier is not time-limited.
           </p>
         </Container>
       </section>
 
-      {/* ------------------------------------------------------------- privacy */}
-      <section className="border-b border-border bg-background-blush px-4 py-24 sm:px-6">
-        <Container>
-          <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
-            <div className="space-y-5">
-              <Eyebrow>Private by design</Eyebrow>
-              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                Sharing is <span className="text-primary">always her choice</span>
-              </h2>
-              <p className="max-w-[520px] text-base leading-relaxed text-muted-foreground">
-                Be Her Sakhi is for one trusted person, not a feed and not a group. She decides what
-                they see, and she can remove access at any time.
-              </p>
-              <div className="flex flex-wrap gap-2.5 pt-1">
-                {[
-                  { icon: ShieldCheck, label: "No ads" },
-                  { icon: LockKeyhole, label: "Data stays hers" },
-                  { icon: UserRound, label: "One trusted person" },
-                ].map(({ icon: Icon, label }) => (
-                  <Badge key={label} variant="soft" className="gap-1.5">
-                    <Icon className="size-3.5" aria-hidden="true" />
-                    {label}
-                  </Badge>
-                ))}
-              </div>
-              <Card variant="flat" className="mt-2 gap-2 bg-card">
-                <strong className="text-[15px] font-bold text-foreground">
-                  Consent is the product rule.
-                </strong>
-                <span className="text-[13px] leading-relaxed text-muted-foreground">
-                  Be Her Sakhi works only when she wants it, with one person she trusts.
-                </span>
-              </Card>
-            </div>
-
-            <Card variant="flat" inset="none" className="overflow-hidden">
-              <div className="flex items-center gap-2 border-b border-border bg-card px-4 py-3">
-                <div className="size-3 rounded-full bg-[#EF4444]" />
-                <div className="size-3 rounded-full bg-[#F59E0B]" />
-                <div className="size-3 rounded-full bg-[#10B981]" />
-                <span className="ml-2 text-xs font-semibold text-muted-foreground">
-                  Track, today
-                </span>
-              </div>
-              <Image
-                className="h-auto w-full"
-                src="/assets/sakhi-track-log.png"
-                alt="The Sakhi Track screen showing a logged day: period flow and cramps, plus mood, breast tenderness, pelvic pain, skin, discharge and energy level"
-                width={545}
-                height={400}
-                sizes="(max-width: 1024px) 92vw, 520px"
-              />
-            </Card>
-          </div>
-        </Container>
-      </section>
-
       {/* ----------------------------------------------------------------- faq */}
-      <section className="border-b border-border bg-background px-4 py-24 sm:px-6">
-        <Container className="space-y-16">
-          <SectionHeading
-            eyebrow="Questions"
-            title="The things people ask first"
-            lead="Straight answers, including the one about what Sakhi cannot do."
-          />
-          <div className="mx-auto max-w-3xl">
+      <section className="border-b border-border bg-background px-6 py-24 sm:px-8 sm:py-28">
+        <Container>
+          <div className="mx-auto max-w-[42rem] text-center">
+            <span className="eyebrow">Questions</span>
+            <h2 className="text-h2 mt-4 text-foreground">The things people ask first</h2>
+            <p className="text-lead mx-auto mt-5 max-w-[36rem] text-muted-foreground">
+              Straight answers, including the one about what Sakhi cannot do.
+            </p>
+          </div>
+          <div className="mx-auto mt-14 max-w-[46rem]">
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((f, i) => (
                 <AccordionItem key={f.q} value={`item-${i}`}>
@@ -678,19 +598,84 @@ export default function HomePage() {
       </section>
 
       {/* ----------------------------------------------------------- final cta */}
-      <section className="bg-background-blush px-4 py-20 sm:px-6">
-        <div className="mx-auto max-w-4xl space-y-6 rounded-xl border border-border bg-card p-10 text-center md:p-14">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Your body deserves <span className="text-primary">to be understood</span>
+      <section className="relative overflow-hidden bg-ink px-6 py-24 sm:px-8 sm:py-32">
+        <Spotlight className="top-0 left-1/2 -translate-x-1/2" fill="var(--secondary)" />
+        <Container className="relative z-10 flex flex-col items-center text-center">
+          <h2 className="text-h2 max-w-[18ch] text-white">
+            Your body deserves{" "}
+            <span className="animate-gradient-x bg-gradient-to-r from-primary via-secondary to-primary-soft bg-clip-text text-transparent">
+              to be understood
+            </span>
           </h2>
-          <p className="mx-auto max-w-xl text-base leading-relaxed text-muted-foreground">
+          <p className="text-lead mx-auto mt-5 max-w-[40ch] text-white/65">
             Start with her own logs. Share only when it feels right.
           </p>
-          <div className="flex flex-col items-center justify-center gap-3 pt-2 sm:flex-row">
-            <StoreButtons />
+          <div className="mt-10">
+            <StoreButtons tone="dark" />
           </div>
-        </div>
+        </Container>
       </section>
     </div>
+  );
+}
+
+function PricingBody({ plan }: { plan: (typeof plans)[number] }) {
+  return (
+    <>
+      {/* In-flow, not an absolute -top ribbon: the featured card's border is
+          drawn by HoverBorderGradient's own overflow-hidden wrapper, which
+          would clip anything poking above the content box's top edge. */}
+      <div>
+        {plan.ribbon && (
+          <Badge
+            variant={plan.featured ? "default" : "muted"}
+            className="mb-4 h-auto min-h-0 self-start px-3 py-1 text-[10px] tracking-[0.06em] uppercase"
+          >
+            {plan.ribbon}
+          </Badge>
+        )}
+        <h3 className="text-h4 text-foreground">{plan.name}</h3>
+        <p className="mt-1.5 text-[13px] text-muted-foreground">{plan.tagline}</p>
+        <div className="mt-6 flex items-baseline gap-2">
+          <span
+            className={
+              plan.price.startsWith("₹")
+                ? "text-[44px] leading-none font-normal tracking-[-0.03em] text-foreground"
+                : "text-[26px] leading-tight font-normal tracking-[-0.02em] text-foreground"
+            }
+          >
+            {plan.price}
+          </span>
+          {plan.unit && <span className="text-[13px] text-muted-foreground">{plan.unit}</span>}
+        </div>
+
+        <ul className="mt-8 space-y-3 border-t border-border pt-7 text-[13px] text-muted-foreground">
+          {plan.features.map((f) => (
+            <li key={f} className="flex items-start gap-2.5">
+              <Check className="mt-px size-4 shrink-0 text-primary" aria-hidden="true" />
+              {f}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        {plan.cta.href ? (
+          <Button asChild block variant={plan.cta.variant}>
+            {plan.cta.href.startsWith("http") ? (
+              <a href={plan.cta.href} target="_blank" rel="noopener noreferrer">
+                {plan.cta.label}
+              </a>
+            ) : (
+              <Link href={plan.cta.href}>{plan.cta.label}</Link>
+            )}
+          </Button>
+        ) : (
+          <Button block variant="outline" disabled>
+            {plan.cta.label}
+          </Button>
+        )}
+      </div>
+    </>
   );
 }

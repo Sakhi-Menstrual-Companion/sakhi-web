@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
-import AnimatedSection from "@/components/ui/AnimatedSection";
-import * as kit from "@/components/ui/pageKit";
+
+import { Container, DotGrid, GradientText, Section } from "@/components/ui/section";
+import { FinalCTA } from "@/components/ui/final-cta";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 export const metadata: Metadata = {
   title: "Team, Sakhi",
   description: "The people building Sakhi. The story of how a university bootcamp became a real women's health product.",
 };
-
-const container = kit.container;
-const sectionPad = kit.sectionPad;
-const label = (mb = 16): React.CSSProperties => ({ ...kit.eyebrow(), marginBottom: mb });
 
 const teamMembers = [
   {
@@ -30,149 +28,129 @@ const teamMembers = [
   },
 ];
 
+function TeamCardBody({ member }: { member: (typeof teamMembers)[number] }) {
+  return (
+    <>
+      <div
+        className={`grid size-14 shrink-0 place-items-center rounded-full text-[18px] font-semibold ${
+          member.highlight
+            ? "bg-secondary text-secondary-foreground"
+            : "border border-border bg-card text-secondary"
+        }`}
+      >
+        {member.initials}
+      </div>
+      <div className="mt-5">
+        <div className="text-[20px] font-medium text-foreground">{member.name}</div>
+        <div className="mt-1 text-[13.5px] text-secondary">{member.role}</div>
+      </div>
+      <p className="mt-6 border-l-2 border-secondary/30 pl-4 text-[15px] leading-relaxed text-muted-foreground italic">
+        &ldquo;{member.quote}&rdquo;
+      </p>
+      <p className="mt-5 text-[14.5px] leading-relaxed text-muted-foreground">{member.bio}</p>
+    </>
+  );
+}
+
 export default function TeamPage() {
   return (
-    <div style={{ overflowX: "hidden", fontFamily: "var(--font-lato), Lato, sans-serif" }}>
-
-      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
-      <section style={{
-        background: "var(--background)", borderBottom: "1px solid var(--border)",
-        padding: "160px 0 96px",
-      }}>
-        <div style={container}>
-          <AnimatedSection delay={0}>
-            <span style={label(20)}>The Team</span>
-            <h1 style={{ fontSize: "clamp(48px, 6vw, 76px)", color: "var(--foreground)", letterSpacing: "-0.02em", lineHeight: 1.05, margin: "0 0 28px" }}>
-              Built by people<br />who care.
-            </h1>
-          </AnimatedSection>
-          <AnimatedSection delay={100}>
-            <p style={{ fontSize: 18, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.8, maxWidth: 540, margin: 0 }}>
-              Sakhi began as Team 07. A university bootcamp. One assignment. Something that became impossible to walk away from.
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* ── TEAM ─────────────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)" }}>
-        <div style={container}>
-          <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 52 }}>
-              <span style={label()}>The People</span>
-              <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 12px" }}>
-                The people building Sakhi.
-              </h2>
-              <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>Small team. Deep conviction.</p>
-            </div>
-          </AnimatedSection>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
-            {teamMembers.map((member, i) => (
-              <AnimatedSection key={i} delay={i * 100}>
-                <div style={{
-                  background: "#F8F2F4",
-                  borderRadius: 24,
-                  padding: "40px 32px",
-                  height: "100%",
-                  boxSizing: "border-box" as const,
-                  display: "flex",
-                  flexDirection: "column" as const,
-                  gap: 20,
-                }}>
-                  {/* Avatar */}
-                  <div style={{
-                    width: 56,
-                    height: 56,
-                    borderRadius: "50%",
-                    background: member.highlight ? "var(--primary)" : "rgba(246,24,135,0.08)",
-                    border: member.highlight ? "none" : "1.5px solid rgba(246,24,135,0.2)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 18,
-                    fontWeight: 400,
-                    color: member.highlight ? "#FFFFFF" : "var(--primary)",
-                    flexShrink: 0,
-                  }}>
-                    {member.initials}
-                  </div>
-
-                  {/* Name + role */}
-                  <div>
-                    <div style={{ fontSize: 20, fontWeight: 500, color: "var(--foreground)", marginBottom: 4 }}>{member.name}</div>
-                    <div style={{ fontSize: 14, fontWeight: 400, color: "var(--primary)" }}>{member.role}</div>
-                  </div>
-
-                  {/* Quote */}
-                  <p style={{
-                    fontSize: 15, fontWeight: 400, fontStyle: "italic",
-                    color: "#6B6B6B", lineHeight: 1.65, margin: 0,
-                    paddingLeft: 14, borderLeft: "2px solid rgba(246,24,135,0.3)",
-                  }}>
-                    &ldquo;{member.quote}&rdquo;
-                  </p>
-
-                  {/* Bio */}
-                  <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
-                    {member.bio}
-                  </p>
-                </div>
-              </AnimatedSection>
+    <div>
+      {/* Hero, variant: "avatar cluster" (Ramp / Notion team-page style) —
+          the faces come before the words: an overlapping stack of initials,
+          then the claim underneath it, rather than a full-width visual. */}
+      <section className="relative overflow-hidden border-b border-border bg-background px-6 pb-20 sm:px-8 sm:pb-24">
+        <DotGrid />
+        <Container className="relative z-10 flex flex-col items-center pt-[calc(var(--nav-clearance)+3.5rem)] text-center sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
+          <div className="flex items-center -space-x-4">
+            {teamMembers.map((m, i) => (
+              <div
+                key={m.initials}
+                className={`grid size-16 place-items-center rounded-full border-4 border-background text-[16px] font-semibold shadow-card ${
+                  m.highlight ? "bg-secondary text-secondary-foreground" : "bg-card text-secondary"
+                }`}
+                style={{ transform: `rotate(${i % 2 === 0 ? -6 : 6}deg)`, zIndex: teamMembers.length - i }}
+              >
+                {m.initials}
+              </div>
             ))}
+            <div
+              className="grid size-16 place-items-center rounded-full border-4 border-background bg-muted text-[20px] font-semibold text-muted-foreground shadow-card"
+              style={{ transform: "rotate(-4deg)", zIndex: 0 }}
+              aria-label="and more contributors"
+            >
+              &middot;&middot;&middot;
+            </div>
           </div>
-        </div>
+
+          <span className="eyebrow mt-8">The team</span>
+          <h1 className="text-h1 mt-5 max-w-[18ch] text-foreground">
+            Built by people <GradientText>who care</GradientText>
+          </h1>
+          <p className="text-lead mx-auto mt-6 max-w-[42rem] text-muted-foreground">
+            Sakhi began as Team 07. A university bootcamp. One assignment. Something that became
+            impossible to walk away from.
+          </p>
+        </Container>
       </section>
 
-      {/* ── ORIGIN ───────────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "#fbf9fb" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <span style={label()}>Where It Began</span>
-            <h2 style={{ fontSize: "clamp(28px, 3.5vw, 44px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.2, margin: "0 0 24px" }}>
-              January 9, 2024. Galgotias University.
-            </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
-              The ISDP Bootcamp assigned Team 07 a problem. They chose women&rsquo;s health, not because they were told to, but because it felt unaddressed. 49 user interviews. Gynaecologist consultations. A gap so large it couldn&rsquo;t be ignored. Sakhi was the answer.
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
+      {/* -------------------------------------------------------------- people */}
+      <Section>
+        <Container>
+          <div className="mx-auto max-w-[46rem] text-center">
+            <span className="eyebrow">The people</span>
+            <h2 className="text-h2 mt-4 text-foreground">Small team. Deep conviction.</h2>
+          </div>
 
-      {/* ── GALGOTIAS ────────────────────────────────────────────────────────── */}
-      <section style={{ ...sectionPad, backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <span style={label()}>Founding Partner</span>
-            <h2 style={{ fontSize: "clamp(28px, 3.5vw, 44px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.2, margin: "0 0 24px" }}>
-              Galgotias University
-            </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, margin: 0 }}>
-              Sakhi exists because of Galgotias University, not as a customer, but as a founding patron. The ISDP program, the campus, the Apple Developer Program enrollment, the institutional credibility, all of it comes from GU. We carry that forward in everything we build.
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
+          <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {teamMembers.map((member) =>
+              member.highlight ? (
+                <HoverBorderGradient
+                  key={member.name}
+                  as="div"
+                  duration={2200}
+                  containerClassName="rounded-2xl p-[1.5px] w-full h-full"
+                  className="flex h-full w-full flex-col items-stretch rounded-2xl bg-card px-9 py-9 text-left"
+                >
+                  <TeamCardBody member={member} />
+                </HoverBorderGradient>
+              ) : (
+                <div key={member.name} className="rounded-2xl border border-border bg-card px-9 py-9">
+                  <TeamCardBody member={member} />
+                </div>
+              )
+            )}
+          </div>
+        </Container>
+      </Section>
 
-      {/* ── CTA ──────────────────────────────────────────────────────────────── */}
-      <section style={{ background: "var(--background-blush)", borderTop: "1px solid var(--border)", padding: "80px 0", textAlign: "center" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.1, margin: "0 0 20px" }}>
-              Join the journey.
-            </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.8, margin: "0 0 36px" }}>
-              Free. No ads. Your data stays yours.
-            </p>
-            <a href="https://apps.apple.com/app/id6742219623" target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: 10, backgroundColor: "var(--secondary)", color: "var(--secondary-foreground)", padding: "0 22px", height: 44, borderRadius: 8, textDecoration: "none", fontSize: 15, fontWeight: 600 }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--primary)"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-              Download on App Store
-            </a>
-          </AnimatedSection>
-        </div>
-      </section>
+      {/* --------------------------------------------------- origin & partner */}
+      <Section tone="blush">
+        <Container>
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
+            <div>
+              <span className="eyebrow">Where it began</span>
+              <h2 className="text-h3 mt-4 text-foreground">January 9, 2024. Galgotias University.</h2>
+              <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground">
+                The ISDP Bootcamp assigned Team 07 a problem. They chose women&rsquo;s health, not because
+                they were told to, but because it felt unaddressed. 49 user interviews. Gynaecologist
+                consultations. A gap so large it couldn&rsquo;t be ignored. Sakhi was the answer.
+              </p>
+            </div>
+            <div>
+              <span className="eyebrow">Founding partner</span>
+              <h2 className="text-h3 mt-4 text-foreground">Galgotias University</h2>
+              <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground">
+                Sakhi exists because of Galgotias University, not as a customer, but as a founding
+                patron. The ISDP program, the campus, the Apple Developer Program enrollment, the
+                institutional credibility, all of it comes from GU. We carry that forward in everything
+                we build.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
 
+      <FinalCTA title="Join" emphasis="the journey" lead="Free. No ads. Her data stays hers." />
     </div>
   );
 }

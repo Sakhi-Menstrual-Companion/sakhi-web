@@ -115,10 +115,10 @@ export default function IndiaMap() {
               pointerEvents: "none",
             }}
           >
-            <div style={{ fontSize: 13, fontWeight: 600, color: "#1A1A1A", marginBottom: 5 }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: "var(--foreground)", marginBottom: 5 }}>
               {activeCity.name}
             </div>
-            <div style={{ fontSize: 12, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.6 }}>
+            <div style={{ fontSize: 12, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.6 }}>
               {activeCity.story}
             </div>
           </motion.div>
@@ -206,15 +206,15 @@ export default function IndiaMap() {
       <div style={{ display: "flex", gap: 16, paddingTop: 12, paddingLeft: 4 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#F61887" }} />
-          <span style={{ fontSize: 11, color: "#A0A0A0" }}>Origin</span>
+          <span style={{ fontSize: 11, color: "var(--muted-foreground)" }}>Origin</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#F61887" }} />
-          <span style={{ fontSize: 11, color: "#A0A0A0" }}>Key cities</span>
+          <span style={{ fontSize: 11, color: "var(--muted-foreground)" }}>Key cities</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(246,24,135,0.6)" }} />
-          <span style={{ fontSize: 11, color: "#A0A0A0" }}>Growing reach</span>
+          <span style={{ fontSize: 11, color: "var(--muted-foreground)" }}>Growing reach</span>
         </div>
       </div>
     </div>

@@ -1,71 +1,87 @@
 "use client";
 
-import { useEffect, useRef, ReactNode } from "react";
+import { useEffect, useRef, type ReactNode, type CSSProperties } from "react";
+
+import { cn } from "@/lib/utils";
 
 interface AnimatedSectionProps {
   children: ReactNode;
   className?: string;
+  /**
+   * Accepted and ignored.
+   *
+   * ~150 call sites pass a per-item stagger (`delay={i * 80}`), which reads as
+   * a template: a grid whose cards arrive one after another is the tell that
+   * the page was assembled rather than designed. The reveal now fires once per
+   * block, so a whole row of cards arrives together. The prop stays in the
+   * signature so those call sites keep compiling.
+   */
   delay?: number;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
-export default function AnimatedSection({
-  children,
-  className = "",
-  delay = 0,
-  style,
-}: AnimatedSectionProps) {
+/**
+ * Scroll reveal.
+ *
+ * The previous version set `opacity: 0` as an inline style during render, so
+ * every wrapped block was invisible in the server-rendered HTML and only
+ * became visible once React hydrated and an effect ran. If JS was blocked,
+ * slow, or errored, the page stayed permanently blank — and since the inner
+ * pages wrap nearly all of their content in this, that meant the whole page.
+ *
+ * Now the hidden state lives in CSS, gated behind `.js-reveal` on <html>,
+ * which the inline script in the root layout sets before first paint. Three
+ * things fall out of that:
+ *
+ *   - No JS at all: `.js-reveal` never lands, so nothing is ever hidden.
+ *   - JS that never hydrates: a CSS failsafe in globals.css reveals the
+ *     content anyway after a short beat.
+ *   - `prefers-reduced-motion`: the hidden rule is neutralised in CSS, so
+ *     content is simply present with no movement.
+ */
+export default function AnimatedSection({ children, className, style }: AnimatedSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    const rect = el.getBoundingClientRect();
-    const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+    const reveal = () => el.classList.add("is-revealed");
 
-    if (inViewport) {
-      // Already visible — reveal instantly, no transition
-      el.style.opacity = "1";
-      el.style.transform = "translateY(0)";
+    // Anything at or above the fold on mount is shown immediately. This covers
+    // the cases an observer alone handles badly: a deep link to an anchor part
+    // way down the page, a restored scroll position on back-navigation, and a
+    // fast fling past the element before the observer has been wired up.
+    if (el.getBoundingClientRect().top < window.innerHeight) {
+      reveal();
       return;
     }
 
-    // Below the fold — set transition then let IntersectionObserver animate in
-    el.style.transition = "opacity 0.7s ease, transform 0.7s ease";
+    // No observer in this browser: show it rather than waiting for a scroll
+    // event that will never reveal it.
+    if (typeof IntersectionObserver === "undefined") {
+      reveal();
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
-            setTimeout(() => {
-              el.style.opacity = "1";
-              el.style.transform = "translateY(0)";
-            }, delay);
-            observer.unobserve(el);
+            reveal();
+            observer.disconnect();
           }
-        });
+        }
       },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -40px 0px",
-      }
+      { threshold: 0.05, rootMargin: "0px 0px -40px 0px" }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [delay]);
+  }, []);
 
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        ...style,
-        opacity: 0,
-        transform: "translateY(28px)",
-      }}
-    >
+    <div ref={ref} className={cn("reveal", className)} style={style}>
       {children}
     </div>
   );

@@ -9,12 +9,10 @@ import type { CSSProperties } from "react";
  *    globals.css. There is one palette on the site, not two.
  *
  * 2. The scale matches the homepage, which is the reference for the whole
- *    site: 30px section headings, 12px label pills, p-6 cards at radius 12,
- *    and rounded-lg buttons rather than full pills.
- *
- * `heroSection` is LIGHT now. Every inner page used to open on a near-black
- * gradient while the homepage opened on white, which was the single biggest
- * reason the site looked like two different products.
+ *    site. The homepage now runs on the fluid display scale in globals.css
+ *    (`--text-h1`, `--text-h2`, `--text-lead`), so these objects point at the
+ *    same custom properties rather than restating pixel values that would
+ *    drift the moment the scale changes.
  *
  * New work should prefer the components in `section.tsx` (Container, Section,
  * PageHero, SectionHeading) over these objects. These remain so the existing
@@ -43,50 +41,70 @@ export const container: CSSProperties = {
 
 /** Vertical only. The gutter belongs to `container`. */
 export const sectionPad: CSSProperties = {
-  padding: "96px 0",
+  padding: "clamp(72px, 9vw, 128px) 0",
 };
 
-/** Light hero, matching the homepage. pt clears the fixed navbar (y=18..68). */
+/**
+ * A responsive grid, in one call.
+ *
+ * Every inner page declared `gridTemplateColumns: "repeat(3, 1fr)"` with no
+ * media query behind it, so a three-up card row stayed three-up at 390px:
+ * roughly 90px per column, headings breaking one word per line, and the
+ * overflow swallowed by the `overflowX: hidden` on the page wrapper. Nine
+ * cards became an unreadable stripe.
+ *
+ * `auto-fit` + `minmax` drops the column count on its own, and the
+ * `min(100%, ...)` guard is what stops the track from being wider than the
+ * screen on the narrowest phones.
+ *
+ * @param minWidth the narrowest a column may be before the grid reflows
+ */
+export const gridAuto = (minWidth = 260, gap = 16): CSSProperties => ({
+  display: "grid",
+  gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${minWidth}px), 1fr))`,
+  gap,
+});
+
+/** Light hero, matching the homepage. Top padding clears the fixed navbar. */
 export const heroSection: CSSProperties = {
   background: "var(--background)",
   borderBottom: "1px solid var(--border)",
-  padding: "160px 0 80px",
+  padding: "calc(var(--nav-clearance) + clamp(48px, 7vw, 88px)) 0 clamp(64px, 8vw, 112px)",
   color: "var(--foreground)",
 };
 
 /**
- * The bordered label pill above a heading.
+ * The label above a heading.
  *
- * `tone` used to mean "this sits on a dark background". Now that no page has
- * a dark hero, both tones resolve to the same readable Deep Pink on blush;
- * the argument is kept so existing call sites do not need editing.
+ * This was a bordered pink pill with a background fill. It is plain uppercase
+ * grey text now, matching the `Eyebrow` component and `.eyebrow` class — a
+ * coloured chip above every single heading was the site's most repetitive
+ * visual habit, and it spent the brand accent on decoration.
+ *
+ * `tone` is vestigial (no page has a dark hero any more) and is kept only so
+ * existing call sites do not need editing.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const eyebrow = (_tone: "light" | "dark" = "dark"): CSSProperties => ({
-  display: "inline-flex",
-  alignItems: "center",
-  gap: 6,
-  padding: "4px 12px",
-  borderRadius: 999,
-  border: "1px solid var(--accent)",
-  background: "var(--accent-faint)",
-  color: "var(--secondary)",
-  fontSize: 12,
-  lineHeight: 1.4,
+  display: "block",
+  fontSize: "var(--text-label)",
+  lineHeight: 1.45,
   fontWeight: 600,
-  letterSpacing: 0,
+  letterSpacing: "0.07em",
+  textTransform: "uppercase",
+  color: "var(--muted-foreground)",
   marginBottom: 16,
 });
 
 /**
- * Weight is deliberately unset on h1/h2: globals.css puts every heading on
- * Lato 700 through the `h1, h2` type selector, and an inline weight would
- * override it and desynchronise the pages again.
+ * Weight is deliberately unset on h1/h2: globals.css puts every display
+ * heading on Lato 500 through the `h1, h2` type selector, and an inline weight
+ * would override it and desynchronise the pages again.
  */
 export const h1: CSSProperties = {
-  fontSize: "clamp(36px, 5.4vw, 60px)",
-  lineHeight: 1.06,
-  letterSpacing: "-0.025em",
+  fontSize: "var(--text-h1)",
+  lineHeight: 1.08,
+  letterSpacing: "-0.028em",
   color: "var(--foreground)",
   textWrap: "balance",
   margin: 0,
@@ -94,9 +112,9 @@ export const h1: CSSProperties = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const h2 = (_tone: "light" | "dark" = "dark"): CSSProperties => ({
-  fontSize: "clamp(26px, 3vw, 30px)",
-  lineHeight: 1.15,
-  letterSpacing: "-0.025em",
+  fontSize: "var(--text-h2)",
+  lineHeight: 1.12,
+  letterSpacing: "-0.024em",
   color: "var(--foreground)",
   textWrap: "balance",
   margin: 0,
@@ -104,38 +122,38 @@ export const h2 = (_tone: "light" | "dark" = "dark"): CSSProperties => ({
 
 /** h3 is not part of the display selector, so it keeps its own weight. */
 export const h3: CSSProperties = {
-  fontSize: 18,
-  lineHeight: 1.3,
+  fontSize: 19,
+  lineHeight: 1.35,
   fontWeight: 600,
-  letterSpacing: "-0.015em",
+  letterSpacing: "-0.012em",
   color: ink,
-  margin: "0 0 6px",
+  margin: "0 0 8px",
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const lead = (_tone: "light" | "dark" = "dark"): CSSProperties => ({
-  fontSize: 17,
-  lineHeight: 1.65,
-  letterSpacing: 0,
+  fontSize: "var(--text-lead)",
+  lineHeight: 1.5,
+  letterSpacing: "-0.011em",
   color: muted,
-  maxWidth: 620,
+  maxWidth: "38ch",
   margin: 0,
 });
 
 export const body: CSSProperties = {
-  fontSize: 14,
-  lineHeight: 1.65,
+  fontSize: 14.5,
+  lineHeight: 1.6,
   letterSpacing: 0,
   color: muted,
   margin: 0,
 };
 
-/** Flat bordered card, radius 12, 24px padding. */
+/** Flat bordered card. Radius 14 and no resting shadow, matching <Card>. */
 export const card = (fill: string = "var(--card)"): CSSProperties => ({
   background: fill,
   border: "1px solid var(--border)",
-  borderRadius: 12,
-  padding: 24,
+  borderRadius: 14,
+  padding: 28,
   height: "100%",
   boxSizing: "border-box",
 });
@@ -155,19 +173,19 @@ export const chip: CSSProperties = {
   letterSpacing: 0,
 };
 
-/** Rounded rectangle, 40px tall, matching <Button> in components/ui/button. */
+/** Pill, 44px tall, matching <Button> in components/ui/button. */
 export const pillButton = (variant: "solid" | "light" = "solid"): CSSProperties => ({
-  height: 40,
+  minHeight: 44,
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
   gap: 8,
-  padding: "0 16px",
-  borderRadius: 8,
+  padding: "0 22px",
+  borderRadius: 999,
   border: variant === "light" ? "1px solid var(--border)" : "1px solid transparent",
   background: variant === "light" ? "var(--card)" : pinkDeep,
   color: variant === "light" ? "var(--foreground)" : "var(--primary-foreground)",
-  fontSize: 13,
+  fontSize: 15,
   fontWeight: 600,
   letterSpacing: "-0.01em",
   textDecoration: "none",

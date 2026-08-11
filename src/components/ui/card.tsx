@@ -17,23 +17,31 @@ import { cn } from "@/lib/utils"
  * panel. When every level was the same blush, white elements sat at 1.10:1 and
  * disappeared.
  *
- *   default   white card, warm shadow          (bento)
+ *   default   white card, hairline border, flat at rest
+ *   flat      alias of default, kept for existing call sites
+ *   elevated  white card carrying a warm shadow at rest
  *   muted     flat blush card, darkens on hover (condition groups)
  *   accent    brand pink fill, white type       (the anchor card in a grid)
  *   inverted  near-black fill, white type       (the CTA card in a grid)
+ *
+ * `default` used to be the shadowed card. It is flat now, because a static
+ * drop shadow on every card in a grid is the most common giveaway that a page
+ * was generated: it reads as depth applied by rule rather than by intent. The
+ * shadow is a hover state instead. `elevated` remains for the rare card that
+ * genuinely needs to sit above the page at rest.
  *
  * Variant also drives the colour of every child slot, so `CardTitle` and
  * `CardDescription` never need to know which card they are sitting in.
  */
 const cardVariants = cva(
-  "flex min-w-0 flex-col rounded-xl no-underline",
+  "flex min-w-0 flex-col rounded-[14px] no-underline",
   {
     variants: {
       variant: {
-        default: "bg-card text-card-foreground shadow-card",
-        /* Hairline border, no elevation. The quieter card for dense grids
-           sitting on an off-white band, where a shadow per card is noise. */
+        /* Hairline border, no elevation. */
+        default: "border border-border bg-card text-card-foreground",
         flat: "border border-border bg-card text-card-foreground",
+        elevated: "bg-card text-card-foreground shadow-card",
         muted: "bg-muted text-card-foreground",
         /* Deep Pink, not Primary Pink. White type on Primary reaches only
            3.89:1, and the dimmed description 2.77:1, so the card failed AA
@@ -52,6 +60,7 @@ const cardVariants = cva(
           "[&_[data-slot=card-description]]:text-white/62",
           "[&_[data-slot=card-list]_li]:text-ink-foreground",
           "[&_[data-slot=card-icon]]:bg-white/10 [&_[data-slot=card-icon]]:text-primary-soft",
+          "[&_[data-slot=card-action]]:text-primary-soft",
         ],
       },
       inset: {
@@ -61,20 +70,28 @@ const cardVariants = cva(
         none: "p-0",
       },
       interactive: {
-        true: "transition-[background-color,box-shadow] duration-[260ms] ease-out",
+        true: "transition-[background-color,border-color,box-shadow] duration-(--duration-base) ease-(--ease-out-soft)",
         false: "",
       },
     },
     compoundVariants: [
+      /* Border and shadow cross-fade: the hairline recedes as the elevation
+         arrives, so the two are never both fully present. That handoff is the
+         detail that makes the hover feel considered rather than bolted on. */
       {
         variant: "default",
         interactive: true,
-        class: "hover:shadow-card-hover",
+        class: "hover:border-transparent hover:shadow-card-hover",
       },
       {
         variant: "flat",
         interactive: true,
-        class: "duration-300 hover:border-primary/40",
+        class: "hover:border-transparent hover:shadow-card-hover",
+      },
+      {
+        variant: "elevated",
+        interactive: true,
+        class: "hover:shadow-card-hover",
       },
       {
         variant: "muted",
@@ -122,7 +139,7 @@ function Card({
  * padding would just frame the image twice.
  */
 const cardMediaVariants = cva(
-  "flex flex-col rounded-2xl bg-surface-sunken",
+  "flex flex-col rounded-[10px] bg-surface-sunken",
   {
     variants: {
       flush: {
@@ -173,7 +190,7 @@ function CardIcon({ className, ...props }: React.ComponentProps<"span">) {
       data-slot="card-icon"
       aria-hidden="true"
       className={cn(
-        "mb-[18px] grid size-10 place-items-center rounded-[13px] bg-accent-soft text-primary",
+        "mb-[18px] grid size-10 place-items-center rounded-[10px] bg-accent-soft text-primary",
         className
       )}
       {...props}
@@ -181,13 +198,15 @@ function CardIcon({ className, ...props }: React.ComponentProps<"span">) {
   )
 }
 
+/* Semibold, not bold. At card size the extra weight bought nothing but noise,
+   and it fought the new display scale two steps above it. */
 const cardTitleVariants = cva(
-  "font-sans font-bold tracking-[-0.021em] text-foreground",
+  "font-sans font-semibold tracking-[-0.021em] text-foreground",
   {
     variants: {
       size: {
-        default: "mb-2 text-[22px] leading-[1.22]",
-        sm: "mb-[7px] text-[20px] leading-[1.2]",
+        default: "mb-2 text-[21px] leading-[1.25]",
+        sm: "mb-[7px] text-[18px] leading-[1.3]",
       },
     },
     defaultVariants: { size: "default" },
@@ -250,13 +269,19 @@ function CardList({ className, ...props }: React.ComponentProps<"ul">) {
   )
 }
 
-/** Trailing action row, pinned to the bottom of a card of any height. */
+/**
+ * Trailing action row, pinned to the bottom of a card of any height.
+ *
+ * Deep Pink, not `--primary-soft`. That token is the light pink meant for text
+ * on a dark fill; on the white and blush cards this actually sits on it read
+ * around 2:1, well under AA. The dark card variants override it back above.
+ */
 function CardAction({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="card-action"
       className={cn(
-        "mt-auto inline-flex items-center gap-[7px] pt-6 text-[14.5px] font-semibold tracking-[-0.008em] text-primary-soft",
+        "mt-auto inline-flex items-center gap-[7px] pt-6 text-[14.5px] font-semibold tracking-[-0.008em] text-secondary",
         className
       )}
       {...props}

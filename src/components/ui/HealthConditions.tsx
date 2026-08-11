@@ -220,32 +220,42 @@ const categories = [
   { id: "systemic",    label: "Systemic" },
 ];
 
-const categoryColor: Record<string, string> = {
-  hormonal:     "#F61887",
-  pain:         "#F61887",
-  mental:       "#F61887",
-  reproductive: "#F61887",
-  systemic:     "#F61887",
-};
+/**
+ * `categoryColor` used to be a five-key record that mapped every category to
+ * the same #F61887, so it decided nothing. What it did do was scatter raw hex
+ * through the component, which is how the two contrast failures below got in.
+ *
+ * There are two values now because they do different jobs:
+ *
+ *   ACCENT  a token, for anything that carries text or reads as a solid fill.
+ *           Deep Pink, because Primary Pink is 3.89:1 on white and most of
+ *           these uses are 11-13px type, which needs 4.5:1.
+ *   TINT    a raw hex, because the alpha-suffixed tints (`${TINT}12`) are
+ *           string concatenation and cannot take a var().
+ */
+const ACCENT = "var(--secondary)";
+const TINT = "#F61887";
 
-function ConditionCard({ c, index }: { c: Condition; index: number }) {
+function ConditionCard({ c }: { c: Condition }) {
   const [open, setOpen] = useState(false);
-  const color = categoryColor[c.category];
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      /* No per-card stagger. Sixteen cards arriving one after another reads as
+         a template; the grid now arrives as one block. */
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.4, delay: (index % 3) * 0.07, ease: "easeOut" }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       style={{
-        background: "#fff",
-        border: open ? `1.5px solid ${color}33` : "1px solid rgba(0,0,0,0.07)",
-        borderRadius: 20,
+        background: "var(--card)",
+        border: `1px solid ${open ? `${TINT}33` : "var(--border)"}`,
+        borderRadius: 14,
         overflow: "hidden",
         cursor: "pointer",
         transition: "border-color 0.2s ease, box-shadow 0.2s ease",
-        boxShadow: open ? `0 8px 32px ${color}15` : "0 2px 8px rgba(0,0,0,0.04)",
+        /* Flat at rest. The shadow is the open state, not the look. */
+        boxShadow: open ? `0 8px 32px ${TINT}15` : "none",
       }}
       onClick={() => setOpen(!open)}
     >
@@ -258,14 +268,18 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
       }}>
         {/* Category + Toggle */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          {/* Neutral, not pink. Sixteen pink chips sat directly above sixteen
+              pink stat numbers, so the accent stopped meaning anything. The
+              number is the thing worth looking at; the category is metadata. */}
           <span style={{
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: 600,
-            color,
-            background: `${color}12`,
+            color: "var(--chip-foreground)",
+            background: "var(--chip)",
             padding: "4px 10px",
             borderRadius: 999,
-            letterSpacing: "-0.006em",
+            letterSpacing: "0.03em",
+            textTransform: "uppercase",
           }}>
             {c.category}
           </span>
@@ -274,13 +288,13 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
             transition={{ duration: 0.2 }}
             style={{
               width: 24, height: 24, borderRadius: "50%",
-              background: open ? color : "rgba(0,0,0,0.06)",
+              background: open ? ACCENT : "rgba(0,0,0,0.06)",
               display: "flex", alignItems: "center", justifyContent: "center",
               flexShrink: 0,
             }}
           >
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-              <path d="M5 1v8M1 5h8" stroke={open ? "#fff" : "#666"} strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M5 1v8M1 5h8" stroke={open ? "var(--secondary-foreground)" : "var(--muted-foreground)"} strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </motion.div>
         </div>
@@ -290,24 +304,24 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
           <div style={{
             fontSize: 38,
             fontWeight: 700,
-            color,
+            color: ACCENT,
             lineHeight: 1,
             letterSpacing: 0,
             marginBottom: 4,
           }}>
             {c.stat}
           </div>
-          <div style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0" }}>
+          <div style={{ fontSize: 12, fontWeight: 400, color: "var(--muted-foreground)" }}>
             {c.statLabel}
           </div>
         </div>
 
         {/* Name + Tagline */}
         <div>
-          <div style={{ fontSize: 18, fontWeight: 500, color: "#1A1A1A", marginBottom: 8, lineHeight: 1.25 }}>
+          <div style={{ fontSize: 18, fontWeight: 500, color: "var(--foreground)", marginBottom: 8, lineHeight: 1.25 }}>
             {c.name}
           </div>
-          <div style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.6 }}>
+          <div style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.6 }}>
             {c.tagline}
           </div>
         </div>
@@ -325,22 +339,22 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
           >
             <div style={{
               padding: "0 28px 28px",
-              borderTop: `1px solid ${color}18`,
+              borderTop: `1px solid ${TINT}18`,
               paddingTop: 24,
             }}>
               {/* What it is */}
               <div style={{ marginBottom: 22 }}>
-                <div style={{ fontSize: 11, fontWeight: 500, color, marginBottom: 10 }}>
+                <div style={{ fontSize: 11, fontWeight: 500, color: ACCENT, marginBottom: 10 }}>
                   What it is
                 </div>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>
+                <p style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.75, margin: 0 }}>
                   {c.what}
                 </p>
               </div>
 
               {/* Symptoms */}
               <div style={{ marginBottom: 22 }}>
-                <div style={{ fontSize: 11, fontWeight: 500, color, marginBottom: 10 }}>
+                <div style={{ fontSize: 11, fontWeight: 500, color: ACCENT, marginBottom: 10 }}>
                   What she experiences
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -348,9 +362,9 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
                     <div key={s} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
                       <div style={{
                         width: 5, height: 5, borderRadius: "50%",
-                        background: color, flexShrink: 0, marginTop: 6,
+                        background: ACCENT, flexShrink: 0, marginTop: 6,
                       }} />
-                      <span style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.6 }}>{s}</span>
+                      <span style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.6 }}>{s}</span>
                     </div>
                   ))}
                 </div>
@@ -358,30 +372,30 @@ function ConditionCard({ c, index }: { c: Condition; index: number }) {
 
               {/* What the silence costs */}
               <div style={{
-                background: `${color}08`,
-                border: `1px solid ${color}18`,
-                borderRadius: 20,
+                background: `${TINT}08`,
+                border: `1px solid ${TINT}18`,
+                borderRadius: 14,
                 padding: "16px 18px",
                 marginBottom: 16,
               }}>
-                <div style={{ fontSize: 11, fontWeight: 500, color, marginBottom: 8 }}>
+                <div style={{ fontSize: 11, fontWeight: 500, color: ACCENT, marginBottom: 8 }}>
                   What the silence costs
                 </div>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>
+                <p style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.75, margin: 0 }}>
                   {c.silence}
                 </p>
               </div>
 
               {/* Sakhi */}
               <div style={{
-                background: "#F8E5EC",
-                borderRadius: 20,
+                background: "var(--accent)",
+                borderRadius: 14,
                 padding: "16px 18px",
               }}>
-                <div style={{ fontSize: 11, fontWeight: 500, color: "#F61887", marginBottom: 8 }}>
+                <div style={{ fontSize: 11, fontWeight: 500, color: ACCENT, marginBottom: 8 }}>
                   How Sakhi helps
                 </div>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.75, margin: 0 }}>
+                <p style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.75, margin: 0 }}>
                   {c.sakhi}
                 </p>
               </div>
@@ -402,36 +416,11 @@ export default function HealthConditions() {
 
   return (
     <div>
-      {/* Stats bar */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        gap: 1,
-        background: "rgba(246,24,135,0.08)",
-        borderRadius: 20,
-        overflow: "hidden",
-        marginBottom: 56,
-      }}>
-        {[
-          { n: "16",   label: "conditions tracked" },
-          { n: "252M", label: "women in Sakhi's India" },
-          { n: "57%",  label: "have a condition they don't know about" },
-          { n: "0",    label: "diagnoses made, Sakhi tracks, doctors diagnose" },
-        ].map(s => (
-          <div key={s.label} style={{
-            background: "#fff",
-            padding: "24px 20px",
-            textAlign: "center",
-          }}>
-            <div style={{ fontSize: 28, fontWeight: 700, color: "#F61887", letterSpacing: 0, marginBottom: 6 }}>
-              {s.n}
-            </div>
-            <div style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", lineHeight: 1.4 }}>
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* The 16 / 252M / 57% stat trio now lives in the page hero's data-bar
+         (src/app/health/page.tsx), directly under the headline. Repeating it
+         here as a second block put the same three numbers on screen twice in
+         a row. The "0 diagnoses made" line moved into the closing band below,
+         next to the sentence it actually supports. */}
 
       {/* Category Filter */}
       <div style={{
@@ -448,10 +437,10 @@ export default function HealthConditions() {
               padding: "8px 18px",
               borderRadius: 999,
               border: activeCategory === cat.id
-                ? "1.5px solid #F61887"
+                ? `1px solid ${ACCENT}`
                 : "1px solid rgba(0,0,0,0.1)",
-              background: activeCategory === cat.id ? "#F61887" : "#fff",
-              color: activeCategory === cat.id ? "#fff" : "#6B6B6B",
+              background: activeCategory === cat.id ? ACCENT : "var(--card)",
+              color: activeCategory === cat.id ? "var(--secondary-foreground)" : "var(--muted-foreground)",
               fontSize: 13,
               fontWeight: activeCategory === cat.id ? 500 : 400,
               cursor: "pointer",
@@ -480,29 +469,34 @@ export default function HealthConditions() {
         transition={{ duration: 0.2 }}
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 250px), 1fr))",
           gap: 16,
         }}
       >
-        {filtered.map((c, i) => (
-          <ConditionCard key={c.id} c={c} index={i} />
+        {filtered.map((c) => (
+          <ConditionCard key={c.id} c={c} />
         ))}
       </motion.div>
 
       {/* Bottom disclaimer */}
       <div style={{
         marginTop: 64,
-        background: "#1A1A1A",
-        borderRadius: 20,
+        background: "var(--foreground)",
+        borderRadius: 14,
         padding: "40px 48px",
         display: "flex",
         flexDirection: "column",
         gap: 12,
       }}>
-        <div style={{ fontSize: 20, fontWeight: 700, color: "#fff", letterSpacing: 0 }}>
-          Sakhi tracks. Doctors diagnose.
+        <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
+          <div style={{ fontSize: 20, fontWeight: 700, color: "var(--ink-foreground)", letterSpacing: 0 }}>
+            Sakhi tracks. Doctors diagnose.
+          </div>
+          <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.55)" }}>
+            0 diagnoses made by Sakhi, ever
+          </span>
         </div>
-        <p style={{ fontSize: 14, fontWeight: 400, color: "#A0A0A0", lineHeight: 1.8, margin: 0, maxWidth: 640 }}>
+        <p style={{ fontSize: 14, fontWeight: 400, color: "rgba(255,255,255,0.82)", lineHeight: 1.8, margin: 0, maxWidth: 640 }}>
           Everything on this page is educational research. Sakhi is a tracking and awareness tool,
           not a medical device, not a diagnostic system. If something in what you&apos;ve read resonates,
           bring it to a gynaecologist. Sakhi&apos;s Doctor Report is built to help you have that conversation.
@@ -513,8 +507,8 @@ export default function HealthConditions() {
             style={{
               display: "inline-block",
               padding: "12px 28px",
-              background: "#F61887",
-              color: "#fff",
+              background: ACCENT,
+              color: "var(--ink-foreground)",
               borderRadius: 999,
               fontSize: 14,
               fontWeight: 500,

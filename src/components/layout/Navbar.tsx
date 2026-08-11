@@ -1,111 +1,153 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SakhiLogo from "@/components/ui/SakhiLogo";
+import { cn } from "@/lib/utils";
 
-const primaryNavLinks = [
+const appStoreUrl = "https://apps.apple.com/app/id6742219623";
+
+/**
+ * Every page the site actually has, in the order they sit in the sitemap.
+ * This used to be a 3-item subset (Story, Features, Health) shown on desktop
+ * while the mobile sheet quietly carried all seven — so the two navs
+ * disagreed about what the site contained. Home is not repeated here: the
+ * logo is already the home link, on both desktop and mobile.
+ */
+const navLinks = [
   { label: "Story", href: "/story" },
   { label: "Features", href: "/features" },
   { label: "Health", href: "/health" },
-];
-
-const mobileNavLinks = [
-  { label: "Home", href: "/" },
-  ...primaryNavLinks,
   { label: "Vision", href: "/vision" },
   { label: "Contributors", href: "/contributors" },
+  { label: "Team", href: "/team" },
+  { label: "Contribute", href: "/contribute" },
   { label: "Brand", href: "/brand" },
   { label: "Press", href: "/press" },
 ];
 
+const mobileNavLinks = [{ label: "Home", href: "/" }, ...navLinks];
+
+const MENU_ID = "sakhi-mobile-menu";
+
+/**
+ * The floating frosted pill.
+ *
+ * Three things were fixed here alongside the visual pass:
+ *
+ * 1. The Download pill was Primary Pink behind white text, 3.89:1 — under AA
+ *    for its size. It is Deep Pink now, 5.22:1, the same rule the Button
+ *    component already documents.
+ *
+ * 2. The desktop/mobile split ran through two `!important` rules in
+ *    globals.css keyed off `.sakhi-desktop-nav` and `.sakhi-hamburger`. That
+ *    is now plain responsive utilities, so the breakpoint is visible at the
+ *    element rather than hidden in a stylesheet override.
+ *
+ * 3. The mobile menu was a bare div: no Escape, no focus move, no
+ *    `aria-controls`, and focus stayed on the page behind it. It is a modal
+ *    dialog now, and focus returns to the toggle on close.
+ *
+ * The bar also tightens as the page scrolls, which is the one piece of motion
+ * it has.
+ */
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  /**
+   * Dismissing without going anywhere (Escape, the X) returns focus to the
+   * toggle that opened the sheet. Following a link does not: the browser is
+   * about to move focus to a new document, and yanking it back to the
+   * hamburger first would be the wrong place to land.
+   */
+  const dismiss = useCallback(() => {
+    setMenuOpen(false);
+    toggleRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") dismiss();
+    };
+    document.addEventListener("keydown", onKeyDown);
+
+    // Move focus into the sheet so the keyboard is not left behind the overlay.
+    menuRef.current?.querySelector<HTMLElement>("a, button")?.focus();
+
     return () => {
       document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
     };
-  }, [menuOpen]);
+  }, [menuOpen, dismiss]);
 
   return (
     <>
       <nav
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          pointerEvents: "none",
-        }}
+        aria-label="Primary"
+        className="pointer-events-none fixed inset-x-0 top-0 z-[100] px-4"
       >
         <div
-          style={{
-            maxWidth: 760,
-            margin: "18px auto 0",
-            padding: "0 10px 0 16px",
-            height: 50,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            borderRadius: 999,
-            backgroundColor: "rgba(22,22,23,0.68)",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.18)",
-            backdropFilter: "blur(24px) saturate(180%)",
-            WebkitBackdropFilter: "blur(24px) saturate(180%)",
-            pointerEvents: "auto",
-          }}
+          className={cn(
+            // Nine links plus the logo and Download pill run past 900px at
+            // rest, so this only shows in full past xl (1280px) — see the
+            // link list and the hamburger toggle below, which share the same
+            // breakpoint so there is no width where neither nav is visible.
+            "pointer-events-auto mx-auto mt-4 flex h-[52px] max-w-265 items-center",
+            "justify-between rounded-full pr-2 pl-4",
+            // Apple's own localnav glass recipe (--localnav-background /
+            // .localnav-background), read off apple.com's computed styles: a
+            // warm charcoal — rgb(22,22,23), not pure black — at 80% opacity,
+            // saturate(180%) blur(20px), eased in over 240ms on a custom
+            // curve. Sakhi's pill was close but had drifted to its own
+            // near-black --ink at different opacity/blur numbers; this pins
+            // it to Apple's actual values instead of an approximation.
+            "bg-[rgba(22,22,23,0.8)] backdrop-blur-[20px] backdrop-saturate-180",
+            "transition-[background-color,backdrop-filter,box-shadow] duration-[240ms] ease-[cubic-bezier(0.28,0.11,0.32,1)]",
+            scrolled
+              ? "bg-[rgba(22,22,23,0.92)] shadow-[0_10px_30px_rgba(0,0,0,0.20)]"
+              : "shadow-none"
+          )}
         >
           <Link
             href="/"
             aria-label="Sakhi home"
-            style={{
-              textDecoration: "none",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-            }}
+            className="flex items-center gap-2 no-underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           >
-            <SakhiLogo size={27} tone="light" />
+            <SakhiLogo size={26} tone="light" />
           </Link>
 
-          <div
-            className="sakhi-desktop-nav"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 4,
-            }}
-          >
-            {primaryNavLinks.map((link) => {
+          <div className="hidden items-center gap-0.5 xl:flex">
+            {navLinks.map((link) => {
               const active = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  style={{
-                    textDecoration: "none",
-                    padding: "8px 13px",
-                    borderRadius: 999,
-                    fontSize: 14,
-                    fontWeight: active ? 700 : 400,
-                    color: active ? "#FFFFFF" : "rgba(245,245,247,0.72)",
-                    transition: "color 0.2s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.color = "#FFFFFF";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.color = "rgba(245,245,247,0.72)";
-                    }
-                  }}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "rounded-full px-2.5 py-2 text-[13px] whitespace-nowrap no-underline",
+                    "transition-colors duration-(--duration-fast)",
+                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+                    active
+                      ? "font-semibold text-white"
+                      : "font-normal text-white/70 hover:text-white"
+                  )}
                 >
                   {link.label}
                 </Link>
@@ -113,78 +155,43 @@ export default function Navbar() {
             })}
 
             <a
-              href="https://apps.apple.com/app/id6742219623"
+              href={appStoreUrl}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                marginLeft: 8,
-                textDecoration: "none",
-                backgroundColor: "#F61887",
-                color: "#FFFFFF",
-                padding: "7px 16px",
-                borderRadius: 999,
-                fontSize: 13,
-                fontWeight: 600,
-                transition: "opacity 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = "0.85";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = "1";
-              }}
+              /* Deep Pink. White on Primary Pink is 3.89:1, under AA at 13px. */
+              className={cn(
+                "ml-2 rounded-full bg-secondary px-4 py-2 text-[13px] font-semibold whitespace-nowrap text-white no-underline",
+                "transition-colors duration-(--duration-fast) hover:bg-[#b8005f]",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              )}
             >
               Download
             </a>
           </div>
 
           <button
-            className="sakhi-hamburger"
+            ref={toggleRef}
+            type="button"
             onClick={() => setMenuOpen((open) => !open)}
-            aria-label="Toggle menu"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
-            style={{
-              display: "none",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              padding: 8,
-              flexDirection: "column",
-              gap: 5,
-            }}
+            aria-controls={MENU_ID}
+            className={cn(
+              "flex size-11 flex-col items-center justify-center gap-[5px] rounded-full xl:hidden",
+              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            )}
           >
             <span
-              style={{
-                display: "block",
-                width: 22,
-                height: 2,
-                backgroundColor: "#FFFFFF",
-                borderRadius: 2,
-                transition: "transform 0.3s ease",
-                transform: menuOpen ? "translateY(7px) rotate(45deg)" : "none",
-              }}
+              className="block h-0.5 w-[22px] rounded-full bg-white transition-transform duration-(--duration-base) ease-(--ease-out-soft)"
+              style={{ transform: menuOpen ? "translateY(7px) rotate(45deg)" : undefined }}
             />
             <span
-              style={{
-                display: "block",
-                width: 22,
-                height: 2,
-                backgroundColor: "#FFFFFF",
-                borderRadius: 2,
-                transition: "opacity 0.3s ease",
-                opacity: menuOpen ? 0 : 1,
-              }}
+              className="block h-0.5 w-[22px] rounded-full bg-white transition-opacity duration-(--duration-fast)"
+              style={{ opacity: menuOpen ? 0 : 1 }}
             />
             <span
-              style={{
-                display: "block",
-                width: 22,
-                height: 2,
-                backgroundColor: "#FFFFFF",
-                borderRadius: 2,
-                transition: "transform 0.3s ease",
-                transform: menuOpen ? "translateY(-7px) rotate(-45deg)" : "none",
-              }}
+              className="block h-0.5 w-[22px] rounded-full bg-white transition-transform duration-(--duration-base) ease-(--ease-out-soft)"
+              style={{ transform: menuOpen ? "translateY(-7px) rotate(-45deg)" : undefined }}
             />
           </button>
         </div>
@@ -192,19 +199,18 @@ export default function Navbar() {
 
       {menuOpen && (
         <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 99,
-            backgroundColor: "rgba(22,22,23,0.94)",
-            backdropFilter: "blur(24px) saturate(180%)",
-            WebkitBackdropFilter: "blur(24px) saturate(180%)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-          }}
+          ref={menuRef}
+          id={MENU_ID}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site menu"
+          className={cn(
+            "fixed inset-0 z-[99] flex flex-col items-center justify-center gap-1 md:hidden",
+            // Same glass recipe as the pill (see the comment above), just
+            // more opaque since this is a full-screen takeover rather than a
+            // pill with page content showing through it.
+            "bg-[rgba(22,22,23,0.94)] backdrop-blur-[20px] backdrop-saturate-180"
+          )}
         >
           {mobileNavLinks.map((link) => {
             const active = pathname === link.href;
@@ -212,34 +218,29 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                aria-current={active ? "page" : undefined}
                 onClick={() => setMenuOpen(false)}
-                style={{
-                  textDecoration: "none",
-                  fontSize: 32,
-                  fontWeight: active ? 700 : 300,
-                  color: active ? "#F61887" : "#FFFFFF",
-                  padding: "10px 24px",
-                }}
+                className={cn(
+                  "px-6 py-2.5 text-[30px] tracking-[-0.02em] no-underline",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+                  /* Light pink, not Primary: Primary on near-black is 4.1:1,
+                     and this is the one item that has to stand out. */
+                  active ? "font-semibold text-primary-soft" : "font-light text-white"
+                )}
               >
                 {link.label}
               </Link>
             );
           })}
           <a
-            href="https://apps.apple.com/app/id6742219623"
+            href={appStoreUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMenuOpen(false)}
-            style={{
-              textDecoration: "none",
-              backgroundColor: "#F61887",
-              color: "#FFFFFF",
-              padding: "16px 40px",
-              borderRadius: 999,
-              fontSize: 18,
-              fontWeight: 700,
-              marginTop: 16,
-            }}
+            className={cn(
+              "mt-6 rounded-full bg-secondary px-10 py-4 text-lg font-semibold text-white no-underline",
+              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            )}
           >
             Download
           </a>

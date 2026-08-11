@@ -35,10 +35,10 @@ const W = 840;
 const H = 680;
 
 const LEVEL = {
-  founder:     { size: 80,  bg: "#F61887", border: "#F61887",              text: "#fff",    glow: "0 0 0 10px rgba(246,24,135,0.15), 0 16px 48px rgba(246,24,135,0.28)", fs: 22, lw: 0,   lc: "transparent"              },
-  core:        { size: 56,  bg: "#fff",    border: "#F61887",              text: "#F61887", glow: "0 0 0 6px rgba(246,24,135,0.1), 0 8px 28px rgba(246,24,135,0.18)",  fs: 15, lw: 2,   lc: "rgba(246,24,135,0.3)"     },
-  contributor: { size: 44,  bg: "#fff",    border: "rgba(246,24,135,0.5)", text: "#F61887", glow: "0 0 0 4px rgba(246,24,135,0.06)",                                    fs: 12, lw: 1.5, lc: "rgba(246,24,135,0.18)"    },
-  community:   { size: 32,  bg: "#FDF5F8", border: "rgba(246,24,135,0.3)", text: "#F61887", glow: "none",                                                               fs: 9,  lw: 1,   lc: "rgba(246,24,135,0.1)"     },
+  founder:     { size: 80,  bg: "#D4006E", border: "#D4006E",              text: "#fff",    glow: "0 0 0 10px rgba(246,24,135,0.15), 0 16px 48px rgba(246,24,135,0.28)", fs: 22, lw: 0,   lc: "transparent"              },
+  core:        { size: 56,  bg: "#fff",    border: "#F61887",              text: "var(--secondary)", glow: "0 0 0 6px rgba(246,24,135,0.1), 0 8px 28px rgba(246,24,135,0.18)",  fs: 15, lw: 2,   lc: "rgba(246,24,135,0.3)"     },
+  contributor: { size: 44,  bg: "#fff",    border: "rgba(246,24,135,0.5)", text: "var(--secondary)", glow: "0 0 0 4px rgba(246,24,135,0.06)",                                    fs: 12, lw: 1.5, lc: "rgba(246,24,135,0.18)"    },
+  community:   { size: 32,  bg: "#FDF5F8", border: "rgba(246,24,135,0.3)", text: "var(--secondary)", glow: "none",                                                               fs: 9,  lw: 1,   lc: "rgba(246,24,135,0.1)"     },
 };
 
 function bezierPath(ax: number, ay: number, bx: number, by: number) {
@@ -220,10 +220,10 @@ export default function ContributorsTree({ contributors }: { contributors: Contr
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.18 }}
                     >
-                      <div style={{ fontSize: 13, fontWeight: 600, color: "#1A1A1A", marginBottom: 2 }}>{c.name}</div>
-                      <div style={{ fontSize: 11, color: "#F61887", marginBottom: 4 }}>{c.role}</div>
-                      <div style={{ fontSize: 10, color: "#A0A0A0", marginBottom: 7 }}>Since {c.since}</div>
-                      <div style={{ fontSize: 11, color: "#6B6B6B", lineHeight: 1.6 }}>{c.contributions}</div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: "var(--foreground)", marginBottom: 2 }}>{c.name}</div>
+                      <div style={{ fontSize: 11, color: "var(--secondary)", marginBottom: 4 }}>{c.role}</div>
+                      <div style={{ fontSize: 10, color: "var(--muted-foreground)", marginBottom: 7 }}>Since {c.since}</div>
+                      <div style={{ fontSize: 11, color: "var(--muted-foreground)", lineHeight: 1.6 }}>{c.contributions}</div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -244,8 +244,8 @@ export default function ContributorsTree({ contributors }: { contributors: Contr
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: c.level === "founder" ? 0.5 : 1 + idx * 0.1 }}
                 >
-                  <div style={{ fontSize: 11, fontWeight: 500, color: "#1A1A1A", lineHeight: 1.4 }}>{c.name}</div>
-                  <div style={{ fontSize: 9, color: "#A0A0A0" }}>{c.role}</div>
+                  <div style={{ fontSize: 11, fontWeight: 500, color: "var(--foreground)", lineHeight: 1.4 }}>{c.name}</div>
+                  <div style={{ fontSize: 9, color: "var(--muted-foreground)" }}>{c.role}</div>
                 </motion.div>
               )}
             </div>

@@ -76,6 +76,20 @@
   --elevation-card-hover:
     0 16px 40px rgba(163, 22, 84, 0.13),
     0 2px 6px rgba(163, 22, 84, 0.06);
+
+  /* ---- Motion -------------------------------------------------------------
+     Apple's easing is a long, soft decelerate: things arrive rather than snap.
+     Durations stay in the 200-600ms band; anything faster reads mechanical,
+     anything slower reads sluggish. */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 180ms;
+  --duration-base: 300ms;
+  --duration-slow: 560ms;
+
+  /* Height of the floating navbar plus its top offset, so a page hero and a
+     scroll-margin anchor can both clear it without re-deriving the number. */
+  --nav-clearance: 84px;
 }
 
 @theme inline {
@@ -114,12 +128,66 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 8px);
-  /* The site's own card radii, larger than shadcn's default scale */
-  --radius-card: 24px;
-  --radius-panel: 32px;
+  /* The site's own card radii. Deliberately restrained: the design reference
+     calls 24px-on-everything a template tell, so cards sit at 14 and the one
+     full-bleed inset panel gets 28. */
+  --radius-card: 14px;
+  --radius-panel: 28px;
 
   --shadow-card: var(--elevation-card);
   --shadow-card-hover: var(--elevation-card-hover);
+
+  --ease-soft: var(--ease-out-soft);
+
+  /* ---- Display type scale -------------------------------------------------
+     Fluid, and paired with its own leading, tracking and weight so a size
+     utility carries the whole treatment. Two rules from Apple's type, both
+     face-independent:
+
+       - negative tracking on large sizes only, easing back to 0 by body size
+       - leading tightens as size grows: 1.05 at display, 1.5 at body
+
+     Weight is 500, not 700. A bold display headline is the single strongest
+     "generated template" signal, and Lato 700 at 60px is very heavy; 500 lets
+     size carry the hierarchy instead. See design-reference/DESIGN-LANGUAGE.md.
+     --------------------------------------------------------------------- */
+  --text-display: clamp(2.75rem, 1.55rem + 4.8vw, 4.5rem); /* 44 -> 72 */
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 500;
+
+  --text-h1: clamp(2.25rem, 1.5rem + 3vw, 3.5rem); /* 36 -> 56 */
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.028em;
+  --text-h1--font-weight: 500;
+
+  --text-h2: clamp(1.75rem, 1.25rem + 2vw, 2.75rem); /* 28 -> 44 */
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.024em;
+  --text-h2--font-weight: 500;
+
+  --text-h3: clamp(1.375rem, 1.15rem + 0.9vw, 1.75rem); /* 22 -> 28 */
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.018em;
+  --text-h3--font-weight: 600;
+
+  --text-h4: 1.1875rem; /* 19 */
+  --text-h4--line-height: 1.35;
+  --text-h4--letter-spacing: -0.012em;
+  --text-h4--font-weight: 600;
+
+  /* The one line of copy under a heading. Larger and calmer than body. */
+  --text-lead: clamp(1.0625rem, 0.98rem + 0.42vw, 1.3125rem); /* 17 -> 21 */
+  --text-lead--line-height: 1.5;
+  --text-lead--letter-spacing: -0.011em;
+  --text-lead--font-weight: 400;
+
+  /* Small type gets positive tracking, which is what keeps it calm rather
+     than cramped. This is the eyebrow/label size. */
+  --text-label: 0.6875rem; /* 11 */
+  --text-label--line-height: 1.45;
+  --text-label--letter-spacing: 0.07em;
+  --text-label--font-weight: 600;
 
 /* tailwind.config.ts is not auto-loaded in Tailwind v4, so the font has to be
    mapped here. Without this, body.font-sans wins over the body rule below and
@@ -144,12 +212,17 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Anchor targets must clear the fixed navbar, not hide behind it. */
+    scroll-padding-top: calc(var(--nav-clearance) + 16px);
   }
 
   body {
     color: var(--foreground);
     font-family: var(--font-body), var(--font-lato), 'Lato', sans-serif;
     line-height: 1.6;
+    /* iOS Safari inflates text in the orientation it thinks needs it, which
+       breaks a fluid clamp() scale. */
+    -webkit-text-size-adjust: 100%;
   }
 
   ::-webkit-scrollbar { width: 4px; }
@@ -161,11 +234,37 @@
 
   /* Lato on headlines. Type selector so every page inherits one treatment.
      Lato is already the body face on the inner pages, so this puts the whole
-     site on a single typeface rather than a serif display face on top. */
+     site on a single typeface rather than a serif display face on top.
+
+     Weight 500, down from 700. This is the highest-leverage single change in
+     the redesign: it is what separates a designed page from a generated one.
+     A `font-*` utility on the element still wins, so a heading that genuinely
+     needs weight can ask for it. */
   h1, h2 {
     font-family: var(--font-lato), ui-sans-serif, system-ui, sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.022em;
+    font-weight: 500;
+    letter-spacing: -0.024em;
+    text-wrap: balance;
+  }
+
+  h3, h4, h5, h6 {
+    font-family: var(--font-lato), ui-sans-serif, system-ui, sans-serif;
+    text-wrap: balance;
+  }
+
+  /* A paragraph should never run the full width of a wide container. Pages can
+     opt out with a max-w-* utility, which wins on specificity. */
+  p {
+    text-wrap: pretty;
+  }
+
+  /* One focus treatment for the whole site. Keyboard users get a visible ring
+     everywhere; pointer users never see it. Two-tone so the ring stays visible
+     on both white and pink surfaces. */
+  :focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
@@ -174,23 +273,161 @@
      at Lato 700 an italic clause reads as a different voice, not an accent.
      Layered so a text-* utility on the span can still override it. */
   .hl-em { color: var(--headline-muted); }
+
+  /* The label above a section heading. Plain uppercase text in grey — no pill,
+     no border, no icon. A bordered pink chip with a sparkle in it is the most
+     recognisable AI-generated section header there is. */
+  .eyebrow {
+    display: block;
+    font-size: var(--text-label);
+    line-height: var(--text-label--line-height);
+    font-weight: var(--text-label--font-weight);
+    letter-spacing: var(--text-label--letter-spacing);
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  /**
+   * Label column + content, stacking on small screens.
+   *
+   * Several pages declared this inline as `gridTemplateColumns: "200px 1fr"`
+   * with no breakpoint behind it, which held a fixed track wider than the
+   * phone it was rendering on. An inline style cannot carry a media query, so
+   * the pattern lives here and the width comes in as --sidebar-w.
+   *
+   * 600px is the tablet breakpoint the design reference specifies; the site
+   * has no others.
+   */
+  .grid-sidebar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px 0;
+  }
+
+  @media (min-width: 600px) {
+    .grid-sidebar {
+      grid-template-columns: var(--sidebar-w, 160px) 1fr;
+      gap: 0;
+    }
+  }
+
+  /* Scroll reveal, CSS-driven so it degrades correctly.
+
+     The old JS version set `opacity: 0` as an inline style during render, so
+     the entire page was invisible until React hydrated — and stayed invisible
+     for good if JS failed or was blocked. Here the hidden state is applied
+     only once JS has confirmed it can undo it (`.js-reveal` on <html>), and
+     it is scoped away entirely under reduced-motion. */
+  .reveal {
+    transition:
+      opacity var(--duration-slow) var(--ease-out-soft),
+      transform var(--duration-slow) var(--ease-out-soft);
+  }
+
+  .js-reveal .reveal:not(.is-revealed) {
+    opacity: 0;
+    transform: translateY(20px);
+    /* Failsafe. If the bundle never hydrates, nothing would ever add
+       .is-revealed and the page would sit blank. A zero-duration animation on
+       a delay puts the content back regardless, without touching the normal
+       path (the observer almost always wins this race). Kept short: this is
+       the worst case a reader would ever wait to see text. */
+    animation: reveal-failsafe 1ms linear 1.2s forwards;
+  }
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* ---------------------------------------------------------------------------
+   Aceternity-sourced motion primitives, for the bento/spotlight homepage.
+
+   `spotlight` and `scroll` are the two keyframe definitions Aceternity UI
+   itself ships for its Spotlight and Infinite Moving Cards components
+   (confirmed against ui.aceternity.com's own docs). The rest are written to
+   match that same visual language: long, soft, GPU-only (transform/opacity),
+   never fighting the reduced-motion block below.
+   --------------------------------------------------------------------------- */
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+.animate-spotlight {
+  animation: spotlight 2s var(--ease-out-soft) forwards;
+}
+
+/* Infinite Moving Cards: the track holds two copies of the item list back to
+   back, so translating exactly -50% - the row's own gap loops seamlessly. */
+@keyframes scroll {
+  to {
+    transform: translate(calc(-50% - 0.75rem));
+  }
+}
+.animate-scroll {
+  animation: scroll var(--marquee-duration, 34s) linear infinite;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 5s linear infinite;
+}
+
+@keyframes gradient-x {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.animate-gradient-x {
+  background-size: 200% auto;
+  animation: gradient-x 6s ease infinite;
+}
+
+@keyframes blob-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(3%, -4%) scale(1.06);
+  }
+}
+.animate-blob-drift {
+  animation: blob-drift 14s var(--ease-in-out-soft) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-* { animation: none !important; transition: none !important; }
-}
+  html { scroll-behavior: auto; }
 
-@media (max-width: 768px) {
-.sakhi-desktop-nav { display: none !important; }
-.sakhi-hamburger { display: flex !important; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Never leave content hidden mid-reveal when the transition is stripped. */
+  .js-reveal .reveal:not(.is-revealed) {
+    opacity: 1;
+    transform: none;
+  }
 }

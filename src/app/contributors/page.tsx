@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import AnimatedSection from "@/components/ui/AnimatedSection";
+import { CheckCircle2 } from "lucide-react";
+
 import ContributorsTiers, { type Contributor } from "@/components/ui/ContributorsTiers";
 import JourneyTimeline from "@/components/ui/JourneyTimeline";
 import IndiaMap from "@/components/ui/IndiaMap";
-import * as kit from "@/components/ui/pageKit";
+import { Container, GradientText, PageHero, Section, SectionHeading } from "@/components/ui/section";
+import { FinalCTA } from "@/components/ui/final-cta";
 
 export const metadata: Metadata = {
   title: "Contributors, Sakhi",
@@ -74,12 +76,12 @@ const contributors: Contributor[] = [
     since: "2025",
     contributions: "Campus promotion, word-of-mouth, user onboarding, feedback collection",
   },
-  { id: "leaf-1", name: "Early User",  role: "App Store", initials: "EU", level: "community", since: "Jun 2025", contributions: "Downloaded, used, and shared Sakhi" },
-  { id: "leaf-2", name: "Early User",  role: "App Store", initials: "EU", level: "community", since: "Jun 2025", contributions: "Downloaded, used, and shared Sakhi" },
-  { id: "leaf-3", name: "Early User",  role: "App Store", initials: "EU", level: "community", since: "Jun 2025", contributions: "Downloaded, used, and shared Sakhi" },
-  { id: "leaf-4", name: "Partner",     role: "B2B",       initials: "P",  level: "community", since: "2026",     contributions: "Campus and corporate wellness partnerships" },
-  { id: "leaf-5", name: "Early User",  role: "App Store", initials: "EU", level: "community", since: "Jun 2025", contributions: "Downloaded, used, and shared Sakhi" },
-  { id: "leaf-6", name: "Supporter",   role: "Community", initials: "S",  level: "community", since: "2024",     contributions: "Believed in the mission from the beginning" },
+  { id: "leaf-1", name: "Early User", role: "App Store", initials: "EU", level: "community", since: "Jun 2025", contributions: "Downloaded, used, and shared Sakhi" },
+  { id: "leaf-2", name: "Early User", role: "App Store", initials: "EU", level: "community", since: "Jun 2025", contributions: "Downloaded, used, and shared Sakhi" },
+  { id: "leaf-3", name: "Early User", role: "App Store", initials: "EU", level: "community", since: "Jun 2025", contributions: "Downloaded, used, and shared Sakhi" },
+  { id: "leaf-4", name: "Partner", role: "B2B", initials: "P", level: "community", since: "2026", contributions: "Campus and corporate wellness partnerships" },
+  { id: "leaf-5", name: "Early User", role: "App Store", initials: "EU", level: "community", since: "Jun 2025", contributions: "Downloaded, used, and shared Sakhi" },
+  { id: "leaf-6", name: "Supporter", role: "Community", initials: "S", level: "community", since: "2024", contributions: "Believed in the mission from the beginning" },
 ];
 
 const teamDetailed = [
@@ -87,7 +89,6 @@ const teamDetailed = [
     id: "karan",
     name: "Karan Kumar",
     role: "Founder & Product Lead",
-    title: "iOS Developer · Product Strategist",
     since: "January 2024",
     initials: "KK",
     bio: "Karan started Sakhi as Team 07 at the ISDP Bootcamp, Galgotias University, in January 2024. He leads product strategy, iOS development, AI integration, and the overall direction of Sakhi. Returned full-time on May 10, 2026 to lead the v2 launch.",
@@ -99,7 +100,6 @@ const teamDetailed = [
     id: "shruti",
     name: "Shruti Sachdeva",
     role: "Design Lead",
-    title: "UI/UX · Brand · Visual Identity",
     since: "January 2024",
     initials: "SS",
     bio: "Shruti is the visual mind behind Sakhi. She designed the logo, the brand system, the design language, and every screen of the app. The warmth and clarity that makes Sakhi feel trusted is Shruti's work.",
@@ -109,273 +109,164 @@ const teamDetailed = [
   },
 ];
 
+const founderPartnerItems = [
+  { label: "ISDP Bootcamp", desc: "Where Sakhi was born, Jan 2024" },
+  { label: "Apple Developer Program", desc: "University-custodian model, May 2024" },
+  { label: "Campus Promotion", desc: "v2 launch partner, Jun 2026" },
+  { label: "B2B Pathway", desc: "First institutional partner, Nov 2026" },
+];
+
+const heroStats = [
+  { n: "Jan 2024", l: "Where it began" },
+  { n: "49", l: "User interviews" },
+  { n: "10+", l: "Cities reached" },
+  { n: "252M", l: "Women we build for" },
+];
 
 export default function ContributorsPage() {
   return (
-    <div style={{ overflowX: "hidden", fontFamily: "var(--font-lato), Lato, sans-serif" }}>
+    <div>
+      <PageHero
+        eyebrow="The people behind Sakhi"
+        title={
+          <>
+            Every great thing is built <GradientText>by people who care</GradientText>
+          </>
+        }
+        lead="Sakhi began in Lucknow and reached every corner of India, because the problem it solves lives everywhere. From classrooms to boardrooms, from mothers to daughters."
+        visual={<IndiaMap />}
+      >
+        <div className="flex flex-wrap gap-x-7 gap-y-4">
+          {heroStats.map((s) => (
+            <div key={s.l} className="border-r border-border pr-7 last:border-0 last:pr-0">
+              <div className="text-[20px] leading-tight font-bold text-secondary">{s.n}</div>
+              <div className="mt-0.5 text-[11px] text-muted-foreground">{s.l}</div>
+            </div>
+          ))}
+        </div>
+        <p className="mt-6 text-[13px] text-muted-foreground italic">
+          Hover the map to explore Sakhi&rsquo;s presence across India →
+        </p>
+      </PageHero>
 
-      {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section style={{
-        background: "var(--background)", borderBottom: "1px solid var(--border)",
-        padding: "140px 0 80px",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        <div style={{ ...kit.container, position: "relative" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 420px", gap: 72, alignItems: "center" }}>
+      {/* ------------------------------------------------------- contributors */}
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="Everyone who made this"
+            title="From a classroom to India"
+            lead="Every person who contributed to Sakhi, organised by role and depth of involvement."
+            align="left"
+          />
+          <div className="mt-14">
+            <ContributorsTiers contributors={contributors} />
+          </div>
+        </Container>
+      </Section>
 
-            {/* Left, text */}
-            <div>
-              <AnimatedSection delay={0}>
-                <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginBottom: 20, display: "block" }}>
-                  The People Behind Sakhi
-                </span>
-                <h1 style={{ fontSize: "clamp(40px, 5vw, 70px)", color: "var(--foreground)", letterSpacing: "-0.02em", lineHeight: 1.06, margin: "0 0 28px" }}>
-                  Every great thing is built<br />
-                  <span style={{ color: "var(--primary)" }}>by people who care.</span>
-                </h1>
-              </AnimatedSection>
-              <AnimatedSection delay={120}>
-                <p style={{ fontSize: 17, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.85, maxWidth: 480, margin: "0 0 40px" }}>
-                  Sakhi began in Lucknow and reached every corner of India, because the problem it solves lives everywhere. From classrooms to boardrooms, from mothers to daughters.
-                </p>
-              </AnimatedSection>
-              <AnimatedSection delay={220}>
-                <div style={{ display: "flex", gap: 28, flexWrap: "wrap" as const, marginBottom: 20 }}>
-                  {[
-                    { n: "Jan 2024",  l: "Where it began" },
-                    { n: "49",        l: "User interviews" },
-                    { n: "10+",       l: "Cities reached" },
-                    { n: "252M",      l: "Women we build for" },
-                  ].map((s, i, arr) => (
-                    <div key={i} style={{ paddingRight: i < arr.length - 1 ? 28 : 0, borderRight: i < arr.length - 1 ? "1px solid rgba(246,24,135,0.12)" : "none" }}>
-                      <div style={{ fontSize: 20, fontWeight: 700, color: "var(--primary)", letterSpacing: 0, lineHeight: 1.2 }}>{s.n}</div>
-                      <div style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", marginTop: 3 }}>{s.l}</div>
-                    </div>
+      {/* ------------------------------------------------------------ core team */}
+      <Section tone="blush">
+        <Container>
+          <SectionHeading eyebrow="Core team" title="The people who built it" align="left" />
+          <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {teamDetailed.map((member) => (
+              <div
+                key={member.id}
+                className={`relative overflow-hidden rounded-2xl border bg-card p-9 ${member.highlight ? "border-secondary/25" : "border-border"}`}
+              >
+                <div
+                  className={`absolute inset-x-0 top-0 h-[3px] ${member.highlight ? "bg-gradient-to-r from-primary to-secondary" : "bg-border"}`}
+                  aria-hidden="true"
+                />
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`grid size-15 shrink-0 place-items-center rounded-full text-[18px] font-semibold ${
+                      member.highlight
+                        ? "bg-secondary text-secondary-foreground"
+                        : "border border-border bg-card text-secondary"
+                    }`}
+                  >
+                    {member.initials}
+                  </div>
+                  <div>
+                    <div className="text-[18px] font-medium text-foreground">{member.name}</div>
+                    <div className="mt-0.5 text-[12.5px] text-secondary">{member.role}</div>
+                    <div className="mt-0.5 text-[11px] text-muted-foreground">Since {member.since}</div>
+                  </div>
+                </div>
+
+                <blockquote className="mt-6 border-l-2 border-secondary/25 pl-4 text-[15px] leading-relaxed text-muted-foreground italic">
+                  &ldquo;{member.quote}&rdquo;
+                </blockquote>
+
+                <p className="mt-4 text-[14px] leading-relaxed text-muted-foreground">{member.bio}</p>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {member.contributions.map((c) => (
+                    <span
+                      key={c}
+                      className="rounded-full bg-accent-faint px-2.5 py-1 text-[11px] font-medium text-secondary"
+                    >
+                      {c}
+                    </span>
                   ))}
                 </div>
-              </AnimatedSection>
-              <AnimatedSection delay={300}>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "#A0A0A0", fontStyle: "italic", margin: 0 }}>
-                  Hover the map to explore Sakhi&apos;s presence across India →
-                </p>
-              </AnimatedSection>
-            </div>
-
-            {/* Right, India map */}
-            <AnimatedSection delay={200}>
-              <IndiaMap />
-            </AnimatedSection>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ── CONTRIBUTORS ──────────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)", padding: "96px 0" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 56 }}>
-              <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginBottom: 12, display: "block" }}>Everyone who made this</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 14px" }}>
-                From a classroom to India.
-              </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 480, margin: 0 }}>
-                Every person who contributed to Sakhi, organized by role and depth of involvement.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <ContributorsTiers contributors={contributors} />
-        </div>
-      </section>
-
-      {/* ── CORE TEAM ─────────────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: "#fbf9fb", padding: "96px 0" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <div style={{ marginBottom: 56 }}>
-              <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginBottom: 12, display: "block" }}>Core Team</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: 0 }}>
-                The people who built it.
-              </h2>
-            </div>
-          </AnimatedSection>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
-            {teamDetailed.map((member, i) => (
-              <AnimatedSection key={member.id} delay={i * 100}>
-                <div style={{
-                  background: "var(--card)",
-                  borderRadius: 24,
-                  padding: "40px 36px",
-                  height: "100%",
-                  boxSizing: "border-box" as const,
-                  display: "flex",
-                  flexDirection: "column" as const,
-                  gap: 22,
-                  border: member.highlight ? "1.5px solid rgba(246,24,135,0.2)" : "1.5px solid transparent",
-                  position: "relative" as const,
-                  overflow: "hidden" as const,
-                }}>
-                  {/* Subtle top gradient accent */}
-                  <div style={{
-                    position: "absolute" as const,
-                    top: 0, left: 0, right: 0,
-                    height: 3,
-                    background: member.highlight
-                      ? "linear-gradient(90deg, #F61887, rgba(246,24,135,0.3))"
-                      : "linear-gradient(90deg, rgba(246,24,135,0.15), rgba(246,24,135,0.04))",
-                    borderRadius: "8px 8px 0 0",
-                  }} />
-
-                  {/* Avatar + name */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                    <div style={{
-                      width: 60, height: 60, borderRadius: "50%", flexShrink: 0,
-                      background: member.highlight ? "linear-gradient(135deg, #F61887, #D4127A)" : "rgba(246,24,135,0.08)",
-                      border: member.highlight ? "none" : "1.5px solid rgba(246,24,135,0.2)",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: 18, fontWeight: 400,
-                      color: member.highlight ? "#FFFFFF" : "var(--primary)",
-                    }}>
-                      {member.initials}
-                    </div>
-                    <div>
-                      <div style={{ fontSize: 18, fontWeight: 500, color: "var(--foreground)", lineHeight: 1.3 }}>{member.name}</div>
-                      <div style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginTop: 2 }}>{member.role}</div>
-                      <div style={{ fontSize: 11, fontWeight: 400, color: "#A0A0A0", marginTop: 1 }}>Since {member.since}</div>
-                    </div>
-                  </div>
-
-                  {/* Quote */}
-                  <blockquote style={{
-                    margin: 0, paddingLeft: 16,
-                    borderLeft: "2px solid rgba(246,24,135,0.25)",
-                    fontStyle: "italic", fontSize: 15, fontWeight: 400,
-                    color: "#6B6B6B", lineHeight: 1.75,
-                  }}>
-                    &ldquo;{member.quote}&rdquo;
-                  </blockquote>
-
-                  {/* Bio */}
-                  <p style={{ fontSize: 14, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: 0 }}>
-                    {member.bio}
-                  </p>
-
-                  {/* Tags */}
-                  <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 6, marginTop: "auto" }}>
-                    {member.contributions.map(c => (
-                      <span key={c} style={{
-                        fontSize: 11, fontWeight: 400, color: "var(--primary)",
-                        background: "rgba(246,24,135,0.07)",
-                        padding: "4px 10px", borderRadius: 999,
-                      }}>
-                        {c}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </AnimatedSection>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      {/* ── FOUNDING PARTNER ──────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: "var(--background)", borderBottom: "1px solid var(--border)", padding: "96px 0" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center" }}>
-              <div>
-                <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginBottom: 12, display: "block" }}>Founding Partner</span>
-                <h2 style={{ fontSize: "clamp(24px, 3vw, 38px)", color: "var(--foreground)", letterSpacing: "-0.018em", margin: "0 0 20px", lineHeight: 1.2 }}>
-                  Galgotias University
-                </h2>
-                <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: "0 0 16px" }}>
-                  Sakhi exists because of Galgotias University, not as a customer, but as a founding patron. The ISDP Bootcamp gave Sakhi its first moment. The campus gave it its first users.
-                </p>
-                <p style={{ fontSize: 15, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.85, margin: 0 }}>
-                  We carry that support forward in everything we build.
-                </p>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
-                {[
-                  { label: "ISDP Bootcamp",           desc: "Where Sakhi was born, Jan 2024" },
-                  { label: "Apple Developer Program",  desc: "University-custodian model, May 2024" },
-                  { label: "Campus Promotion",         desc: "v2 launch partner, Jun 2026" },
-                  { label: "B2B Pathway",              desc: "First institutional partner, Nov 2026" },
-                ].map((item, i) => (
-                  <div key={i} style={{
-                    background: "#F8F2F4",
-                    borderRadius: 24,
-                    padding: "16px 20px",
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: 14,
-                  }}>
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--primary)", flexShrink: 0, marginTop: 5 }} />
-                    <div>
-                      <div style={{ fontSize: 14, fontWeight: 500, color: "var(--foreground)", marginBottom: 3 }}>{item.label}</div>
-                      <div style={{ fontSize: 12, fontWeight: 400, color: "#A0A0A0" }}>{item.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* ── JOURNEY TIMELINE ──────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: "#fbf9fb", padding: "96px 0" }}>
-        <div style={kit.container}>
-          <AnimatedSection delay={0}>
-            <div style={{ textAlign: "center" as const, marginBottom: 64 }}>
-              <span style={{ fontSize: 12, fontWeight: 400, color: "var(--primary)", marginBottom: 12, display: "block" }}>The Journey</span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.15, margin: "0 0 16px" }}>
-                From idea to India.
-              </h2>
-              <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.8, maxWidth: 420, margin: "0 auto" }}>
-                Every milestone in Sakhi&rsquo;s story, from a bootcamp classroom to the App Store.
+      {/* ------------------------------------------------------ founding partner */}
+      <Section>
+        <Container>
+          <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
+            <div>
+              <span className="eyebrow">Founding partner</span>
+              <h2 className="text-h3 mt-4 text-foreground">Galgotias University</h2>
+              <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground">
+                Sakhi exists because of Galgotias University, not as a customer, but as a founding
+                patron. The ISDP Bootcamp gave Sakhi its first moment. The campus gave it its first
+                users.
+              </p>
+              <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
+                We carry that support forward in everything we build.
               </p>
             </div>
-          </AnimatedSection>
+            <div className="flex flex-col gap-3">
+              {founderPartnerItems.map((item) => (
+                <div key={item.label} className="flex items-start gap-3 rounded-2xl border border-border bg-card p-5">
+                  <CheckCircle2 className="mt-0.5 size-4.5 shrink-0 text-primary" aria-hidden="true" />
+                  <div>
+                    <div className="text-[14px] font-medium text-foreground">{item.label}</div>
+                    <div className="mt-0.5 text-[12.5px] text-muted-foreground">{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </Section>
 
-          <JourneyTimeline />
-        </div>
-      </section>
+      {/* ---------------------------------------------------------------- journey */}
+      <Section tone="blush">
+        <Container>
+          <SectionHeading
+            eyebrow="The journey"
+            title="From idea to India"
+            lead="Every milestone in Sakhi's story, from a bootcamp classroom to the App Store."
+          />
+          <div className="mt-16">
+            <JourneyTimeline />
+          </div>
+        </Container>
+      </Section>
 
-      {/* ── CTA ───────────────────────────────────────────────────────────── */}
-      <section style={{ background: "var(--background-blush)", borderTop: "1px solid var(--border)", padding: "96px 0", textAlign: "center" as const, position: "relative" as const, overflow: "hidden" as const }}>
-        <div style={{ ...kit.container, position: "relative" as const }}>
-          <AnimatedSection delay={0}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 52px)", color: "var(--foreground)", letterSpacing: "-0.018em", lineHeight: 1.1, margin: "0 0 20px" }}>
-              Add your leaf to the tree.
-            </h2>
-            <p style={{ fontSize: 17, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.8, margin: "0 0 40px" }}>
-              Every download, every share, every conversation, you become part of this.
-            </p>
-            <a
-              href="https://apps.apple.com/app/id6742219623"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 10,
-                backgroundColor: "var(--secondary)", color: "var(--secondary-foreground)", padding: "0 22px", height: 44, borderRadius: 8,
-                textDecoration: "none", fontSize: 15, fontWeight: 600,
-                boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--primary)">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-              </svg>
-              Download Sakhi
-            </a>
-          </AnimatedSection>
-        </div>
-      </section>
-
+      <FinalCTA
+        title="Add your leaf"
+        emphasis="to the tree"
+        lead="Every download, every share, every conversation, she becomes part of this."
+      />
     </div>
   );
 }

@@ -29,7 +29,7 @@ const stages: Stage[] = [
     statLabel: "miss school every month because of period pain",
     conditions: ["Dysmenorrhea", "Early PCOD onset", "Anemia", "Menstrual Irregularity"],
     sakhiRole: "Track cycles from the very first one. Understand what's normal for her — not for everyone. Flag patterns that should go to a doctor. Give her language for what she's feeling.",
-    color: "#F61887",
+    color: "var(--secondary)",
     bg: "#F8F2F4",
   },
   {
@@ -42,7 +42,7 @@ const stages: Stage[] = [
     statLabel: "Indian women has PCOD — and 70% don't know it",
     conditions: ["PCOD / PCOS", "PMDD", "Thyroid Disorders", "Hormonal Mental Health", "Anemia"],
     sakhiRole: "Sakhi AI that answers what she'd never Google out loud. Symptom patterns documented for a doctor she's finally ready to see. Be Her Sakhi — so the person she loves most, 500km away, knows when to call.",
-    color: "#F61887",
+    color: "var(--secondary)",
     bg: "#F8E5EC",
   },
   {
@@ -55,7 +55,7 @@ const stages: Stage[] = [
     statLabel: "of women with infertility have endometriosis",
     conditions: ["Fertility Challenges", "Endometriosis", "Ovarian Cysts", "Thyroid Disorders", "PCOD / PCOS"],
     sakhiRole: "Detailed cycle tracking for fertility windows. Three months of documented symptoms for a specialist consultation — the evidence that makes a 10-minute appointment count. Not a fertility tool. A health record that makes the right conversation possible.",
-    color: "#F61887",
+    color: "var(--secondary)",
     bg: "#F8F2F4",
   },
   {
@@ -68,7 +68,7 @@ const stages: Stage[] = [
     statLabel: "of Indian women experience postpartum depression",
     conditions: ["Postpartum Depression", "Hormonal Mental Health", "Anemia", "Thyroid Disorders"],
     sakhiRole: "Mood and symptom tracking through the postpartum window. PPD awareness before the moment of crisis. Be Her Sakhi — so someone sees when she's having a hard week, before she has to say it herself.",
-    color: "#F61887",
+    color: "var(--secondary)",
     bg: "#F8E5EC",
   },
   {
@@ -81,7 +81,7 @@ const stages: Stage[] = [
     statLabel: "mean age of menopause in India (vs. 51 in the West)",
     conditions: ["Bone Health", "Hormonal Mental Health", "Thyroid Disorders", "Menorrhagia", "Amenorrhea"],
     sakhiRole: "Track cycle changes through perimenopause. Recognise the early window for bone health conversations. Understand the hormonal mental health connection — so her low weeks have a name, not a blame.",
-    color: "#F61887",
+    color: "var(--secondary)",
     bg: "#F8F2F4",
   },
 ];
@@ -96,7 +96,7 @@ export default function LifeStages() {
       {/* Header */}
       <div style={{ marginBottom: 52 }}>
         <div style={{
-          fontSize: 11, fontWeight: 400, color: "#F61887",
+          fontSize: 11, fontWeight: 400, color: "var(--secondary)",
           letterSpacing: "0.14em", textTransform: "uppercase",
           marginBottom: 16,
         }}>
@@ -105,16 +105,16 @@ export default function LifeStages() {
         <h2 style={{
           fontSize: "clamp(32px, 4vw, 52px)",
           fontWeight: 300,
-          color: "#1A1A1A",
+          color: "var(--foreground)",
           letterSpacing: "-0.5px",
           lineHeight: 1.12,
           margin: "0 0 16px",
           maxWidth: 600,
         }}>
           Sakhi is with her<br />
-          <span style={{ color: "#F61887" }}>through all of it.</span>
+          <span style={{ color: "var(--secondary)" }}>through all of it.</span>
         </h2>
-        <p style={{ fontSize: 16, fontWeight: 400, color: "#6B6B6B", lineHeight: 1.7, maxWidth: 500, margin: 0 }}>
+        <p style={{ fontSize: 16, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.7, maxWidth: 500, margin: 0 }}>
           Her body changes across a lifetime. Her need for someone who understands her doesn&rsquo;t.
         </p>
       </div>
@@ -135,7 +135,7 @@ export default function LifeStages() {
               borderRadius: 999,
               border: active === i ? `1.5px solid ${s.color}` : "1px solid rgba(0,0,0,0.1)",
               background: active === i ? s.color : "#fff",
-              color: active === i ? "#fff" : "#6B6B6B",
+              color: active === i ? "#fff" : "var(--muted-foreground)",
               fontSize: 13,
               fontWeight: active === i ? 500 : 400,
               cursor: "pointer",
@@ -192,7 +192,7 @@ export default function LifeStages() {
               <h3 style={{
                 fontSize: 32,
                 fontWeight: 300,
-                color: "#1A1A1A",
+                color: "var(--foreground)",
                 letterSpacing: "-0.5px",
                 lineHeight: 1.2,
                 margin: "0 0 12px",
@@ -214,7 +214,7 @@ export default function LifeStages() {
               <p style={{
                 fontSize: 15,
                 fontWeight: 400,
-                color: "#6B6B6B",
+                color: "var(--muted-foreground)",
                 lineHeight: 1.85,
                 margin: "0 0 32px",
                 maxWidth: 520,
@@ -243,7 +243,7 @@ export default function LifeStages() {
                 <p style={{
                   fontSize: 14,
                   fontWeight: 400,
-                  color: "#6B6B6B",
+                  color: "var(--muted-foreground)",
                   lineHeight: 1.75,
                   margin: 0,
                 }}>
@@ -276,7 +276,7 @@ export default function LifeStages() {
                 <div style={{
                   fontSize: 13,
                   fontWeight: 400,
-                  color: "#6B6B6B",
+                  color: "var(--muted-foreground)",
                   lineHeight: 1.5,
                   maxWidth: 200,
                 }}>
@@ -289,7 +289,7 @@ export default function LifeStages() {
                 <div style={{
                   fontSize: 10,
                   fontWeight: 600,
-                  color: "#A0A0A0",
+                  color: "var(--muted-foreground)",
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   marginBottom: 14,
@@ -313,7 +313,7 @@ export default function LifeStages() {
                       <span style={{
                         fontSize: 13,
                         fontWeight: 400,
-                        color: "#1A1A1A",
+                        color: "var(--foreground)",
                       }}>
                         {c}
                       </span>
