@@ -420,6 +420,411 @@
   animation: blob-drift 14s var(--ease-in-out-soft) infinite;
 }
 
+/* Shared "this is live" motif for the bento illustrations: a badge breathing
+   in place plus a ring emitting from it once a cycle. Two keyframes, not
+   one, because they run on different elements (the badge itself vs. an
+   absolutely-positioned ring sized to match it) and Tailwind's own
+   `animate-ping` doubles the ring's diameter and uses its default easing —
+   too sharp a jump for a badge this small; this scales less and rides the
+   site's own soft-out curve instead. */
+@keyframes badge-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+.animate-badge-pulse {
+  animation: badge-pulse 2.6s var(--ease-in-out-soft) infinite;
+}
+
+@keyframes ping-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70%,
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.animate-ping-soft {
+  animation: ping-soft 2.6s var(--ease-out-soft) infinite;
+}
+
+/* ---------------------------------------------------------------------------
+   Doctor report storyboard.
+
+   One object through three states, never two elements taking turns: the
+   Generate button is pressed and becomes the sheet, the sheet fills in and
+   is confirmed, then it lifts and becomes a share icon, then it settles back
+   into the button. That is why this is a width/height/radius/colour morph on
+   a single box — the whole point is that nothing ever appears beside
+   anything else.
+
+   Every part runs its own keyframes at the same --doc-cycle period, so they
+   stay in lockstep with no JS timeline. The per-line stagger is a plain
+   positive animation-delay, which holds a constant offset forever precisely
+   because the period is identical.
+
+   The un-animated styles are deliberately the *finished report* — sheet
+   shaped, lines full, tick shown, label and share hidden. That is what the
+   reduced-motion block below falls back to, so the illustration reads as a
+   completed report rather than freezing on a bare button.
+   --------------------------------------------------------------------------- */
+.doc-scene {
+  --doc-cycle: 4.8s;
+}
+
+/* The morphing box. Base = the finished sheet. */
+.doc-morph {
+  position: relative;
+  width: 64px;
+  height: 84px;
+  border-radius: 10px;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  animation: doc-morph var(--doc-cycle) var(--ease-in-out-soft) infinite;
+}
+
+@keyframes doc-morph {
+  /* the button */
+  0% {
+    width: 74px;
+    height: 26px;
+    border-radius: 999px;
+    background-color: var(--secondary);
+    border-color: transparent;
+    transform: translateY(0) scale(1);
+  }
+  4% {
+    transform: translateY(0) scale(0.93);
+  }
+  9% {
+    width: 74px;
+    height: 26px;
+    border-radius: 999px;
+    background-color: var(--secondary);
+    border-color: transparent;
+    transform: translateY(0) scale(1);
+  }
+  /* becomes the sheet */
+  24%,
+  56% {
+    width: 64px;
+    height: 84px;
+    border-radius: 10px;
+    background-color: var(--card);
+    border-color: var(--border);
+  }
+  56% {
+    transform: translateY(0) scale(1);
+  }
+  /* lifts away and becomes the share icon, with a little overshoot */
+  66% {
+    transform: translateY(-16px) scale(1.06);
+  }
+  68%,
+  84% {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background-color: var(--secondary);
+    border-color: transparent;
+  }
+  74%,
+  84% {
+    transform: translateY(-14px) scale(1);
+  }
+  /* back to the button, so the loop closes on itself */
+  100% {
+    width: 74px;
+    height: 26px;
+    border-radius: 999px;
+    background-color: var(--secondary);
+    border-color: transparent;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.doc-label {
+  opacity: 0;
+  animation: doc-label var(--doc-cycle) var(--ease-in-out-soft) infinite;
+}
+@keyframes doc-label {
+  0%,
+  6% {
+    opacity: 1;
+  }
+  13%,
+  92% {
+    opacity: 0;
+  }
+  98%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Clears before the box starts collapsing, so the lines are never caught
+   half-visible over the shrinking share circle. */
+.doc-body {
+  animation: doc-body var(--doc-cycle) var(--ease-in-out-soft) infinite;
+}
+@keyframes doc-body {
+  0%,
+  18% {
+    opacity: 0;
+  }
+  26%,
+  56% {
+    opacity: 1;
+  }
+  63%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.doc-line {
+  transform-origin: left;
+  animation: doc-line var(--doc-cycle) var(--ease-out-soft) infinite;
+  animation-delay: calc(var(--i, 0) * 0.1s);
+}
+@keyframes doc-line {
+  0%,
+  22% {
+    transform: scaleX(0);
+  }
+  40%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+/* The tick confirms the report is built, then clears as it becomes a share. */
+.doc-tick {
+  animation: doc-tick var(--doc-cycle) var(--ease-out-soft) infinite;
+}
+@keyframes doc-tick {
+  0%,
+  44% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  55% {
+    transform: scale(1);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  66%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.doc-tick-ring {
+  opacity: 0;
+  animation: doc-tick-ring var(--doc-cycle) var(--ease-out-soft) infinite;
+}
+@keyframes doc-tick-ring {
+  0%,
+  50% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  54% {
+    opacity: 0.45;
+  }
+  68%,
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* The share mark, only ever visible while the box is the circle. */
+.doc-share {
+  opacity: 0;
+  animation: doc-share var(--doc-cycle) var(--ease-out-soft) infinite;
+}
+@keyframes doc-share {
+  0%,
+  63% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  75%,
+  86% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  92%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.doc-share-ring {
+  opacity: 0;
+  animation: doc-share-ring var(--doc-cycle) var(--ease-out-soft) infinite;
+}
+@keyframes doc-share-ring {
+  0%,
+  70% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  74% {
+    opacity: 0.45;
+  }
+  90%,
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Be Her Sakhi storyboard.
+
+   Deliberately a different grammar from the doctor report above, because it
+   is a different kind of thing: no button, no box morphing into another box.
+   Here a heartbeat draws itself from her across to the one person she
+   chooses, that person fills in and takes a heart, and then the line
+   retracts back the way it came — which is the honest shape of this feature.
+   It is hers to give and hers to take back, so the loop returning to an
+   empty outline is the point, not just a reset.
+
+   The line is drawn with stroke-dashoffset over a `pathLength="100"` path,
+   so the maths stays readable percentages instead of a measured length that
+   breaks the moment the waveform is edited.
+
+   Un-animated styles are the finished, connected state, for reduced motion.
+   --------------------------------------------------------------------------- */
+.sakhi-scene {
+  --sakhi-cycle: 4.8s;
+}
+
+/* The heartbeat travelling from her to them. Base = fully drawn. */
+.sakhi-link {
+  stroke-dashoffset: 0;
+  animation: sakhi-link var(--sakhi-cycle) var(--ease-out-soft) infinite;
+}
+@keyframes sakhi-link {
+  0%,
+  10% {
+    stroke-dashoffset: 100;
+  }
+  46%,
+  76% {
+    stroke-dashoffset: 0;
+  }
+  /* negative, so it withdraws back toward her rather than un-drawing
+     from the end she started at */
+  92%,
+  100% {
+    stroke-dashoffset: -100;
+  }
+}
+
+/* The one person she chooses: an empty outline until the beat reaches them. */
+.sakhi-guest {
+  fill: var(--primary-soft);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sakhi-guest var(--sakhi-cycle) var(--ease-out-soft) infinite;
+}
+@keyframes sakhi-guest {
+  0%,
+  44% {
+    fill: transparent;
+    transform: scale(0.86);
+  }
+  52% {
+    fill: var(--primary-soft);
+    transform: scale(1.1);
+  }
+  58%,
+  78% {
+    fill: var(--primary-soft);
+    transform: scale(1);
+  }
+  90%,
+  100% {
+    fill: transparent;
+    transform: scale(0.86);
+  }
+}
+
+/* Her heart, once it has actually arrived with them. */
+.sakhi-heart {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  animation: sakhi-heart var(--sakhi-cycle) var(--ease-out-soft) infinite;
+}
+@keyframes sakhi-heart {
+  0%,
+  48% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  56% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+  62% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+  78% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  88%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.sakhi-ring {
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: sakhi-ring var(--sakhi-cycle) var(--ease-out-soft) infinite;
+}
+@keyframes sakhi-ring {
+  0%,
+  52% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+  56% {
+    opacity: 0.45;
+  }
+  74%,
+  100% {
+    transform: translate(-50%, -50%) scale(1.9);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
@@ -436,5 +841,23 @@
   .js-reveal .reveal:not(.is-revealed) {
     opacity: 1;
     transform: none;
+  }
+
+  /* The rule above lands every animation on its final keyframe, which for the
+     storyboard is the button it loops back into. Drop the animations entirely
+     instead, so these fall back to their finished base styles. */
+  .doc-morph,
+  .doc-label,
+  .doc-body,
+  .doc-line,
+  .doc-tick,
+  .doc-tick-ring,
+  .doc-share,
+  .doc-share-ring,
+  .sakhi-link,
+  .sakhi-guest,
+  .sakhi-heart,
+  .sakhi-ring {
+    animation: none !important;
   }
 }

@@ -321,7 +321,7 @@ export const processSpecimens: SpecimenGroup = {
     {
       id: "process-01",
       name: "Climbing flow line",
-      note: "An SVG curve with nodes riding it at rising heights. The homepage treatment. Needs real width, so it drops to a stack below md.",
+      note: "An SVG curve with nodes riding it at rising heights. Was the homepage treatment and was replaced there by process-07: it read as a stock infographic and left most of the band empty. Kept because it can work where the copy is short and the band is wide.",
       preview: (
         <div className="relative h-44">
           <svg viewBox="0 0 600 160" preserveAspectRatio="none" className="absolute inset-0 size-full" aria-hidden="true">
@@ -510,9 +510,9 @@ export const processSpecimens: SpecimenGroup = {
     {
       id: "process-07",
       name: "Steps with screenshots",
-      note: "Each step paired with the screen it happens on. The most literal way to show a flow, and the most convincing.",
+      note: "Each step paired with the screen it happens on. Compact enough for a short band. The homepage uses the roomier alternating version of this idea, where each step owns a full row and the screen crosses sides, so the copy can run at reading size rather than card size.",
       preview: (
-        <div className="grid gap-5 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-5 sm:grid-cols-3">
           {[
             { t: "Log", b: "One tap for an ordinary day.", l: "Day view" },
             { t: "Ask", b: "Answers from her own logs.", l: "Sakhi AI" },
@@ -638,7 +638,7 @@ export const statSpecimens: SpecimenGroup = {
         <div className="flex flex-wrap gap-x-10 gap-y-6 border-y border-border py-6">
           {[
             { n: "16", l: "conditions covered" },
-            { n: "252M", l: "women in Sakhi's India" },
+            { n: "150M", l: "women in Sakhi's India" },
             { n: "49", l: "interviews conducted" },
           ].map((s) => (
             <div key={s.l}>
@@ -691,7 +691,7 @@ export const statSpecimens: SpecimenGroup = {
       preview: (
         <div className="flex gap-2.5 overflow-hidden">
           {[
-            { i: Heart, l: "252M women in Sakhi's India" },
+            { i: Heart, l: "150M women in Sakhi's India" },
             { i: Activity, l: "16 conditions tracked" },
             { i: ShieldCheck, l: "Zero ads. Ever." },
             { i: CloudOff, l: "100% offline-first" },
@@ -717,7 +717,7 @@ export const statSpecimens: SpecimenGroup = {
       preview: (
         <div className="text-center">
           <div className="text-display bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tabular-nums">
-            252M
+            150M
           </div>
           <p className="mx-auto mt-3 max-w-[34ch] text-[14.5px] text-muted-foreground">
             Women in Sakhi&rsquo;s India. One number, one caption, nothing else in the band.
@@ -725,7 +725,7 @@ export const statSpecimens: SpecimenGroup = {
         </div>
       ),
       code: `<div className="text-center">
-  <div className="text-display bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tabular-nums">252M</div>
+  <div className="text-display bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tabular-nums">150M</div>
   <p className="mx-auto mt-3 max-w-[34ch] text-[14.5px] text-muted-foreground">Caption with the source.</p>
 </div>`,
     },
@@ -736,7 +736,7 @@ export const statSpecimens: SpecimenGroup = {
       preview: (
         <div className="divide-y divide-border border-y border-border">
           {[
-            { n: "252M", l: "menstruating women in India, the population Sakhi is built for" },
+            { n: "150M", l: "menstruating women in India, the population Sakhi is built for" },
             { n: "16", l: "conditions covered in the health library, from PCOS to anemia" },
             { n: "49", l: "user interviews conducted before the first line of v2 was written" },
           ].map((row) => (
@@ -774,7 +774,7 @@ export const statSpecimens: SpecimenGroup = {
           <div className="grid grid-cols-2 gap-5">
             {[
               { n: "16", l: "conditions covered" },
-              { n: "252M", l: "women in Sakhi's India" },
+              { n: "150M", l: "women in Sakhi's India" },
               { n: "49", l: "interviews conducted" },
               { n: "10+", l: "cities reached" },
             ].map((x) => (
@@ -861,7 +861,7 @@ export const statSpecimens: SpecimenGroup = {
       note: "The only correct way to publish a research number on this site. The citation sits with the figure, not in a footer.",
       preview: (
         <div className="max-w-md rounded-2xl border border-border bg-card p-6">
-          <p className="text-[30px] leading-none font-semibold text-secondary tabular-nums">252M</p>
+          <p className="text-[30px] leading-none font-semibold text-secondary tabular-nums">150M</p>
           <p className="mt-2.5 text-[14px] leading-relaxed text-foreground">
             Menstruating women in India, the population Sakhi is built for.
           </p>

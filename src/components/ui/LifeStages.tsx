@@ -324,7 +324,7 @@ export default function LifeStages() {
 
               {/* Health library link */}
               <Link
-                href="/health"
+                href="/product#health"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",

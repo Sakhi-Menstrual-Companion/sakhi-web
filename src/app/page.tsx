@@ -1,18 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
 import {
   Activity,
   ArrowRight,
   Check,
   CloudOff,
-  FileText,
   Heart,
   LockKeyhole,
   MapPin,
   MessageCircleHeart,
   NotebookPen,
   Plus,
+  Send,
   ShieldCheck,
   Smartphone,
   Users,
@@ -32,7 +31,20 @@ import { Spotlight } from "@/components/ui/spotlight";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { CardRail } from "@/components/ui/card-rail";
-import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { SakhiLogoMark } from "@/components/ui/SakhiLogo";
+
+/* Imported rather than referenced by a /public path so the emitted filename
+   carries a content hash. A fixed public URL is why a replaced image kept
+   showing the old picture: nothing in the URL told any cache it had changed. */
+import heroPhone from "@/assets/hero-phone-in-hand.png";
+import photoDayOne from "@/assets/lifestyle-day-one-calendar.jpg";
+import photoChat from "@/assets/lifestyle-sakhi-ai-chat.jpg";
+import condHormonal from "@/assets/condition-hormonal.jpg";
+import condPain from "@/assets/condition-pain.jpg";
+import condMental from "@/assets/condition-mental.jpg";
+import condReproductive from "@/assets/condition-reproductive.jpg";
+import condSystemic from "@/assets/condition-systemic.jpg";
+import AnimatedSection from "@/components/ui/AnimatedSection";
 
 const appStoreUrl = "https://apps.apple.com/app/id6742219623";
 
@@ -55,7 +67,7 @@ const trustRow = [
    colour, so they stay the same warm pink pop whichever tone the marquee
    band ends up in. */
 const marqueeStats = [
-  { icon: <Users className="size-3.5 text-secondary" aria-hidden="true" />, label: "252M women in Sakhi's India" },
+  { icon: <Users className="size-3.5 text-secondary" aria-hidden="true" />, label: "150M women in Sakhi's India" },
   { icon: <Activity className="size-3.5 text-secondary" aria-hidden="true" />, label: "16 conditions tracked" },
   { icon: <ShieldCheck className="size-3.5 text-secondary" aria-hidden="true" />, label: "Zero ads. Ever." },
   { icon: <CloudOff className="size-3.5 text-secondary" aria-hidden="true" />, label: "100% offline-first" },
@@ -67,18 +79,21 @@ const steps = [
   {
     n: "01",
     icon: NotebookPen,
+    screen: "Day view, logging",
     title: "Log what happened today",
     body: "Period days, pain, mood, sleep, energy and notes. One tap is enough for an ordinary day.",
   },
   {
     n: "02",
     icon: MessageCircleHeart,
+    screen: "Sakhi AI conversation",
     title: "Ask Sakhi what it means",
     body: "Sakhi reads her own logs and answers plainly, including when a doctor should be involved.",
   },
   {
     n: "03",
     icon: LockKeyhole,
+    screen: "Doctor report export",
     title: "Share only if she wants to",
     body: "Export a doctor report, or invite one trusted person. Both are her choice, and reversible.",
   },
@@ -91,30 +106,40 @@ const steps = [
 const conditionGroups = [
   {
     group: "Hormonal",
+    image: condHormonal,
+    imageAlt: "A woman looking out of a window in soft daylight, hand resting near her chin",
     note: "When the signal itself is off.",
     items: ["PCOD / PCOS", "Amenorrhea", "Thyroid Disorders"],
     desc: "Sakhi logs the cycle changes that point to them, month after month.",
   },
   {
     group: "Pain",
+    image: condPain,
+    imageAlt: "A woman sitting curled forward on a bed in bright daylight, holding her middle",
     note: "The pain she was told to expect.",
     items: ["Endometriosis", "Dysmenorrhea", "Adenomyosis", "Menorrhagia"],
     desc: "Every episode gets a date and a severity, so it becomes evidence instead of memory.",
   },
   {
     group: "Mental",
+    image: condMental,
+    imageAlt: "A woman indoors with her brow drawn, mid expression",
     note: "Mood that moves with the cycle.",
     items: ["PMDD", "Hormonal Mental Health", "Postpartum Depression"],
     desc: "Mood is tracked beside the cycle, so the two can be read together.",
   },
   {
     group: "Reproductive",
+    image: condReproductive,
+    imageAlt: "A doctor listening to a patient with a stethoscope during an appointment",
     note: "What a scan often finds years too late.",
     items: ["Uterine Fibroids", "Ovarian Cysts", "Fertility Challenges", "Cervical Health"],
     desc: "The history is ready before the appointment, not written in the waiting room.",
   },
   {
     group: "Systemic",
+    image: condSystemic,
+    imageAlt: "A woman lying down on a bed with an arm across her forehead in soft daylight",
     note: "What the cycle quietly costs her body.",
     items: ["Anemia", "Bone Health"],
     desc: "Tracked alongside the cycle, because that is where the cost shows up.",
@@ -128,8 +153,10 @@ function toSentenceList(items: string[]) {
 }
 
 /* ₹49/month is the figure in 12-Finance/Business-Plans/Sakhi-Business-Plan-v2.md.
-   It is an internal plan, not a live price: nothing is purchasable in the app
-   today, so the tier is labelled as planned rather than available. */
+   Shown here as a live tier for the website showcase, per product decision
+   (2026-08-12). Billing itself is not wired up yet: iOS's RazorpayManager is
+   an intentional stub ("Payments are not live in this release"). Re-check that
+   file before this copy is treated as a real purchase flow. */
 const plans = [
   {
     name: "Free",
@@ -152,16 +179,16 @@ const plans = [
     name: "Sakhi Plus",
     tagline: "Deeper guidance, for those who want it",
     price: "₹49",
-    unit: "/ month, planned",
+    unit: "/ month",
     featured: false,
-    ribbon: "Not live yet",
+    ribbon: "Available now",
     features: [
       "Everything in Free",
       "Deeper cycle and symptom insight",
       "Guidance on diet and routine",
       "Longer report history",
     ],
-    cta: { label: "Not available yet", href: null, variant: "outline" as const },
+    cta: { label: "Get Sakhi Plus", href: appStoreUrl, variant: "outline" as const },
   },
   {
     name: "Campus & NGO",
@@ -229,23 +256,26 @@ function PlayMark({ size = 16 }: { size?: number }) {
 
 
 /**
- * Used on both the white hero and the dark closing band, and only ever
- * styled for the dark one — the Google Play button's border/text/hover were
- * all white-on-white on the light background, effectively invisible but for
- * the Play triangle icon. `tone` picks the readable variant for wherever
- * it's actually placed.
+ * Used on both the white hero and the dark closing band. `tone` picks the
+ * readable variant for wherever it's actually placed — on `dark`, the App
+ * Store pill flips to a solid white fill. It used to stay `bg-ink` on both,
+ * which was invisible-on-invisible against the closing band's own `bg-ink`
+ * section: a black pill has no edge against a black page. White-on-black is
+ * also just the correct read for a dark-mode primary action, not only a fix.
  */
 function StoreButtons({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
     <div className="flex flex-col items-center gap-3 sm:flex-row">
-      {/* Plain black pill, no gradient ring: the store buttons sit directly
-          under the headline and the animated border was pulling attention off
-          the copy. */}
       <a
         href={appStoreUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-7 py-3.5 text-[15px] font-semibold text-white transition-transform duration-300 hover:-translate-y-0.5"
+        className={cn(
+          "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[15px] font-semibold transition-transform duration-300 hover:-translate-y-0.5",
+          tone === "dark"
+            ? "bg-white text-ink shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+            : "bg-ink text-white"
+        )}
       >
         <AppleMark /> App Store
       </a>
@@ -282,40 +312,95 @@ function DotGrid({ className }: { className?: string }) {
   );
 }
 
-/**
- * A step marker on the "how it works" flow line: white rounded pentagon,
- * brand-pink icon, soft shadow.
- *
- * The five corners are rounded by stroking the polygon in its own fill colour
- * with a round linejoin, rather than hand-writing five arc segments. One
- * `points` list stays the single source of truth for the shape, and the
- * stroke width is the corner radius.
- */
-function StepBadge({ icon: Icon, className }: { icon: LucideIcon; className?: string }) {
+/** Doctor report tile header: the export acted out on a single object. The
+    Generate button is pressed and becomes the sheet, the sheet fills in and
+    is ticked off, then it lifts and becomes a share mark before settling
+    back into the button — nothing ever sits beside anything else, so the
+    whole loop reads as one continuous motion. Decorative, so it is hidden
+    from screen readers; the card's own title and description already say
+    what it is. Sizes and timings are in globals.css under `.doc-scene`,
+    since the morph animates the box itself. */
+function DoctorReportIllustration() {
   return (
-    <div className={cn("relative grid size-16 place-items-center", className)}>
-      {/* Soft pink bloom behind the pentagon, so a node reads as sitting on
-          the line with a little light around it rather than pasted on top. */}
-      <span
-        aria-hidden="true"
-        className="absolute size-16 rounded-full bg-primary/15 blur-lg"
-      />
-      <svg
-        viewBox="0 0 56 56"
-        className="absolute inset-0 size-full drop-shadow-[0_12px_22px_rgba(163,22,84,0.16)]"
-        aria-hidden="true"
-      >
-        <polygon
-          points="28,8 47,21.8 39.8,44.2 16.2,44.2 9,21.8"
-          fill="var(--card)"
-          stroke="var(--card)"
-          strokeWidth="14"
-          strokeLinejoin="round"
-        />
-      </svg>
-      {/* 1.6 rather than lucide's default 2: a lighter stroke keeps the mark
-          delicate at this size instead of blocky. */}
-      <Icon className="relative size-6 text-secondary" strokeWidth={1.6} aria-hidden="true" />
+    <div className="doc-scene flex h-full items-center justify-center" aria-hidden="true">
+      <div className="doc-morph flex items-center justify-center">
+        <span className="doc-label absolute inset-0 flex items-center justify-center text-[9px] font-semibold whitespace-nowrap text-white">
+          Generate
+        </span>
+
+        <div className="doc-body absolute inset-0 flex flex-col justify-center gap-2 px-3">
+          <div className="doc-line h-1 w-full rounded-full bg-border" style={{ "--i": 0 } as React.CSSProperties} />
+          <div className="doc-line h-1 w-full rounded-full bg-border" style={{ "--i": 1 } as React.CSSProperties} />
+          <div className="doc-line h-1 w-3/5 rounded-full bg-border" style={{ "--i": 2 } as React.CSSProperties} />
+        </div>
+
+        <div className="doc-share absolute inset-0 flex items-center justify-center text-white">
+          {/* Nudged a hair down-left: the paper plane's own artwork sits
+              high-right inside its viewBox, so a dead-centred icon reads
+              off-centre inside the circle. */}
+          <Send className="size-3.5 translate-x-px translate-y-px" />
+          <span className="doc-share-ring absolute inset-0 rounded-full border border-secondary" />
+        </div>
+
+        <div className="doc-tick absolute -right-2.5 -bottom-2.5 flex size-7 items-center justify-center rounded-full bg-secondary text-white">
+          <Check className="size-3.5" strokeWidth={3} />
+          <span className="doc-tick-ring absolute inset-0 rounded-full border border-secondary" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Be Her Sakhi tile header. Deliberately a different idea from the doctor
+    report above rather than the same button-morph twice: her heartbeat draws
+    itself across to the one person she chooses, that person fills in and
+    takes the heart, then the line withdraws back to her. The reset is the
+    meaning, not just a loop — this is hers to give and hers to take back.
+
+    The SVG is rendered at exactly 120x40 CSS px so the viewBox maps 1:1 and
+    the heart can be pinned over the second circle by its own coordinates.
+    Decorative, so hidden from screen readers. Timings are in globals.css
+    under `.sakhi-scene`. */
+function TrustedPersonIllustration() {
+  return (
+    <div className="sakhi-scene flex h-full items-center justify-center" aria-hidden="true">
+      <div className="relative h-10 w-30">
+        <svg viewBox="0 0 120 40" className="h-10 w-30 overflow-visible">
+          {/* her */}
+          <circle cx="14" cy="20" r="9" fill="var(--secondary)" />
+
+          {/* the beat travelling across */}
+          <path
+            className="sakhi-link"
+            d="M26 20 H42 L48 11 L54 29 L60 20 H94"
+            pathLength={100}
+            strokeDasharray={100}
+            fill="none"
+            stroke="var(--secondary)"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          {/* the one person she chooses */}
+          <circle
+            className="sakhi-guest"
+            cx="106"
+            cy="20"
+            r="9"
+            stroke="var(--border)"
+            strokeWidth={1.5}
+          />
+        </svg>
+
+        {/* Pinned to the second circle's centre (106, 20) in the same units. */}
+        <div className="sakhi-ring absolute top-5 left-[106px] size-[18px] rounded-full border border-secondary" />
+        {/* Deep pink, not white: the heart lands on the light --primary-soft
+            fill, where white barely reads at this size. */}
+        <div className="sakhi-heart absolute top-5 left-[106px] text-secondary">
+          <Heart className="size-3.5" fill="currentColor" />
+        </div>
+      </div>
     </div>
   );
 }
@@ -368,21 +453,22 @@ export default function HomePage() {
               and hand silhouette on a transparent background, so a bordered
               container would just clip the hand. */}
           <div className="mt-20 flex w-full items-center justify-center sm:mt-24">
-            {/* translate-x-[9%]: the phone itself sits left-of-centre inside
-                the source PNG's own canvas (the wrist runs off the right edge
-                to fill the frame), so centring the <img> box centres the hand,
-                not the phone. This nudges the phone's bezel to true centre;
-                the extra wrist that runs past the right edge is caught by the
-                section's overflow-hidden. */}
+            {/* No centring transform any more. The asset itself was padded so
+                the phone bezel sits on the canvas centre, which means the image
+                centres naturally in the flex row. The old transform shoved the
+                whole picture right to compensate, and that read as an off-centre
+                hero even though the phone was technically centred.
+
+                The canvas is 29.7% phone and the rest transparent hand, wrist
+                and air, so these widths are larger than they look: at lg the
+                phone renders about 228px wide. */}
             <Image
-              src="/assets/phone-mockup.png"
-              alt="A hand holding an iPhone showing the Sakhi app open on the Day view: day 1 of period, August 2026 calendar, and a mood check-in prompt"
-              width={802}
-              height={1212}
+              src={heroPhone}
+              alt="A hand holding a phone showing the Sakhi app on day 1 of a period, with the August calendar below"
               priority
               quality={100}
-              className="h-auto w-90 translate-x-8 select-none drop-shadow-[0_35px_45px_rgba(163,22,84,0.22)] sm:w-md sm:translate-x-10 lg:w-125 lg:translate-x-11"
-              sizes="(max-width: 640px) 360px, (max-width: 1024px) 448px, 500px"
+              className="h-auto w-115 select-none drop-shadow-[0_35px_45px_rgba(163,22,84,0.22)] sm:w-155 lg:w-192"
+              sizes="(max-width: 640px) 460px, (max-width: 1024px) 620px, 768px"
             />
           </div>
         </Container>
@@ -417,33 +503,48 @@ export default function HomePage() {
           <BentoGrid className="mt-16">
             <BentoGridItem
               className="sm:col-span-2 lg:col-span-2 lg:row-span-4"
-              header={<ImagePlaceholder />}
-              icon={<NotebookPen className="size-4" aria-hidden="true" />}
+              header={
+                <Image
+                  src={photoDayOne}
+                  alt="A woman resting on a sofa, looking at the Sakhi day view showing day 1 of her period"
+                  className="h-full w-full rounded-xl object-cover"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                />
+              }
               title="Cycle logs"
               description="Period, pain, mood, sleep, energy and symptoms in one place, so the pattern becomes visible."
             />
             <BentoGridItem
               className="sm:col-span-2 lg:col-span-2 lg:row-span-3"
-              header={<ImagePlaceholder />}
-              icon={<MessageCircleHeart className="size-4" aria-hidden="true" />}
+              header={
+                <Image
+                  src={photoChat}
+                  alt="A woman typing a message to Sakhi about cramps and a fever, and being told to see a doctor today"
+                  className="h-full w-full rounded-xl object-cover"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                />
+              }
               title="Sakhi AI"
               description="Answers drawn from what she has actually logged, not a generic script."
             />
             <BentoGridItem
               className="lg:row-span-3"
-              icon={<FileText className="size-4" aria-hidden="true" />}
+              header={<DoctorReportIllustration />}
               title="Doctor report"
               description="A clean health history to take into the ten-minute appointment."
             />
             <BentoGridItem
               className="lg:row-span-3"
-              icon={<Heart className="size-4" aria-hidden="true" />}
+              header={<TrustedPersonIllustration />}
               title="Be Her Sakhi"
               description="One trusted person can understand her better, only if and when she chooses."
             />
+            {/* No header on this one: "keeps working with no signal" has no
+                scene worth staging, so it takes the plain icon chip that sits
+                directly above the title instead of a centred illustration. */}
             <BentoGridItem
               className="lg:col-span-2 lg:row-span-2"
-              icon={<CloudOff className="size-4" aria-hidden="true" />}
+              icon={<CloudOff className="size-5" aria-hidden="true" />}
               title="Works offline"
               description="Logging never depends on signal. Her history stays on her device first, always."
             />
@@ -454,120 +555,87 @@ export default function HomePage() {
       {/* -------------------------------------------------------- how it works */}
       <section className="border-b border-border bg-background-blush px-6 py-24 sm:px-8 sm:py-28">
         <Container>
+          {/* Centred mark, heading, lead. The mark stands in for the small
+              decorative glyph the reference sets above its title; using the
+              Sakhi mark keeps that beat without inventing a new ornament. */}
           <div className="mx-auto max-w-[42rem] text-center">
-            <span className="eyebrow">How it works</span>
-            <h2 className="text-h2 mt-4 text-foreground">Three steps, and none of them rush her</h2>
-            <p className="text-lead mx-auto mt-5 max-w-[36rem] text-muted-foreground">
+            <span className="inline-flex" aria-hidden="true">
+              <SakhiLogoMark size={30} />
+            </span>
+            <h2 className="text-h2 mt-5 text-foreground">Three steps, and none of them rush her</h2>
+            <p className="text-lead mx-auto mt-4 max-w-[36rem] text-muted-foreground">
               Sakhi is built to be opened for thirty seconds a day, not to demand attention.
             </p>
           </div>
 
-          {/* One S-curve climbing left to right, each stage a white pentagon
-              node riding it at its own height. Sakhi's own primary→secondary
-              pink runs the length of the line, and it fades to transparent at
-              both ends so the flow reads as passing through the section
-              rather than starting and stopping inside it.
+          {/* Three nodes on one line, joined by dashed connectors that alternate
+              valley and hill. The connectors are absolutely positioned at the
+              circles' vertical centre (top-16, half of the size-32 node) and sit
+              at the one-third and two-thirds marks, which is exactly midway
+              between adjacent column centres in a three-column grid. They are
+              decorative, so they are hidden rather than reflowed on phones,
+              where the steps stack and a horizontal joint would be meaningless.
 
-              Geometry is authored in the SVG's own 1200x480 coordinate space
-              and mirrored into the node positions as percentages of the same
-              box (168/1200 = 14%, 340/480 = 70.83%, and so on). That is the
-              one thing holding the nodes on the line: the SVG stretches with
-              `preserveAspectRatio="none"` while the container height is
-              fixed, so both scale identically and a node stays on the curve
-              at every width. `vectorEffect="non-scaling-stroke"` keeps the
-              stroke an even weight under that non-uniform stretch, which it
-              otherwise would not be.
-
-              Labels hang off their own node (bottom-full / top-full) rather
-              than sitting in a shared row, so each one follows its node's
-              height. Step 1's goes above because nothing is below it; steps
-              2 and 3 go below, into the space the rising curve vacates.
-
-              The box holds a 5:2 aspect rather than a fixed height, so the
-              curve keeps the exact sweep it was drawn with at every width
-              instead of being squashed steeper as the container narrows —
-              a fixed height did exactly that and cost the line its long,
-              gentle rise. min-h-96 is the floor that keeps step 2's label
-              inside the box once the ratio would otherwise go too short.
-
-              Below md the line is dropped entirely: a diagonal needs real
-              width to read as one, so phones get a plain stacked list using
-              the same pentagon nodes. */}
-          <div className="relative mt-20 hidden aspect-5/2 min-h-96 md:block">
+              The first node is filled and lifted, the rest are dashed outlines:
+              that is the reference's own way of showing where the sequence
+              starts, and it costs nothing to keep. */}
+          <div className="relative mt-16 grid grid-cols-1 gap-14 sm:mt-20 sm:grid-cols-3 sm:gap-8">
             <svg
-              viewBox="0 0 1200 480"
-              preserveAspectRatio="none"
-              className="absolute inset-0 size-full overflow-visible"
               aria-hidden="true"
+              viewBox="0 0 160 60"
+              preserveAspectRatio="none"
+              className="absolute top-16 left-1/3 hidden h-14 w-[18%] -translate-x-1/2 -translate-y-1/2 sm:block"
             >
-              <defs>
-                <linearGradient id="stepFlow" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="var(--primary)" stopOpacity="0" />
-                  <stop offset="12%" stopColor="var(--primary)" stopOpacity="1" />
-                  <stop offset="70%" stopColor="var(--secondary)" stopOpacity="1" />
-                  <stop offset="93%" stopColor="var(--secondary)" stopOpacity="1" />
-                  <stop offset="100%" stopColor="var(--secondary)" stopOpacity="0" />
-                </linearGradient>
-                <filter id="stepGlow" x="-10%" y="-60%" width="120%" height="220%">
-                  <feGaussianBlur stdDeviation="10" />
-                </filter>
-              </defs>
-              {/* Same path twice: a blurred copy underneath for the soft pink
-                  halo, the crisp line on top. */}
               <path
-                d="M0,350 C60,350 110,344 168,340 C260,334 430,312 552,290 C630,270 810,50 900,40 C1000,30 1110,26 1200,24"
+                d="M0,10 C45,56 115,56 160,10"
                 fill="none"
-                stroke="url(#stepFlow)"
-                strokeWidth="10"
+                stroke="var(--primary)"
+                strokeOpacity="0.4"
+                strokeWidth="2"
                 strokeLinecap="round"
-                filter="url(#stepGlow)"
-                opacity="0.4"
+                strokeDasharray="5 8"
+                vectorEffect="non-scaling-stroke"
               />
+            </svg>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 160 60"
+              preserveAspectRatio="none"
+              className="absolute top-16 left-2/3 hidden h-14 w-[18%] -translate-x-1/2 -translate-y-1/2 sm:block"
+            >
               <path
-                d="M0,350 C60,350 110,344 168,340 C260,334 430,312 552,290 C630,270 810,50 900,40 C1000,30 1110,26 1200,24"
+                d="M0,50 C45,4 115,4 160,50"
                 fill="none"
-                stroke="url(#stepFlow)"
-                strokeWidth="6"
+                stroke="var(--primary)"
+                strokeOpacity="0.4"
+                strokeWidth="2"
                 strokeLinecap="round"
+                strokeDasharray="5 8"
                 vectorEffect="non-scaling-stroke"
               />
             </svg>
 
-            {/* Step 1 — low on the line, label above it. */}
-            <div className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: "14%", top: "70.8333%" }}>
-              <StepBadge icon={steps[0].icon} />
-              <div className="absolute bottom-full left-1/2 mb-5 w-52 -translate-x-9 text-left lg:w-60">
-                <h3 className="text-h4 text-foreground">{steps[0].title}</h3>
-                <p className="mt-2 text-[14.5px] leading-relaxed text-muted-foreground">{steps[0].body}</p>
-              </div>
-            </div>
+            {steps.map(({ n, icon: Icon, title, body }, i) => (
+              <div key={n} className="relative z-10 flex flex-col items-center text-center">
+                <div className="relative">
+                  {/* Pulled clear of the ring at eleven o'clock. At a smaller
+                      offset it sat on the dashed border and read as part of it. */}
+                  <span className="absolute -top-3 -left-3 z-10 grid size-7 place-items-center rounded-full border border-border bg-card text-[11px] font-semibold text-foreground">
+                    {i + 1}
+                  </span>
 
-            {/* Step 2 — start of the climb, label below. */}
-            <div className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: "46%", top: "60.4167%" }}>
-              <StepBadge icon={steps[1].icon} />
-              <div className="absolute top-full left-1/2 mt-5 w-52 -translate-x-9 text-left lg:w-60">
-                <h3 className="text-h4 text-foreground">{steps[1].title}</h3>
-                <p className="mt-2 text-[14.5px] leading-relaxed text-muted-foreground">{steps[1].body}</p>
-              </div>
-            </div>
+                  {/* Three identical white discs, no ring and no shadow. The
+                      numbered badges carry the sequence on their own, so nothing
+                      needs to mark one node as different from the others. */}
+                  <div className="grid size-32 place-items-center rounded-full bg-card">
+                    <Icon className="size-10 text-secondary" strokeWidth={1.5} aria-hidden="true" />
+                  </div>
+                </div>
 
-            {/* Step 3 — crest, label below. Held at 75% rather than further
-                right so the label still clears the container at md. */}
-            <div className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: "75%", top: "8.3333%" }}>
-              <StepBadge icon={steps[2].icon} />
-              <div className="absolute top-full left-1/2 mt-5 w-52 -translate-x-9 text-left lg:w-60">
-                <h3 className="text-h4 text-foreground">{steps[2].title}</h3>
-                <p className="mt-2 text-[14.5px] leading-relaxed text-muted-foreground">{steps[2].body}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative mt-10 flex flex-col gap-10 text-center md:hidden">
-            {steps.map(({ n, icon, title, body }) => (
-              <div key={n} className="flex flex-col items-center">
-                <StepBadge icon={icon} className="mb-4" />
-                <h3 className="text-h4 text-foreground">{title}</h3>
-                <p className="mt-2 max-w-88 text-[14.5px] leading-relaxed text-muted-foreground">{body}</p>
+                <h3 className="text-h4 mt-8 text-foreground">{title}</h3>
+                <p className="mx-auto mt-2.5 max-w-[30ch] text-[14px] leading-relaxed text-muted-foreground">
+                  {body}
+                </p>
               </div>
             ))}
           </div>
@@ -605,7 +673,7 @@ export default function HomePage() {
               </p>
             </div>
             <Link
-              href="/health"
+              href="/product#health"
               className="inline-flex shrink-0 items-center gap-1.5 text-[15px] font-semibold text-secondary no-underline underline-offset-[3px] hover:underline"
             >
               Explore all 16 conditions <ArrowRight className="size-4" aria-hidden="true" />
@@ -627,16 +695,25 @@ export default function HomePage() {
                   {toSentenceList(g.items)}. {g.desc}
                 </p>
 
-                {/* mt-auto pins the image well to the bottom of whichever card
-                    is tallest, so the wells line up across the rail however
-                    long each group's copy runs. */}
+                {/* mt-auto pins the photograph to the bottom of whichever card
+                    is tallest, so the images line up across the rail however
+                    long each group's copy runs. `fill` with object-cover keeps
+                    every card on the same 4:3 crop whatever the source. */}
                 <div className="mt-auto pt-8">
-                  <ImagePlaceholder className="aspect-4/3" />
+                  <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-muted">
+                    <Image
+                      src={g.image}
+                      alt={g.imageAlt}
+                      fill
+                      className="object-cover"
+                      sizes="320px"
+                    />
+                  </div>
                 </div>
 
                 <div className="mt-6 flex justify-end">
                   <Link
-                    href="/health"
+                    href="/product#health"
                     aria-label={`Read about ${g.group.toLowerCase()} conditions`}
                     className="grid size-9 place-items-center rounded-full bg-ink text-white transition-transform duration-200 hover:scale-105"
                   >
@@ -670,11 +747,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-
-          <p className="mx-auto mt-12 max-w-[52ch] text-center text-[13px] leading-relaxed text-muted-foreground">
-            Sakhi Plus is planned, not released. Nothing in the app can be bought today, and the
-            free tier is not time-limited.
-          </p>
         </Container>
       </section>
 
@@ -701,22 +773,29 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ----------------------------------------------------------- final cta */}
-      <section className="relative overflow-hidden bg-ink px-6 py-24 sm:px-8 sm:py-32">
+      {/* ----------------------------------------------------------- final cta
+          The page's closing statement, so it gets the hero's own type scale
+          back (text-display, not text-h2) as a deliberate bookend to "Sakhi
+          knows your body" up top — and more room around it than any other
+          band on the page, since nothing follows it. The emphasis clause
+          used to share the hero's animate-gradient-x sweep; here it is a
+          single static --primary-soft (the token this file already
+          documents for accent text on a dark fill) so the last thing a
+          visitor reads is confident rather than in motion. */}
+      <section className="relative overflow-hidden bg-ink px-6 py-28 sm:px-8 sm:py-36 lg:py-44">
         <Spotlight className="top-0 left-1/2 -translate-x-1/2" fill="var(--secondary)" />
         <Container className="relative z-10 flex flex-col items-center text-center">
-          <h2 className="text-h2 max-w-[18ch] text-white">
-            Your body deserves{" "}
-            <span className="animate-gradient-x bg-gradient-to-r from-primary via-secondary to-primary-soft bg-clip-text text-transparent">
-              to be understood
-            </span>
-          </h2>
-          <p className="text-lead mx-auto mt-5 max-w-[40ch] text-white/65">
-            Start with her own logs. Share only when it feels right.
-          </p>
-          <div className="mt-10">
-            <StoreButtons tone="dark" />
-          </div>
+          <AnimatedSection className="flex flex-col items-center">
+            <h2 className="text-display max-w-[15ch] text-white">
+              Your body deserves <span className="text-primary-soft">to be understood</span>
+            </h2>
+            <p className="text-lead mx-auto mt-7 max-w-[40ch] text-white/65">
+              Start with her own logs. Share only when it feels right.
+            </p>
+            <div className="mt-12">
+              <StoreButtons tone="dark" />
+            </div>
+          </AnimatedSection>
         </Container>
       </section>
     </div>

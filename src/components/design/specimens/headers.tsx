@@ -52,7 +52,7 @@ function Stage({
 
 const demoStats = [
   { n: "16", label: "conditions covered" },
-  { n: "252M", label: "women in Sakhi's India" },
+  { n: "150M", label: "women in Sakhi's India" },
   { n: "57%", label: "have a condition they don't know about" },
 ];
 

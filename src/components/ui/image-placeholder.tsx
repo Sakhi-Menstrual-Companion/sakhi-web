@@ -23,7 +23,14 @@ export function ImagePlaceholder({
   return (
     <div
       className={cn(
-        "flex h-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-muted/40 px-3 text-center",
+        // w-full, never h-full. With `h-full` baked in, a caller adding an
+        // aspect class got its height from the row and its width from the
+        // aspect, so a short ratio like aspect-video next to a tall one
+        // resolved to an enormous width and overlapped its neighbours. Width
+        // first means the aspect always derives the height, which is the way
+        // round every caller actually wants. A slot that genuinely needs to
+        // fill its row passes `h-full` itself.
+        "flex w-full min-w-0 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-muted/40 px-3 text-center",
         className
       )}
     >

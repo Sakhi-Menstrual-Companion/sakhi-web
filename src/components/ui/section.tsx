@@ -235,8 +235,14 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   const centred = align === "center" || !visual;
+  // Measurements below are the Vision page's original hero, kept exactly.
+  // Generalising it into this component drifted them (18ch -> 20ch on the
+  // headline, 38rem -> 42rem on the lead, and a nav-clearance calc in place of
+  // the flat py-32) and the headline stopped wrapping where it was drawn to.
+  // `text-h1` never changed; the measure did, which is what altered how big the
+  // title reads. py-32 already clears the 84px navbar on its own.
   return (
-    <section className="relative overflow-hidden border-b border-border bg-background px-6 pb-24 sm:px-8 sm:pb-28">
+    <section className="relative overflow-hidden border-b border-border bg-background px-6 py-32 sm:px-8 sm:py-40">
       {backdrop === "mesh" ? (
         <MeshGradientBackdrop />
       ) : (
@@ -247,7 +253,7 @@ export function PageHero({
       )}
       <Container
         className={cn(
-          "relative z-10 pt-[calc(var(--nav-clearance)+3.5rem)] sm:pt-[calc(var(--nav-clearance)+5.5rem)]",
+          "relative z-10",
           centred
             ? "flex flex-col items-center text-center"
             : "grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]"
@@ -255,16 +261,21 @@ export function PageHero({
       >
         <div className={cn(!centred && "max-w-none")}>
           {eyebrow && (
-            <Eyebrow className={cn("mb-5 inline-block", centred && "text-center")}>{eyebrow}</Eyebrow>
+            <Eyebrow className={cn("inline-block", centred && "text-center")}>{eyebrow}</Eyebrow>
           )}
-          <h1 className={cn("text-h1 text-foreground", centred ? "mx-auto max-w-[20ch]" : "max-w-[16ch]")}>
+          <h1
+            className={cn(
+              "text-h1 mt-7 text-foreground",
+              centred ? "mx-auto max-w-[18ch]" : "max-w-[16ch]"
+            )}
+          >
             {title}
           </h1>
           {lead && (
             <p
               className={cn(
-                "text-lead mt-6 text-muted-foreground",
-                centred ? "mx-auto max-w-[42rem]" : "max-w-[38rem]"
+                "text-lead mt-7 text-muted-foreground",
+                centred ? "mx-auto max-w-[38rem]" : "max-w-[38rem]"
               )}
             >
               {lead}

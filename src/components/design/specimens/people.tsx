@@ -318,9 +318,9 @@ export const mediaSpecimens: SpecimenGroup = {
           label="Hand holding the Sakhi day view"
         />
       ),
-      code: `<Image src="/assets/phone-mockup.png" alt="Descriptive alt" width={802} height={1212}
-  quality={100} sizes="(max-width: 640px) 360px, 500px"
-  className="h-auto w-90 sm:w-md" />`,
+      code: `<Image src="/assets/hero-phone-in-hand.png" alt="Descriptive alt" width={1600} height={2186}
+  quality={100} sizes="(max-width: 640px) 320px, 480px"
+  className="h-auto w-80 sm:w-120" />`,
     },
     {
       id: "media-02",
@@ -349,13 +349,13 @@ export const mediaSpecimens: SpecimenGroup = {
       name: "Gallery grid",
       note: "Several screens at once. Equal aspect keeps the rows aligned however many land in each.",
       preview: (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="grid grid-cols-2 items-start gap-3 sm:grid-cols-4">
           {["Day view", "Calendar", "Sakhi AI", "Health report"].map((l) => (
             <ImagePlaceholder key={l} className="aspect-square" label={l} />
           ))}
         </div>
       ),
-      code: `<div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      code: `<div className="grid grid-cols-2 items-start gap-3 sm:grid-cols-4">
   {shots.map((s) => <ImagePlaceholder key={s.id} className="aspect-square" />)}
 </div>`,
     },
@@ -493,7 +493,7 @@ export const mediaSpecimens: SpecimenGroup = {
       name: "Aspect ratio reference",
       note: "The ratios this site uses, so a new asset is exported at one of them rather than a fourth.",
       preview: (
-        <div className="grid gap-3 sm:grid-cols-4">
+        <div className="grid grid-cols-2 items-start gap-4 sm:grid-cols-4">
           {[
             { c: "aspect-9/16", l: "Phone screen" },
             { c: "aspect-4/3", l: "Split visual" },

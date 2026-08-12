@@ -2,18 +2,22 @@ import Link from "next/link";
 import SakhiLogo from "@/components/ui/SakhiLogo";
 import { Container } from "@/components/ui/section";
 
+// /features, /health, /story, /vision, /team, /contributors, /contribute,
+// /brand and /press are now sections of /product, /about and /resources
+// (next.config.ts redirects the old paths), so the footer points straight at
+// the merged pages and their anchors instead of a page that no longer exists.
 const productLinks = [
-  { label: "Features", href: "/features" },
-  { label: "Vision & Roadmap", href: "/vision" },
+  { label: "Features", href: "/product#features" },
+  { label: "Health Library", href: "/product#health" },
   { label: "Download App", href: "https://apps.apple.com/app/id6742219623", external: true },
-  { label: "Press Kit", href: "/press" },
+  { label: "Press Kit", href: "/resources#press" },
 ];
 
 const companyLinks = [
-  { label: "Our Story", href: "/story" },
-  { label: "Team", href: "/team" },
-  { label: "Press", href: "/press" },
-  { label: "Join Us", href: "/contribute" },
+  { label: "Our Story", href: "/about#story" },
+  { label: "Vision & Roadmap", href: "/about#vision" },
+  { label: "Team", href: "/about#people" },
+  { label: "Join Us", href: "/resources#contribute" },
 ];
 
 const connectLinks = [

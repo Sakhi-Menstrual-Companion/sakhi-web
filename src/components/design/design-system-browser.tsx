@@ -225,8 +225,12 @@ function SpecimenCard({ item }: { item: Specimen }) {
         {item.note}
       </p>
 
+      {/* The stage is generous on purpose: a specimen that needs more room should
+          wrap onto another row rather than be squeezed, since the whole point of
+          the catalogue is seeing the real thing. overflow-hidden only clips the
+          rounded corners and full-bleed specimens, not layout. */}
       <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-background">
-        <div className={item.bleed ? "" : "p-6 sm:p-8"}>{item.preview}</div>
+        <div className={item.bleed ? "" : "p-6 sm:p-10"}>{item.preview}</div>
       </div>
 
       <details className="group mt-3">

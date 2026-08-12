@@ -9,25 +9,18 @@ import { cn } from "@/lib/utils";
 const appStoreUrl = "https://apps.apple.com/app/id6742219623";
 
 /**
- * Every page the site actually has, in the order they sit in the sitemap.
- * This used to be a 3-item subset (Story, Features, Health) shown on desktop
- * while the mobile sheet quietly carried all seven — so the two navs
- * disagreed about what the site contained. Home is not repeated here: the
- * logo is already the home link, on both desktop and mobile.
+ * The three pages the site now has. Used to be nine flat links, then a
+ * three-group dropdown mega-menu over those same nine URLs; the site itself
+ * is three pages now (/product, /about, /resources, each the full merged
+ * content of what used to be three-to-four separate routes), so a click on
+ * any of these is a click on the actual page, not a menu that opens a menu.
+ * Home is not repeated here: the logo is already the home link.
  */
 const navLinks = [
-  { label: "Story", href: "/story" },
-  { label: "Features", href: "/features" },
-  { label: "Health", href: "/health" },
-  { label: "Vision", href: "/vision" },
-  { label: "Contributors", href: "/contributors" },
-  { label: "Team", href: "/team" },
-  { label: "Contribute", href: "/contribute" },
-  { label: "Brand", href: "/brand" },
-  { label: "Press", href: "/press" },
+  { label: "Product", href: "/product" },
+  { label: "About", href: "/about" },
+  { label: "Resources", href: "/resources" },
 ];
-
-const mobileNavLinks = [{ label: "Home", href: "/" }, ...navLinks];
 
 const MENU_ID = "sakhi-mobile-menu";
 
@@ -104,10 +97,9 @@ export default function Navbar() {
       >
         <div
           className={cn(
-            // Nine links plus the logo and Download pill run past 900px at
-            // rest, so this only shows in full past xl (1280px) — see the
-            // link list and the hamburger toggle below, which share the same
-            // breakpoint so there is no width where neither nav is visible.
+            // Three links plus the logo and Download pill are narrow enough
+            // to show in full past sm (640px) — the hamburger below shares
+            // this breakpoint, so there is no width where neither nav works.
             "pointer-events-auto mx-auto mt-4 flex h-[52px] max-w-265 items-center",
             "justify-between rounded-full pr-2 pl-4",
             // Apple's own localnav glass recipe (--localnav-background /
@@ -132,7 +124,7 @@ export default function Navbar() {
             <SakhiLogo size={26} tone="light" />
           </Link>
 
-          <div className="hidden items-center gap-0.5 xl:flex">
+          <div className="hidden items-center gap-0.5 sm:flex">
             {navLinks.map((link) => {
               const active = pathname === link.href;
               return (
@@ -141,7 +133,7 @@ export default function Navbar() {
                   href={link.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "rounded-full px-2.5 py-2 text-[13px] whitespace-nowrap no-underline",
+                    "rounded-full px-3 py-2 text-[13px] whitespace-nowrap no-underline",
                     "transition-colors duration-(--duration-fast)",
                     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
                     active
@@ -177,7 +169,7 @@ export default function Navbar() {
             aria-expanded={menuOpen}
             aria-controls={MENU_ID}
             className={cn(
-              "flex size-11 flex-col items-center justify-center gap-[5px] rounded-full xl:hidden",
+              "flex size-11 flex-col items-center justify-center gap-[5px] rounded-full sm:hidden",
               "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             )}
           >
@@ -205,14 +197,26 @@ export default function Navbar() {
           aria-modal="true"
           aria-label="Site menu"
           className={cn(
-            "fixed inset-0 z-[99] flex flex-col items-center justify-center gap-1 md:hidden",
+            "fixed inset-0 z-[99] flex flex-col items-center justify-center gap-1 sm:hidden",
             // Same glass recipe as the pill (see the comment above), just
             // more opaque since this is a full-screen takeover rather than a
             // pill with page content showing through it.
             "bg-[rgba(22,22,23,0.94)] backdrop-blur-[20px] backdrop-saturate-180"
           )}
         >
-          {mobileNavLinks.map((link) => {
+          <Link
+            href="/"
+            aria-current={pathname === "/" ? "page" : undefined}
+            onClick={() => setMenuOpen(false)}
+            className={cn(
+              "px-6 py-2.5 text-[30px] tracking-[-0.02em] no-underline",
+              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+              pathname === "/" ? "font-semibold text-primary-soft" : "font-light text-white"
+            )}
+          >
+            Home
+          </Link>
+          {navLinks.map((link) => {
             const active = pathname === link.href;
             return (
               <Link
