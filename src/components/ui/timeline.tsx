@@ -3,13 +3,22 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-import { cn } from "@/lib/utils";
-
 /**
- * Aceternity UI's Timeline, reproduced against its documented shape: a `data`
- * array of `{ title, content }`, a sticky left rail carrying each title, and
- * a vertical line on the right whose fill grows with scroll progress through
- * the whole list — read via `useScroll({ target: containerRef })`.
+ * A vertical timeline: a marker per entry on a shared spine, with the spine
+ * filling in as you scroll through the list.
+ *
+ * The spine used to be invisible everywhere this component was used. It was
+ * measured with `lineRef.getBoundingClientRect()` and that same measurement
+ * was written back as its own inline `height` — circular, so it began at 0px,
+ * measured 0px, and stayed 0px for good. Both the rail and the progress fill
+ * inside it were clipped to nothing, which left every timeline on the site as
+ * unconnected dots beside floating text.
+ *
+ * Now the spine is positioned off the markers themselves: it starts at the
+ * centre of the first and ends at the centre of the last, so it never
+ * over- or under-shoots regardless of how tall any entry runs. A
+ * ResizeObserver re-measures on reflow — a webfont swapping in or a
+ * breakpoint change both alter row heights after first paint.
  */
 export function Timeline({
   data,
@@ -17,47 +26,73 @@ export function Timeline({
   data: { title: React.ReactNode; content: React.ReactNode }[];
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
-  const [lineHeight, setLineHeight] = useState(0);
+  const [rail, setRail] = useState({ top: 0, height: 0 });
 
   useEffect(() => {
-    if (lineRef.current) setLineHeight(lineRef.current.getBoundingClientRect().height);
-  }, []);
+    const el = containerRef.current;
+    if (!el) return;
+
+    const measure = () => {
+      const markers = el.querySelectorAll<HTMLElement>("[data-timeline-marker]");
+      if (markers.length === 0) return;
+      const containerTop = el.getBoundingClientRect().top;
+      const first = markers[0].getBoundingClientRect();
+      const last = markers[markers.length - 1].getBoundingClientRect();
+      const start = first.top - containerTop + first.height / 2;
+      const end = last.top - containerTop + last.height / 2;
+      setRail({ top: start, height: Math.max(0, end - start) });
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [data.length]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 80%", "end 60%"],
+    offset: ["start 70%", "end 70%"],
   });
 
-  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, lineHeight]);
-  const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+  const fillHeight = useTransform(scrollYProgress, [0, 1], [0, rail.height]);
+  const fillOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
 
   return (
     <div ref={containerRef} className="relative">
-      {data.map((item, i) => (
-        <div key={i} className="flex gap-6 pt-10 first:pt-0 md:gap-10">
-          <div className="sticky top-[calc(var(--nav-clearance)+1rem)] z-20 flex h-fit max-w-[7rem] shrink-0 flex-col items-start self-start md:max-w-[10rem]">
-            <div className="absolute -left-[7px] grid size-3.5 place-items-center rounded-full border border-border bg-card md:-left-[9px] md:size-4">
-              <div className="size-1.5 rounded-full bg-gradient-to-br from-primary to-secondary md:size-2" />
-            </div>
-            <div className="pl-6 text-[13px] font-semibold text-muted-foreground md:pl-8 md:text-[14px]">
-              {item.title}
-            </div>
-          </div>
-          <div className="w-full pr-2 pb-14">{item.content}</div>
-        </div>
-      ))}
-
+      {/* The spine, sitting behind the markers. left-[7px] with a 2px width
+          centres it on x=8, which is the centre of a 16px marker opening the
+          row — so the dots sit exactly on the line at every breakpoint. */}
       <div
-        ref={lineRef}
-        style={{ height: lineHeight + "px" }}
-        className="absolute top-0 left-1.5 w-[2px] overflow-hidden bg-gradient-to-b from-transparent via-border to-transparent md:left-2"
+        aria-hidden="true"
+        className="absolute left-[7px] w-0.5 rounded-full bg-border"
+        style={{ top: rail.top, height: rail.height }}
       >
         <motion.div
-          style={{ height: heightTransform, opacity: opacityTransform }}
-          className={cn("absolute inset-x-0 top-0 w-[2px] rounded-full bg-gradient-to-t from-primary via-secondary to-transparent")}
+          style={{ height: fillHeight, opacity: fillOpacity }}
+          className="absolute inset-x-0 top-0 rounded-full bg-gradient-to-b from-primary to-secondary"
         />
       </div>
+
+      {data.map((item, i) => (
+        <div key={i} className="relative flex gap-4 pb-11 last:pb-0 md:gap-6">
+          <span
+            data-timeline-marker
+            className="relative z-10 mt-0.5 grid size-4 shrink-0 place-items-center rounded-full border border-border bg-card shadow-[0_0_0_4px_var(--background)]"
+          >
+            <span className="size-1.5 rounded-full bg-gradient-to-br from-primary to-secondary" />
+          </span>
+
+          {/* Stacks under the date on a phone, sits beside it from md up: a
+              fixed date column plus body copy is too narrow to read at
+              mobile widths. */}
+          <div className="flex min-w-0 flex-1 flex-col gap-1.5 md:flex-row md:gap-8">
+            <div className="text-[12px] font-semibold tracking-[0.04em] text-secondary uppercase md:w-[8.5rem] md:shrink-0 md:pt-0.5">
+              {item.title}
+            </div>
+            <div className="min-w-0 flex-1">{item.content}</div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

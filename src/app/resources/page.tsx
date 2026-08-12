@@ -117,7 +117,7 @@ export default function ResourcesPage() {
         eyebrow="Get involved"
         title={
           <>
-            Join the <GradientText>Sakhi mission</GradientText>
+            Everything you need to <GradientText>work with Sakhi</GradientText>
           </>
         }
         lead="Three ways to be part of something that matters, for women across India."
@@ -134,8 +134,12 @@ export default function ResourcesPage() {
       {/* ============================================================ CONTRIBUTE */}
       <Section id="contribute">
         <Container>
-          <SectionHeading title="How you can help" />
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <SectionHeading
+            eyebrow="Get involved"
+            title="How you can help"
+            lead="Three ways to be part of something that genuinely matters, for women across India."
+          />
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
             {ways.map((w) => (
               <div
                 key={w.title}

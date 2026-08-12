@@ -432,6 +432,43 @@
   animation: blob-drift 14s var(--ease-in-out-soft) infinite;
 }
 
+/* Cloth catching a breeze, for the "Made in India" badge.
+
+   Rotating the whole flag around its centre reads as a sticker being tilted.
+   What actually reads as fabric is the mast edge staying put while the free
+   edge travels — so transform-origin pins the left edge, and the motion is a
+   `rotateY` sweep under perspective (the far edge swings toward and away from
+   the viewer) rather than a flat 2D spin. The small `skewY` riding along with
+   it is the diagonal drag a real flag shows as the wave passes down its
+   length, and the keyframe stops are deliberately uneven — a symmetric
+   back-and-forth is what makes this kind of thing look mechanical.
+
+   Transform-only, so it stays on the compositor. The site-wide
+   prefers-reduced-motion block below freezes it. */
+@keyframes flag-wave {
+  0%,
+  100% {
+    transform: perspective(140px) rotateY(0deg) skewY(0deg);
+  }
+  22% {
+    transform: perspective(140px) rotateY(-14deg) skewY(-1.6deg);
+  }
+  46% {
+    transform: perspective(140px) rotateY(-2deg) skewY(0.5deg);
+  }
+  70% {
+    transform: perspective(140px) rotateY(12deg) skewY(1.4deg);
+  }
+  88% {
+    transform: perspective(140px) rotateY(4deg) skewY(0.4deg);
+  }
+}
+.animate-flag-wave {
+  display: inline-block;
+  transform-origin: left center;
+  animation: flag-wave 4.2s ease-in-out infinite;
+}
+
 /* Shared "this is live" motif for the bento illustrations: a badge breathing
    in place plus a ring emitting from it once a cycle. Two keyframes, not
    one, because they run on different elements (the badge itself vs. an

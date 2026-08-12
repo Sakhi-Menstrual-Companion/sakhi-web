@@ -27,6 +27,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Spotlight } from "@/components/ui/spotlight";
+import { IndiaFlag } from "@/components/ui/india-flag";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { CardRail } from "@/components/ui/card-rail";
@@ -361,9 +362,9 @@ export default function HomePage() {
             all the way down to the marquee bar and sit flush on that divider,
             so the wrist is cut by the border rather than floating above it. */}
         <Container className="relative z-10 flex flex-col items-center pt-[calc(var(--nav-clearance)+3.5rem)] pb-0 text-center sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-1.5 text-[13px] font-medium text-muted-foreground backdrop-blur-sm">
-            <span aria-hidden="true">🇮🇳</span>
-            Developed in India
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-1.5 text-[11.5px] font-medium text-muted-foreground backdrop-blur-sm">
+            <IndiaFlag className="animate-flag-wave h-3 w-4.25 shrink-0 drop-shadow-[0_1px_2px_rgba(163,22,84,0.18)]" />
+            Made in India
           </div>
 
           <h1 className="text-display mt-7 max-w-[16ch] text-foreground">
