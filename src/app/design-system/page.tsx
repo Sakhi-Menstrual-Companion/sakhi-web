@@ -4,7 +4,7 @@ import { DesignSystemBrowser } from "@/components/design/design-system-browser";
 import { designGroups, designSpecimenCount } from "@/components/design/registry";
 
 export const metadata: Metadata = {
-  title: "Design system, Sakhi",
+  title: "Design System - Sakhi",
   description:
     "Every section pattern on the Sakhi site, named, previewed live and copyable. Internal reference.",
   // Internal build tool, not a page for visitors to find in search.

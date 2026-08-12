@@ -1,7 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface Condition {
   id: string;
@@ -211,314 +218,162 @@ const conditions: Condition[] = [
   },
 ];
 
-const categories = [
-  { id: "all",          label: "All Conditions" },
-  { id: "hormonal",    label: "Hormonal" },
-  { id: "pain",        label: "Pain & Cycles" },
-  { id: "mental",      label: "Mental Health" },
-  { id: "reproductive",label: "Reproductive" },
-  { id: "systemic",    label: "Systemic" },
-];
-
 /**
- * `categoryColor` used to be a five-key record that mapped every category to
- * the same #F61887, so it decided nothing. What it did do was scatter raw hex
- * through the component, which is how the two contrast failures below got in.
+ * Sixteen conditions, as a reference library.
  *
- * There are two values now because they do different jobs:
+ * This was a sixteen-card grid with a pill filter above it, and each card
+ * expanded in place. Three things made it hard to look at:
  *
- *   ACCENT  a token, for anything that carries text or reads as a solid fill.
- *           Deep Pink, because Primary Pink is 3.89:1 on white and most of
- *           these uses are 11-13px type, which needs 4.5:1.
- *   TINT    a raw hex, because the alpha-suffixed tints (`${TINT}12`) are
- *           string concatenation and cannot take a var().
+ * 1. Sixteen cards each led with a 32px pink statistic, so the page was
+ *    sixteen competing numbers and no way in. The stat is the hook for one
+ *    condition; repeated sixteen times it is wallpaper.
+ * 2. Expanding a card in a three-column grid pushed every card after it down
+ *    the page, so reading one condition moved everything the reader had just
+ *    been looking at.
+ * 3. The opened card was four blocks of 11px uppercase pink labels, which is
+ *    the most templated way to set a heading there is.
+ *
+ * It is a grouped list now, five sections by category, one row per condition.
+ * A row is scannable at a glance and the full entry opens in the same dialog
+ * the feature gallery and the team cards use, so the page never reflows and
+ * the site has one way of showing detail rather than three.
+ *
+ * The category filter is gone with the grid. Grouping answers the same
+ * question the filter did, permanently and without a click.
+ *
+ * Copy rule: every number on this page is from the research in 02-Research and
+ * carries its own source there. Do not add, round, or soften a figure here.
  */
-const ACCENT = "var(--secondary)";
-const TINT = "#F61887";
+const groups = [
+  { id: "hormonal", label: "Hormonal" },
+  { id: "pain", label: "Pain & Cycles" },
+  { id: "mental", label: "Mental Health" },
+  { id: "reproductive", label: "Reproductive" },
+  { id: "systemic", label: "Systemic" },
+] as const;
 
-function ConditionCard({ c }: { c: Condition }) {
-  const [open, setOpen] = useState(false);
-
+/** A labelled block inside the dialog. */
+function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <motion.div
-      /* No per-card stagger. Sixteen cards arriving one after another reads as
-         a template; the grid now arrives as one block. */
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      style={{
-        background: "var(--card)",
-        border: `1px solid ${open ? `${TINT}33` : "var(--border)"}`,
-        borderRadius: 14,
-        overflow: "hidden",
-        cursor: "pointer",
-        transition: "border-color 0.2s ease, box-shadow 0.2s ease",
-        /* Flat at rest. The shadow is the open state, not the look. */
-        boxShadow: open ? `0 8px 32px ${TINT}15` : "none",
-      }}
-      onClick={() => setOpen(!open)}
-    >
-      {/* Card Header */}
-      <div style={{
-        padding: "28px",
-        display: "flex",
-        flexDirection: "column",
-        gap: 16,
-      }}>
-        {/* Category + Toggle */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          {/* Neutral, not pink. Sixteen pink chips sat directly above sixteen
-              pink stat numbers, so the accent stopped meaning anything. The
-              number is the thing worth looking at; the category is metadata. */}
-          <span style={{
-            fontSize: 11,
-            fontWeight: 600,
-            color: "var(--chip-foreground)",
-            background: "var(--chip)",
-            padding: "4px 10px",
-            borderRadius: 999,
-            letterSpacing: "0.03em",
-            textTransform: "uppercase",
-          }}>
-            {c.category}
-          </span>
-          <motion.div
-            animate={{ rotate: open ? 45 : 0 }}
-            transition={{ duration: 0.2 }}
-            style={{
-              width: 24, height: 24, borderRadius: "50%",
-              background: open ? ACCENT : "rgba(0,0,0,0.06)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-              <path d="M5 1v8M1 5h8" stroke={open ? "var(--secondary-foreground)" : "var(--muted-foreground)"} strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </motion.div>
+    <section className="mt-8 first:mt-0">
+      <h4 className="text-[13.5px] font-semibold tracking-[-0.01em] text-foreground">{title}</h4>
+      <div className="mt-2.5">{children}</div>
+    </section>
+  );
+}
+
+function ConditionRow({ c, group }: { c: Condition; group: string }) {
+  return (
+    <Dialog>
+      {/* The whole row is the control. grid rather than flex so the stat
+          column lines up down the list instead of floating wherever each
+          tagline happens to end. */}
+      <DialogTrigger
+        className={
+          "group grid w-full cursor-pointer grid-cols-1 items-baseline gap-x-8 gap-y-2 py-6 text-left " +
+          "transition-colors duration-(--duration-fast) hover:bg-accent-faint/40 " +
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary " +
+          "sm:grid-cols-[minmax(0,1fr)_13rem_1.5rem] sm:px-4"
+        }
+      >
+        <div className="min-w-0">
+          <p className="text-[1.0625rem] leading-snug font-medium text-foreground">{c.name}</p>
+          <p className="mt-1.5 text-[14px] leading-relaxed text-muted-foreground">{c.tagline}</p>
         </div>
 
-        {/* Stat */}
-        <div>
-          <div style={{
-            fontSize: 38,
-            fontWeight: 700,
-            color: ACCENT,
-            lineHeight: 1,
-            letterSpacing: 0,
-            marginBottom: 4,
-          }}>
+        <div className="min-w-0">
+          <p className="text-[1.25rem] leading-none font-semibold tracking-tight tabular-nums text-secondary">
             {c.stat}
-          </div>
-          <div style={{ fontSize: 12, fontWeight: 400, color: "var(--muted-foreground)" }}>
-            {c.statLabel}
-          </div>
+          </p>
+          <p className="mt-1.5 text-[12.5px] leading-snug text-muted-foreground">{c.statLabel}</p>
         </div>
 
-        {/* Name + Tagline */}
-        <div>
-          <div style={{ fontSize: 18, fontWeight: 500, color: "var(--foreground)", marginBottom: 8, lineHeight: 1.25 }}>
-            {c.name}
-          </div>
-          <div style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.6 }}>
-            {c.tagline}
-          </div>
+        <ArrowRight
+          className="hidden size-4 self-center text-muted-foreground transition-transform duration-(--duration-fast) group-hover:translate-x-0.5 group-hover:text-secondary sm:block"
+          aria-hidden="true"
+        />
+      </DialogTrigger>
+
+      <DialogContent className="max-h-[85vh] max-w-none overflow-y-auto p-10 sm:max-w-[50vw] sm:p-12">
+        <p className="text-[15px] font-semibold tracking-tight text-secondary">{group}</p>
+        <DialogTitle className="text-h2 mt-3 font-semibold text-foreground">{c.name}</DialogTitle>
+
+        <div className="mt-6 flex items-baseline gap-3 border-y border-border py-5">
+          <span className="text-[2rem] leading-none font-semibold tracking-tight tabular-nums text-secondary">
+            {c.stat}
+          </span>
+          <span className="text-[14px] text-muted-foreground">{c.statLabel}</span>
         </div>
-      </div>
 
-      {/* Expanded Content */}
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            style={{ overflow: "hidden" }}
-          >
-            <div style={{
-              padding: "0 28px 28px",
-              borderTop: `1px solid ${TINT}18`,
-              paddingTop: 24,
-            }}>
-              {/* What it is */}
-              <div style={{ marginBottom: 22 }}>
-                <div style={{ fontSize: 11, fontWeight: 500, color: ACCENT, marginBottom: 10 }}>
-                  What it is
-                </div>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.75, margin: 0 }}>
-                  {c.what}
-                </p>
-              </div>
+        <div className="mt-8">
+          <Block title="What it is">
+            <DialogDescription className="text-[15.5px] leading-relaxed text-muted-foreground">
+              {c.what}
+            </DialogDescription>
+          </Block>
 
-              {/* Symptoms */}
-              <div style={{ marginBottom: 22 }}>
-                <div style={{ fontSize: 11, fontWeight: 500, color: ACCENT, marginBottom: 10 }}>
-                  What she experiences
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  {c.symptoms.map(s => (
-                    <div key={s} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                      <div style={{
-                        width: 5, height: 5, borderRadius: "50%",
-                        background: ACCENT, flexShrink: 0, marginTop: 6,
-                      }} />
-                      <span style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.6 }}>{s}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          <Block title="What she experiences">
+            <ul className="flex flex-col gap-2">
+              {c.symptoms.map((sym) => (
+                <li key={sym} className="flex items-start gap-3">
+                  <span
+                    className="mt-2 size-1.5 shrink-0 rounded-full bg-secondary"
+                    aria-hidden="true"
+                  />
+                  <span className="text-[15px] leading-relaxed text-muted-foreground">{sym}</span>
+                </li>
+              ))}
+            </ul>
+          </Block>
 
-              {/* What the silence costs */}
-              <div style={{
-                background: `${TINT}08`,
-                border: `1px solid ${TINT}18`,
-                borderRadius: 14,
-                padding: "16px 18px",
-                marginBottom: 16,
-              }}>
-                <div style={{ fontSize: 11, fontWeight: 500, color: ACCENT, marginBottom: 8 }}>
-                  What the silence costs
-                </div>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.75, margin: 0 }}>
-                  {c.silence}
-                </p>
-              </div>
+          <Block title="What the silence costs">
+            <p className="text-[15.5px] leading-relaxed text-muted-foreground">{c.silence}</p>
+          </Block>
 
-              {/* Sakhi */}
-              <div style={{
-                background: "var(--accent)",
-                borderRadius: 14,
-                padding: "16px 18px",
-              }}>
-                <div style={{ fontSize: 11, fontWeight: 500, color: ACCENT, marginBottom: 8 }}>
-                  How Sakhi helps
-                </div>
-                <p style={{ fontSize: 13, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.75, margin: 0 }}>
-                  {c.sakhi}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+          {/* The one tinted block in the dialog, because it is the only part
+              that is about Sakhi rather than about the condition. */}
+          <section className="mt-8 rounded-2xl bg-accent-faint p-6">
+            <h4 className="text-[13.5px] font-semibold tracking-[-0.01em] text-foreground">
+              How Sakhi helps
+            </h4>
+            <p className="mt-2.5 text-[15.5px] leading-relaxed text-muted-foreground">{c.sakhi}</p>
+          </section>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 
 export default function HealthConditions() {
-  const [activeCategory, setActiveCategory] = useState("all");
-
-  const filtered = activeCategory === "all"
-    ? conditions
-    : conditions.filter(c => c.category === activeCategory);
-
   return (
     <div>
-      {/* The 16 / 252M / 57% stat trio now lives in the page hero's data-bar
-         (src/app/health/page.tsx), directly under the headline. Repeating it
-         here as a second block put the same three numbers on screen twice in
-         a row. The "0 diagnoses made" line moved into the closing band below,
-         next to the sentence it actually supports. */}
-
-      {/* Category Filter */}
-      <div style={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 8,
-        marginBottom: 40,
-      }}>
-        {categories.map(cat => (
-          <button
-            key={cat.id}
-            onClick={() => setActiveCategory(cat.id)}
-            style={{
-              padding: "8px 18px",
-              borderRadius: 999,
-              border: activeCategory === cat.id
-                ? `1px solid ${ACCENT}`
-                : "1px solid rgba(0,0,0,0.1)",
-              background: activeCategory === cat.id ? ACCENT : "var(--card)",
-              color: activeCategory === cat.id ? "var(--secondary-foreground)" : "var(--muted-foreground)",
-              fontSize: 13,
-              fontWeight: activeCategory === cat.id ? 500 : 400,
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-          >
-            {cat.label}
-            <span style={{
-              marginLeft: 8,
-              fontSize: 11,
-              opacity: 0.7,
-            }}>
-              {cat.id === "all"
-                ? conditions.length
-                : conditions.filter(c => c.category === cat.id).length}
-            </span>
-          </button>
-        ))}
+      <div className="flex flex-col gap-16">
+        {groups.map((g) => {
+          const items = conditions.filter((c) => c.category === g.id);
+          return (
+            <section key={g.id}>
+              <h3 className="text-h4 text-foreground">{g.label}</h3>
+              <div className="mt-5 divide-y divide-border border-y border-border sm:-mx-4">
+                {items.map((c) => (
+                  <ConditionRow key={c.id} c={c} group={g.label} />
+                ))}
+              </div>
+            </section>
+          );
+        })}
       </div>
 
-      {/* Grid */}
-      <motion.div
-        key={activeCategory}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.2 }}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 250px), 1fr))",
-          gap: 16,
-        }}
-      >
-        {filtered.map((c) => (
-          <ConditionCard key={c.id} c={c} />
-        ))}
-      </motion.div>
-
-      {/* Bottom disclaimer */}
-      <div style={{
-        marginTop: 64,
-        background: "var(--foreground)",
-        borderRadius: 14,
-        padding: "40px 48px",
-        display: "flex",
-        flexDirection: "column",
-        gap: 12,
-      }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
-          <div style={{ fontSize: 20, fontWeight: 700, color: "var(--ink-foreground)", letterSpacing: 0 }}>
-            Sakhi tracks. Doctors diagnose.
-          </div>
-          <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.55)" }}>
-            0 diagnoses made by Sakhi, ever
-          </span>
-        </div>
-        <p style={{ fontSize: 14, fontWeight: 400, color: "rgba(255,255,255,0.82)", lineHeight: 1.8, margin: 0, maxWidth: 640 }}>
+      {/* Closing disclaimer. Plain and flat, same surface as the section
+          around it: the page's one dark CTA band follows right after this, so
+          this stays quiet rather than competing with it. */}
+      <div className="mt-20 rounded-2xl border border-border bg-card p-8 sm:p-10">
+        <h3 className="text-h4 text-foreground">Sakhi tracks. Doctors diagnose.</h3>
+        <p className="mt-3 max-w-140 text-[15px] leading-relaxed text-muted-foreground">
           Everything on this page is educational research. Sakhi is a tracking and awareness tool,
-          not a medical device, not a diagnostic system. If something in what you&apos;ve read resonates,
-          bring it to a gynaecologist. Sakhi&apos;s Doctor Report is built to help you have that conversation.
+          not a medical device and not a diagnostic system. If something you have read here
+          resonates, please bring it to a gynaecologist. Sakhi&rsquo;s Doctor Report is built to
+          help you have that conversation.
         </p>
-        <div style={{ paddingTop: 8 }}>
-          <a
-            href="https://apps.apple.com/app/sakhi"
-            style={{
-              display: "inline-block",
-              padding: "12px 28px",
-              background: ACCENT,
-              color: "var(--ink-foreground)",
-              borderRadius: 999,
-              fontSize: 14,
-              fontWeight: 500,
-              textDecoration: "none",
-              transition: "opacity 0.2s ease",
-            }}
-          >
-            Start tracking with Sakhi
-          </a>
-        </div>
       </div>
     </div>
   );

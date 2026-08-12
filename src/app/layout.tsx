@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Lato, Inter } from "next/font/google";
 import "./globals.css";
+import { ViewTransitions } from "next-view-transitions";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { AppDownloadBand } from "@/components/ui/app-download-band";
 import { DesignSystemLauncher } from "@/components/design/design-system-launcher";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/structured-data";
 
 // Body: neutral, highly legible. Correct register for health copy.
 const body = Inter({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -23,12 +26,12 @@ export const metadata: Metadata = {
      resolve against http://localhost:3000 in the build and every share card
      points at a dev server. Next warns about it on every build. */
   metadataBase: new URL(siteUrl),
-  title: "Sakhi, Your Health Companion",
+  title: "Sakhi - Your Health Companion",
   description:
     "Sakhi is the female health companion every Indian woman deserves. Log your health, get AI-powered insights, and share with one trusted person who cares for you.",
   keywords: ["period tracker", "menstrual health", "women's health", "PCOD", "PCOS", "India", "Sakhi"],
   openGraph: {
-    title: "Sakhi, Your Health Companion",
+    title: "Sakhi - Your Health Companion",
     description:
       "A girl's health is not just her data. It is something her people want to understand, and act on.",
     type: "website",
@@ -38,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sakhi, Your Health Companion",
+    title: "Sakhi - Your Health Companion",
     description: "The female health companion every Indian woman deserves.",
   },
 };
@@ -74,28 +77,44 @@ export default function RootLayout({
   // element's own attributes, not the tree under it, so a genuine mismatch
   // anywhere else is still reported.
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${lato.variable} ${body.variable} h-full antialiased`}
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: revealBootstrap }} />
-      </head>
-      <body className="flex min-h-full flex-col bg-background-shell font-sans">
-        <a
-          href="#main"
-          className="sr-only rounded-lg bg-secondary px-4 py-2 text-sm font-semibold text-secondary-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200]"
-        >
-          Skip to content
-        </a>
-        <Navbar />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <DesignSystemLauncher />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html
+        lang="en"
+        suppressHydrationWarning
+        data-scroll-behavior="smooth"
+        className={`${lato.variable} ${body.variable} h-full antialiased`}
+      >
+        <head>
+          <script dangerouslySetInnerHTML={{ __html: revealBootstrap }} />
+          {/* Site-wide entity markup. Per-page schema (SoftwareApplication,
+              ItemList, breadcrumbs) lives on the pages it describes instead
+              of here, so this stays the two facts true on every route:
+              Sakhi the organisation, and this site as a WebSite. */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          />
+        </head>
+        <body className="flex min-h-full flex-col bg-background-shell font-sans">
+          <a
+            href="#main"
+            className="sr-only rounded-lg bg-secondary px-4 py-2 text-sm font-semibold text-secondary-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-200"
+          >
+            Skip to content
+          </a>
+          <Navbar />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <AppDownloadBand />
+          <Footer />
+          <DesignSystemLauncher />
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

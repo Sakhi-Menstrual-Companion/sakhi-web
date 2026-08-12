@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { useEffect, useRef, useState } from "react";
 import { ExternalLink, Shapes, X } from "lucide-react";
 

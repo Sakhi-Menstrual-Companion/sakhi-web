@@ -125,13 +125,18 @@ export default function IndiaMap() {
         )}
       </AnimatePresence>
 
-      {/* Map */}
+      {/* Map
+          scale 1050 in a 420x480 box put India's own longitude/latitude
+          span outside the SVG viewBox, an SVG clips anything past its own
+          bounds by default, so Kashmir and the north-east states were
+          silently cut off rather than just cramped. 720/440/520 keeps
+          India's full extent inside the box with margin on every side. */}
       <ComposableMap
         projection="geoMercator"
-        projectionConfig={{ center: [82, 22], scale: 1050 }}
+        projectionConfig={{ center: [82, 22], scale: 720 }}
         style={{ width: "100%", height: "auto" }}
-        width={420}
-        height={480}
+        width={440}
+        height={520}
       >
         <Geographies geography={GEO_URL}>
           {({ geographies }) =>

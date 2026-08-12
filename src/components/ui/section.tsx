@@ -164,6 +164,13 @@ export function Section({
 /**
  * Centred heading block: eyebrow, heading, one line of lead copy. Nothing
  * else — no button, no chips. The measure stays narrow even on a wide page.
+ *
+ * Left-aligned body copy is capped at max-w-140, which is 560px, exactly half
+ * of Container's 1120px. Site rule: a left-aligned paragraph is either half
+ * the column or the whole of it, never a value in between. The in-between
+ * widths (42rem, 34rem) ended a line of prose two thirds of the way across
+ * with nothing to its right, which reads as a layout that did not finish
+ * rather than a deliberate measure.
  */
 export function SectionHeading({
   eyebrow,
@@ -187,7 +194,7 @@ export function SectionHeading({
         <p
           className={cn(
             "text-lead mt-5 text-muted-foreground",
-            centred ? "mx-auto max-w-[38rem]" : "max-w-[34rem]"
+            centred ? "mx-auto max-w-[38rem]" : "max-w-140"
           )}
         >
           {lead}

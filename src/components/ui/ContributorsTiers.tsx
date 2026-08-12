@@ -2,225 +2,211 @@
 
 import { motion } from "framer-motion";
 
-import { gridAuto } from "@/components/ui/pageKit";
+import { cn } from "@/lib/utils";
 
 export interface Contributor {
   id: string;
   name: string;
   role: string;
   initials: string;
-  level: "founder" | "core" | "contributor" | "community";
+  level: "founder" | "core" | "contributor";
   since: string;
   contributions: string;
 }
 
-const card = {
+/**
+ * The credits list, by tier.
+ *
+ * Rewritten from inline styles onto the same Tailwind tokens the rest of the
+ * site uses. The old version hardcoded `#fff`, `#F8F2F4` and three different
+ * `rgba(246,24,135,…)` mixes next to the `var(--token)` ones, so a palette
+ * change would have moved half of this section and left the other half
+ * behind.
+ *
+ * Three things were wrong beyond the styling:
+ *
+ * 1. The founder card was capped at 600px inside a 1120px column, so the tier
+ *    with the most to say occupied half a row and left the rest empty. It
+ *    runs the full width now.
+ *
+ * 2. That card printed `contributions` twice, once as a sentence and again as
+ *    chips split out of the same string.
+ *
+ * 3. The smaller cards sliced their chips to the first four, which silently
+ *    dropped a real contribution from anyone who had five. Shruti's logo
+ *    design and Galgotias's institutional backing were both being cut.
+ *
+ * Nothing is a chip any more, which settles 2 and 3 together: `contributions`
+ * is rendered once, as the sentence it already is. See `Contributions` below.
+ *
+ * There is no Community tier. It was a hardcoded block that never read the
+ * `community` entries passed to this component, so those six records rendered
+ * nowhere; both the block and the dead records are gone, and the level is off
+ * the `Contributor` union so nothing can be filed under it again by accident.
+ */
+
+const reveal = {
   hidden: { opacity: 0, y: 18 },
-  show:   { opacity: 1, y:  0  },
+  show: { opacity: 1, y: 0 },
 };
 
-function Avatar({ initials, large, highlight }: { initials: string; large?: boolean; highlight?: boolean }) {
-  const size = large ? 64 : 52;
+/**
+ * A sentence, not a row of pills.
+ *
+ * `contributions` arrives comma-joined and used to be split into chips. Five
+ * grey capsules under every name is the most templated pattern there is, it
+ * shrank real work to 11px labels, and because the chips wrapped to different
+ * heights the cards never lined up. Read as written, "Visual identity, design
+ * system, UI/UX, brand guidelines, logo design" is a plain readable sentence
+ * at a size someone can actually read, and every card ends the same way.
+ */
+function Contributions({ text, className }: { text: string; className?: string }) {
+  return <p className={cn("leading-relaxed text-muted-foreground", className)}>{text}</p>;
+}
+
+function Avatar({
+  initials,
+  large,
+  highlight,
+}: {
+  initials: string;
+  large?: boolean;
+  highlight?: boolean;
+}) {
   return (
-    <div style={{
-      width: size, height: size, borderRadius: "50%", flexShrink: 0,
-      /* The plain avatar was a 12% pink wash. On the blush founder card that
-         composited down to 4.35:1 behind its initials, just under AA. An
-         opaque white disc puts Deep Pink back at 5.22:1 wherever the avatar
-         is placed, instead of depending on what is behind it. */
-      background: highlight ? "var(--secondary)" : "var(--card)",
-      border: highlight ? "none" : "1px solid var(--border)",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      fontSize: large ? 20 : 15, fontWeight: 600,
-      color: highlight ? "var(--secondary-foreground)" : "var(--secondary)",
-      letterSpacing: "0.02em",
-    }}>
+    <div
+      className={cn(
+        "grid shrink-0 place-items-center rounded-full font-semibold tracking-[0.02em]",
+        large ? "size-18 text-[22px]" : "size-14 text-[16px]",
+        /* Solid fills, never a translucent wash. The old plain avatar was 12%
+           pink, which composited to 4.35:1 over the blush founder card, just
+           under AA. Deep Pink on --accent-faint is 4.68:1 and on white 5.22:1,
+           so the initials pass wherever the avatar is placed. */
+        highlight ? "bg-secondary text-secondary-foreground" : "bg-accent-faint text-secondary"
+      )}
+    >
       {initials}
     </div>
   );
 }
 
-function TierDivider({ label, color }: { label: string; color: string }) {
+/**
+ * Just the word, set as a heading.
+ *
+ * It used to be a small uppercase label with a hairline running from it to
+ * the far edge of the container and a count parked at the end. Over four
+ * tiers that is four dangling lines down the page, and at the Founders tier
+ * the rule ran nearly the full 1120px to sit beside one short word, which is
+ * what made the section look unfinished rather than structured. A heading in
+ * the page's own type scale, with the whitespace between sections doing the
+ * separating, is both quieter and more formal.
+ */
+function TierHeader({ label }: { label: string }) {
+  return <h3 className="text-h4 mb-8 text-foreground">{label}</h3>;
+}
+
+/**
+ * The role line: title, then the date behind a middot.
+ *
+ * "Since Jan 2024" used to sit on its own row under the name, and on the
+ * smaller cards it was pushed to a footer behind its own rule, which gave a
+ * four word date the same structural weight as the person. It rides with the
+ * role now.
+ */
+function RoleLine({ role, since, className }: { role: string; since: string; className?: string }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24, marginTop: 8 }}>
-      <div style={{ width: 8, height: 8, borderRadius: "50%", background: color, flexShrink: 0 }} />
-      <span style={{ fontSize: 11, fontWeight: 400, color: "var(--muted-foreground)", whiteSpace: "nowrap" as const }}>
-        {label}
-      </span>
-      <div style={{ flex: 1, height: 1, background: "rgba(246,24,135,0.1)" }} />
-    </div>
+    <p className={cn("text-secondary", className)}>
+      {role}
+      <span className="text-muted-foreground"> · Since {since}</span>
+    </p>
   );
 }
 
 function FounderCard({ c }: { c: Contributor }) {
   return (
-    <motion.div
-      variants={card}
+    <motion.article
+      variants={reveal}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.45, ease: "easeOut" }}
-      whileHover={{ y: -3 }}
-      style={{
-        background: "var(--accent-faint)",
-        borderRadius: 14,
-        padding: "36px 36px",
-        display: "flex",
-        flexDirection: "column" as const,
-        gap: 20,
-        maxWidth: 600,
-        cursor: "default",
-        transition: "box-shadow 0.25s ease",
-      }}
+      className="rounded-3xl bg-accent-faint p-9 sm:p-11"
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+      <div className="flex items-center gap-6">
         <Avatar initials={c.initials} large highlight />
-        <div>
-          <div style={{ fontSize: 20, fontWeight: 500, color: "var(--foreground)", lineHeight: 1.25 }}>{c.name}</div>
-          <div style={{ fontSize: 13, fontWeight: 400, color: "var(--secondary)", marginTop: 3 }}>{c.role}</div>
-          <div style={{ fontSize: 11, fontWeight: 400, color: "var(--muted-foreground)", marginTop: 2 }}>Since {c.since}</div>
+        <div className="min-w-0">
+          <p className="text-[1.5rem] leading-tight font-medium tracking-[-0.015em] text-foreground">
+            {c.name}
+          </p>
+          <RoleLine role={c.role} since={c.since} className="mt-1.5 text-[15px]" />
         </div>
       </div>
-      <p style={{ fontSize: 14, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.8, margin: 0 }}>
-        {c.contributions}
-      </p>
-      <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 6 }}>
-        {c.contributions.split(", ").slice(0, 5).map(t => (
-          <span key={t} style={{
-            fontSize: 11, fontWeight: 400, color: "var(--secondary)",
-            background: "rgba(246,24,135,0.08)",
-            padding: "4px 11px", borderRadius: 999,
-          }}>
-            {t}
-          </span>
-        ))}
-      </div>
-    </motion.div>
+      <Contributions text={c.contributions} className="mt-7 text-[16.5px]" />
+    </motion.article>
   );
 }
 
 function ContributorCard({ c, delay = 0 }: { c: Contributor; delay?: number }) {
   return (
-    <motion.div
-      variants={card}
+    <motion.article
+      variants={reveal}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.4, delay, ease: "easeOut" }}
-      whileHover={{ y: -3 }}
-      style={{
-        background: "#fff",
-        borderRadius: 14,
-        padding: "28px",
-        display: "flex",
-        flexDirection: "column" as const,
-        gap: 16,
-        cursor: "default",
-        transition: "box-shadow 0.25s ease",
-      }}
+      className="rounded-3xl border border-border bg-card p-8 transition-colors duration-(--duration-slow) ease-(--ease-in-out-soft) hover:border-secondary/25"
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+      <div className="flex items-center gap-4">
         <Avatar initials={c.initials} />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 15, fontWeight: 500, color: "var(--foreground)", lineHeight: 1.3, whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis" }}>{c.name}</div>
-          <div style={{ fontSize: 12, fontWeight: 400, color: "var(--secondary)", marginTop: 2 }}>{c.role}</div>
-        </div>
-        <div style={{ fontSize: 10, fontWeight: 400, color: "var(--muted-foreground)", flexShrink: 0, whiteSpace: "nowrap" as const }}>
-          Since {c.since}
+        <div className="min-w-0">
+          <p className="text-[1.125rem] leading-tight font-medium text-foreground">{c.name}</p>
+          <RoleLine role={c.role} since={c.since} className="mt-1 text-[13.5px]" />
         </div>
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 5 }}>
-        {c.contributions.split(", ").slice(0, 4).map(t => (
-          <span key={t} style={{
-            fontSize: 10, fontWeight: 400, color: "var(--muted-foreground)",
-            background: "#F8F2F4",
-            padding: "3px 9px", borderRadius: 999,
-          }}>
-            {t}
-          </span>
-        ))}
-      </div>
-    </motion.div>
-  );
-}
-
-function CommunityBlock() {
-  return (
-    <motion.div
-      variants={card}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.45, ease: "easeOut" }}
-      style={{
-        background: "#F8F2F4",
-        borderRadius: 14,
-        padding: "36px",
-        display: "flex",
-        flexDirection: "column" as const,
-        gap: 20,
-      }}
-    >
-      <div>
-        <div style={{ fontSize: 24, fontWeight: 700, color: "var(--secondary)", letterSpacing: 0, marginBottom: 6 }}>
-          Every woman who trusted Sakhi.
-        </div>
-        <p style={{ fontSize: 14, fontWeight: 400, color: "var(--muted-foreground)", lineHeight: 1.8, margin: 0, maxWidth: 560 }}>
-          Early App Store users, beta testers, campus ambassadors, B2B partners, and supporters who believed from day one, every one of them is part of what Sakhi is.
-        </p>
-      </div>
-      <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 8 }}>
-        {["Early App Store Users", "TestFlight Beta Testers", "Campus Ambassadors", "B2B Partners", "Community Supporters"].map(label => (
-          <span key={label} style={{
-            fontSize: 12, fontWeight: 400, color: "var(--secondary)",
-            background: "#fff",
-            padding: "6px 14px", borderRadius: 999,
-          }}>
-            {label}
-          </span>
-        ))}
-      </div>
-    </motion.div>
+      <Contributions text={c.contributions} className="mt-6 text-[14.5px]" />
+    </motion.article>
   );
 }
 
 export default function ContributorsTiers({ contributors }: { contributors: Contributor[] }) {
-  const founders     = contributors.filter(c => c.level === "founder");
-  const core         = contributors.filter(c => c.level === "core");
-  const contributors_ = contributors.filter(c => c.level === "contributor");
+  const founders = contributors.filter((c) => c.level === "founder");
+  const core = contributors.filter((c) => c.level === "core");
+  const rest = contributors.filter((c) => c.level === "contributor");
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" as const, gap: 48 }}>
-
-      {/* Founders */}
-      <div>
-        <TierDivider label="Founders" color="#F61887" />
-        <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
-          {founders.map(c => <FounderCard key={c.id} c={c} />)}
+    <div className="flex flex-col gap-14">
+      <section>
+        <TierHeader label="Founders" />
+        <div className="flex flex-col gap-3">
+          {founders.map((c) => (
+            <FounderCard key={c.id} c={c} />
+          ))}
         </div>
-      </div>
+      </section>
 
-      {/* Core */}
-      <div>
-        <TierDivider label="Core Partners" color="#F61887" />
-        <div style={gridAuto(280, 12)}>
-          {core.map((c, i) => <ContributorCard key={c.id} c={c} delay={i * 0.08} />)}
+      <section>
+        <TierHeader label="Core Partners" />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {core.map((c, i) => (
+            <ContributorCard key={c.id} c={c} delay={i * 0.08} />
+          ))}
         </div>
-      </div>
+      </section>
 
-      {/* Contributors */}
-      <div>
-        <TierDivider label="Contributors" color="rgba(246,24,135,0.5)" />
-        <div style={gridAuto(280, 12)}>
-          {contributors_.map((c, i) => <ContributorCard key={c.id} c={c} delay={i * 0.07} />)}
+      <section>
+        <TierHeader label="Contributors" />
+        {/* Two across, not four. At four the cards came out around 268px, which
+            broke "User Researcher" and "Campus Ambassador" onto two lines and
+            wrapped the role and date apart from each other. Three would fit
+            them but leaves the fourth card alone on its own row; two divides
+            evenly, matches the Core Partners grid above it, and gives the
+            whole section one rhythm. */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {rest.map((c, i) => (
+            <ContributorCard key={c.id} c={c} delay={i * 0.07} />
+          ))}
         </div>
-      </div>
-
-      {/* Community */}
-      <div>
-        <TierDivider label="Community" color="rgba(246,24,135,0.3)" />
-        <CommunityBlock />
-      </div>
+      </section>
 
     </div>
   );

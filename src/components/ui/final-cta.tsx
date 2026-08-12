@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 import { Container } from "@/components/ui/section";
 import { Spotlight } from "@/components/ui/spotlight";

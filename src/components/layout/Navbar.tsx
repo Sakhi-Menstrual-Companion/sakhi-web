@@ -1,25 +1,29 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { usePathname } from "next/navigation";
 import SakhiLogo from "@/components/ui/SakhiLogo";
+import { DownloadModal } from "@/components/ui/download-modal";
 import { cn } from "@/lib/utils";
 
-const appStoreUrl = "https://apps.apple.com/app/id6742219623";
-
 /**
- * The three pages the site now has. Used to be nine flat links, then a
- * three-group dropdown mega-menu over those same nine URLs; the site itself
- * is three pages now (/product, /about, /resources, each the full merged
- * content of what used to be three-to-four separate routes), so a click on
- * any of these is a click on the actual page, not a menu that opens a menu.
- * Home is not repeated here: the logo is already the home link.
+ * The top-level nav links. Used to be nine flat links, then a three-group
+ * dropdown mega-menu over those same nine URLs, then three flat links
+ * (/product, /about, /resources); /resources (Community) has since come out
+ * of the primary nav, so a click on either of these is a click on the actual
+ * page, not a menu that opens a menu. Home is not repeated here: the logo is
+ * already the home link.
+ *
+ * Labels describe what's actually on the page rather than the route name:
+ * /product is the feature list, so "Features". /about is "Our Story", the
+ * founding story and timeline. Every other link the old nine-page nav had,
+ * including /resources, lives in the footer now, anchored into the pages
+ * that still carry that content.
  */
 const navLinks = [
-  { label: "Product", href: "/product" },
-  { label: "About", href: "/about" },
-  { label: "Resources", href: "/resources" },
+  { label: "Features", href: "/product" },
+  { label: "Our Story", href: "/about" },
 ];
 
 const MENU_ID = "sakhi-mobile-menu";
@@ -97,10 +101,14 @@ export default function Navbar() {
       >
         <div
           className={cn(
-            // Three links plus the logo and Download pill are narrow enough
-            // to show in full past sm (640px) — the hamburger below shares
-            // this breakpoint, so there is no width where neither nav works.
-            "pointer-events-auto mx-auto mt-4 flex h-[52px] max-w-265 items-center",
+            // Two links plus the logo and Download pill are narrow enough to
+            // show in full past sm (640px) — the hamburger below shares this
+            // breakpoint, so there is no width where neither nav works.
+            // max-w sized to this content: it was 265 for three nav links,
+            // and stayed that wide after Community was cut to two, which
+            // left the pill's resting width unchanged while its content
+            // shrank — a lot of empty glass between the logo and the links.
+            "pointer-events-auto mx-auto mt-4 flex h-[52px] max-w-200 items-center",
             "justify-between rounded-full pr-2 pl-4",
             // Apple's own localnav glass recipe (--localnav-background /
             // .localnav-background), read off apple.com's computed styles: a
@@ -146,19 +154,19 @@ export default function Navbar() {
               );
             })}
 
-            <a
-              href={appStoreUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              /* Deep Pink. White on Primary Pink is 3.89:1, under AA at 13px. */
-              className={cn(
-                "ml-2 rounded-full bg-secondary px-4 py-2 text-[13px] font-semibold whitespace-nowrap text-white no-underline",
-                "transition-colors duration-(--duration-fast) hover:bg-[#b8005f]",
-                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              )}
-            >
-              Download
-            </a>
+            <DownloadModal>
+              <button
+                type="button"
+                /* Deep Pink. White on Primary Pink is 3.89:1, under AA at 13px. */
+                className={cn(
+                  "ml-2 cursor-pointer rounded-full bg-secondary px-4 py-2 text-[13px] font-semibold whitespace-nowrap text-white no-underline",
+                  "transition-colors duration-(--duration-fast) hover:bg-[#b8005f]",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                )}
+              >
+                Download
+              </button>
+            </DownloadModal>
           </div>
 
           <button
@@ -236,18 +244,18 @@ export default function Navbar() {
               </Link>
             );
           })}
-          <a
-            href={appStoreUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setMenuOpen(false)}
-            className={cn(
-              "mt-6 rounded-full bg-secondary px-10 py-4 text-lg font-semibold text-white no-underline",
-              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            )}
-          >
-            Download
-          </a>
+          <DownloadModal>
+            <button
+              type="button"
+              onClick={() => setMenuOpen(false)}
+              className={cn(
+                "mt-6 cursor-pointer rounded-full bg-secondary px-10 py-4 text-lg font-semibold text-white no-underline",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              )}
+            >
+              Download
+            </button>
+          </DownloadModal>
         </div>
       )}
     </>

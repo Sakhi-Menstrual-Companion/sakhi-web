@@ -26,9 +26,11 @@ import { cn } from "@/lib/utils"
  *
  * `default` used to be the shadowed card. It is flat now, because a static
  * drop shadow on every card in a grid is the most common giveaway that a page
- * was generated: it reads as depth applied by rule rather than by intent. The
- * shadow is a hover state instead. `elevated` remains for the rare card that
- * genuinely needs to sit above the page at rest.
+ * was generated: it reads as depth applied by rule rather than by intent.
+ * There is no hover shadow anywhere on the site either, so `default`/`flat`
+ * stay flat at rest and on hover. `elevated` remains for the rare card that
+ * genuinely needs to sit above the page at rest, and that shadow does not
+ * change on hover.
  *
  * Variant also drives the colour of every child slot, so `CardTitle` and
  * `CardDescription` never need to know which card they are sitting in.
@@ -75,24 +77,10 @@ const cardVariants = cva(
       },
     },
     compoundVariants: [
-      /* Border and shadow cross-fade: the hairline recedes as the elevation
-         arrives, so the two are never both fully present. That handoff is the
-         detail that makes the hover feel considered rather than bolted on. */
-      {
-        variant: "default",
-        interactive: true,
-        class: "hover:border-transparent hover:shadow-card-hover",
-      },
-      {
-        variant: "flat",
-        interactive: true,
-        class: "hover:border-transparent hover:shadow-card-hover",
-      },
-      {
-        variant: "elevated",
-        interactive: true,
-        class: "hover:shadow-card-hover",
-      },
+      /* default/flat/elevated used to gain a shadow on hover here (border
+         fading out as the shadow arrived). No hover shadow anywhere on the
+         site now, so those three variants are flat at rest and on hover;
+         muted and inverted still get their background-only hover cue. */
       {
         variant: "muted",
         interactive: true,

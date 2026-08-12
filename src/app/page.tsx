@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import {
   Activity,
   ArrowRight,
@@ -17,7 +17,6 @@ import {
   Users,
 } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/section";
@@ -32,6 +31,20 @@ import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { CardRail } from "@/components/ui/card-rail";
 import { SakhiLogoMark } from "@/components/ui/SakhiLogo";
+import { StoreButtons, appStoreUrl } from "@/components/ui/app-download-band";
+import { softwareApplicationJsonLd } from "@/lib/structured-data";
+import type { Metadata } from "next";
+
+/* The layout's own title/description are generic enough to fall back on
+   safely for any page that skips this export, but the homepage is the page
+   most likely to be the actual search-result someone lands on, so it earns
+   its own more specific pair rather than inheriting the site-wide default. */
+export const metadata: Metadata = {
+  title: "Sakhi - Period Tracker & Women's Health App for India",
+  description:
+    "Sakhi is a free period tracker and health companion built for Indian women. Track your cycle, log symptoms, get AI-powered insights, and share with one trusted person. PCOD, PMS, and 16 conditions covered. Free on the App Store.",
+  alternates: { canonical: "/" },
+};
 
 /* Imported rather than referenced by a /public path so the emitted filename
    carries a content hash. A fixed public URL is why a replaced image kept
@@ -44,22 +57,11 @@ import condPain from "@/assets/condition-pain.jpg";
 import condMental from "@/assets/condition-mental.jpg";
 import condReproductive from "@/assets/condition-reproductive.jpg";
 import condSystemic from "@/assets/condition-systemic.jpg";
-import AnimatedSection from "@/components/ui/AnimatedSection";
-
-const appStoreUrl = "https://apps.apple.com/app/id6742219623";
-
-// PLACEHOLDER, swap in the real Play Store link.
-// Derived from the applicationId in 02-Android/app/build.gradle.kts
-// ("com.galgotiasuniversity.rachnasakhi") so it is a sane default, but it has
-// not been checked against the live listing.
-const playStoreUrl =
-  "https://play.google.com/store/apps/details?id=com.galgotiasuniversity.rachnasakhi";
 
 const trustRow = [
   { icon: NotebookPen, label: "Log your day in one tap" },
-  { icon: ShieldCheck, label: "No ads, no data selling" },
   { icon: CloudOff, label: "Works offline" },
-  { icon: Users, label: "Invite one trusted person" },
+  { icon: Users, label: "Care with your close one" },
 ];
 
 /* Reused from the Health Library page, so the two pages never disagree.
@@ -233,69 +235,6 @@ const faqs = [
   },
 ];
 
-function AppleMark({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-    </svg>
-  );
-}
-
-/* Redrawn Google Play mark: the play triangle split into four colour regions
-   by its spine midpoint and fold point. */
-function PlayMark({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-      <polygon points="3.5,1.6 3.5,12 13.4,12" fill="#00D95F" />
-      <polygon points="3.5,12 3.5,22.4 13.4,12" fill="#00A0FF" />
-      <polygon points="3.5,1.6 13.4,12 20.7,12" fill="#FFCE00" />
-      <polygon points="3.5,22.4 13.4,12 20.7,12" fill="#FF3A44" />
-    </svg>
-  );
-}
-
-
-/**
- * Used on both the white hero and the dark closing band. `tone` picks the
- * readable variant for wherever it's actually placed — on `dark`, the App
- * Store pill flips to a solid white fill. It used to stay `bg-ink` on both,
- * which was invisible-on-invisible against the closing band's own `bg-ink`
- * section: a black pill has no edge against a black page. White-on-black is
- * also just the correct read for a dark-mode primary action, not only a fix.
- */
-function StoreButtons({ tone = "light" }: { tone?: "light" | "dark" }) {
-  return (
-    <div className="flex flex-col items-center gap-3 sm:flex-row">
-      <a
-        href={appStoreUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn(
-          "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[15px] font-semibold transition-transform duration-300 hover:-translate-y-0.5",
-          tone === "dark"
-            ? "bg-white text-ink shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
-            : "bg-ink text-white"
-        )}
-      >
-        <AppleMark /> App Store
-      </a>
-      <Button
-        asChild
-        size="lg"
-        variant="outline"
-        className={cn(
-          "w-full sm:w-auto",
-          tone === "dark" && "border-white/15 bg-transparent text-white hover:bg-white/10"
-        )}
-      >
-        <a href={playStoreUrl} target="_blank" rel="noopener noreferrer">
-          <PlayMark /> Google Play
-        </a>
-      </Button>
-    </div>
-  );
-}
-
 /** The faint dot-grid ambience behind the hero, radially masked so it fades toward the edges. */
 function DotGrid({ className }: { className?: string }) {
   return (
@@ -408,8 +347,12 @@ function TrustedPersonIllustration() {
 export default function HomePage() {
   return (
     <div className="bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationJsonLd) }}
+      />
       {/* ---------------------------------------------------------------- hero */}
-      <section className="relative overflow-hidden border-b border-border bg-background">
+      <section className="relative overflow-hidden bg-background">
         <DotGrid className="opacity-70" />
         <Spotlight className="-top-40 left-0 lg:-top-24 lg:left-40" fill="var(--primary)" />
         <Spotlight className="top-10 right-0 lg:top-0 lg:right-20" fill="var(--secondary)" />
@@ -490,7 +433,7 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------------------------------------ features */}
-      <section className="border-b border-border bg-background px-6 py-24 sm:px-8 sm:py-28">
+      <section className="bg-background px-6 py-24 sm:px-8 sm:py-28">
         <Container>
           <div className="mx-auto max-w-[42rem] text-center">
             <span className="eyebrow">What Sakhi does</span>
@@ -553,7 +496,7 @@ export default function HomePage() {
       </section>
 
       {/* -------------------------------------------------------- how it works */}
-      <section className="border-b border-border bg-background-blush px-6 py-24 sm:px-8 sm:py-28">
+      <section className="bg-background-blush px-6 py-24 sm:px-8 sm:py-28">
         <Container>
           {/* Centred mark, heading, lead. The mark stands in for the small
               decorative glyph the reference sets above its title; using the
@@ -661,7 +604,7 @@ export default function HomePage() {
           Card alignment is unaffected: the rail's padding uses the same value
           as its negative margin, so the first card still lands on the container
           edge exactly. */}
-      <section className="border-b border-border bg-background-shell px-6 py-24 overflow-x-clip sm:px-8 sm:py-28">
+      <section className="bg-background-shell px-6 py-24 overflow-x-clip sm:px-8 sm:py-28">
         <Container>
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-xl">
@@ -727,7 +670,7 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------------------------------------- pricing */}
-      <section id="pricing" className="border-b border-border bg-background-blush px-6 py-24 sm:px-8 sm:py-28">
+      <section id="pricing" className="bg-background-blush px-6 py-24 sm:px-8 sm:py-28">
         <Container>
           <div className="mx-auto max-w-[42rem] text-center">
             <span className="eyebrow">Pricing</span>
@@ -741,7 +684,7 @@ export default function HomePage() {
             {plans.map((plan) => (
               <div
                 key={plan.name}
-                className="relative flex flex-col justify-between gap-8 rounded-2xl border border-border bg-card px-8 py-9"
+                className="relative flex flex-col justify-between gap-8 rounded-2xl bg-card px-8 py-9 shadow-[0_1px_3px_rgba(0,0,0,0.06)]"
               >
                 <PricingBody plan={plan} />
               </div>
@@ -751,7 +694,7 @@ export default function HomePage() {
       </section>
 
       {/* ----------------------------------------------------------------- faq */}
-      <section className="border-b border-border bg-background px-6 py-24 sm:px-8 sm:py-28">
+      <section className="bg-background px-6 py-24 sm:px-8 sm:py-28">
         <Container>
           <div className="mx-auto max-w-[42rem] text-center">
             <span className="eyebrow">Questions</span>
@@ -773,31 +716,10 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ----------------------------------------------------------- final cta
-          The page's closing statement, so it gets the hero's own type scale
-          back (text-display, not text-h2) as a deliberate bookend to "Sakhi
-          knows your body" up top — and more room around it than any other
-          band on the page, since nothing follows it. The emphasis clause
-          used to share the hero's animate-gradient-x sweep; here it is a
-          single static --primary-soft (the token this file already
-          documents for accent text on a dark fill) so the last thing a
-          visitor reads is confident rather than in motion. */}
-      <section className="relative overflow-hidden bg-ink px-6 py-28 sm:px-8 sm:py-36 lg:py-44">
-        <Spotlight className="top-0 left-1/2 -translate-x-1/2" fill="var(--secondary)" />
-        <Container className="relative z-10 flex flex-col items-center text-center">
-          <AnimatedSection className="flex flex-col items-center">
-            <h2 className="text-display max-w-[15ch] text-white">
-              Your body deserves <span className="text-primary-soft">to be understood</span>
-            </h2>
-            <p className="text-lead mx-auto mt-7 max-w-[40ch] text-white/65">
-              Start with her own logs. Share only when it feels right.
-            </p>
-            <div className="mt-12">
-              <StoreButtons tone="dark" />
-            </div>
-          </AnimatedSection>
-        </Container>
-      </section>
+      {/* The dark closing band ("Your body deserves to be understood...")
+          used to live here as this page's own bookend. It is now rendered
+          once in the root layout, directly above the footer, so it appears
+          on every page instead of only this one. */}
     </div>
   );
 }
@@ -831,7 +753,7 @@ function PricingBody({ plan }: { plan: (typeof plans)[number] }) {
           {plan.unit && <span className="text-[13px] text-muted-foreground">{plan.unit}</span>}
         </div>
 
-        <ul className="mt-8 space-y-3 border-t border-border pt-7 text-[13px] text-muted-foreground">
+        <ul className="mt-8 space-y-3 pt-7 text-[13px] text-muted-foreground">
           {plan.features.map((f) => (
             <li key={f} className="flex items-start gap-2.5">
               <Check className="mt-px size-4 shrink-0 text-primary" aria-hidden="true" />

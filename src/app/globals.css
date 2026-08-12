@@ -216,6 +216,18 @@
     scroll-padding-top: calc(var(--nav-clearance) + 16px);
   }
 
+  /* Route changes (next-view-transitions, wired in layout.tsx) get one calm
+     crossfade of the whole page instead of a hard cut, on the browser's own
+     View Transitions engine: it snapshots old and new DOM and blends them
+     directly, so there is no React remount/hydration race to cause the
+     flicker a JS-driven fade (framer-motion keyed on pathname) had here
+     before. Same duration/curve the rest of the site's motion already uses. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--duration-slow);
+    animation-timing-function: var(--ease-out-soft);
+  }
+
   body {
     color: var(--foreground);
     font-family: var(--font-body), var(--font-lato), 'Lato', sans-serif;
@@ -835,6 +847,15 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* ::before/::after above does not reach the browser's own
+     ::view-transition-* pseudo-element tree, so the route crossfade needs
+     its own opt-out here. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms !important;
   }
 
   /* Never leave content hidden mid-reveal when the transition is stripped. */

@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 /**
  * The jump-link row under a merged page's hero.
  *
@@ -7,9 +9,21 @@
  * client-side scrollspy: the content below is what carries the page, this is
  * just a table of contents for it.
  */
-export function SectionNav({ items }: { items: { href: string; label: string }[] }) {
+export function SectionNav({
+  items,
+  align = "center",
+}: {
+  items: { href: string; label: string }[];
+  align?: "center" | "left";
+}) {
   return (
-    <nav aria-label="Sections on this page" className="mt-10 flex flex-wrap justify-center gap-2">
+    <nav
+      aria-label="Sections on this page"
+      className={cn(
+        "mt-10 flex flex-wrap gap-2",
+        align === "left" ? "justify-start" : "justify-center"
+      )}
+    >
       {items.map((item) => (
         <a
           key={item.href}
