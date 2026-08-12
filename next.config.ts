@@ -29,7 +29,11 @@ const nextConfig: NextConfig = {
       { source: "/team", destination: "/about#people", permanent: true },
       { source: "/contributors", destination: "/about#people", permanent: true },
       { source: "/contribute", destination: "/resources#contribute", permanent: true },
-      { source: "/brand", destination: "/resources#brand", permanent: true },
+      // /resources no longer has a #brand anchor: the internal brand
+      // documentation that lived there moved out (most of it is already
+      // covered as live specimens on /design-system), leaving the public
+      // media kit as the closest equivalent of what /brand offered.
+      { source: "/brand", destination: "/resources#media-kit", permanent: true },
       { source: "/press", destination: "/resources#press", permanent: true },
     ];
   },

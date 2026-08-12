@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
-import { Download, Handshake, Mail, Megaphone } from "lucide-react";
+import {
+  Download,
+  FileText,
+  Handshake,
+  ImageIcon,
+  Mail,
+  Megaphone,
+  Palette,
+  Type,
+} from "lucide-react";
 
 import { Container, GradientText, PageHero, Section, SectionHeading } from "@/components/ui/section";
 import { SectionNav } from "@/components/ui/section-nav";
-import { HeroPillLinks, HeroTagRow } from "@/components/ui/page-hero-variants";
 import { Spotlight } from "@/components/ui/spotlight";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { Timeline } from "@/components/ui/timeline";
@@ -11,7 +19,7 @@ import { Timeline } from "@/components/ui/timeline";
 export const metadata: Metadata = {
   title: "Resources, Sakhi",
   description:
-    "How to help, the Sakhi brand system, and where Sakhi has been covered. Ways to contribute, brand guidelines for press, and press coverage.",
+    "Ways to get involved with Sakhi, the media kit for press and partners, and where Sakhi has been covered.",
 };
 
 /*
@@ -23,12 +31,22 @@ export const metadata: Metadata = {
  * to contact@sakhiapp.in and we will send brand assets, a press kit, or get
  * back to you about partnering. Keeping three near-identical closing bands on
  * one page would read as a mistake, so this keeps that ask once, at the end,
- * covering all three reasons someone might be writing in. Nothing else was
- * shortened, that closing band is the only place three became one.
+ * covering all three reasons someone might be writing in.
+ *
+ * What this page is NOT is the design system. It used to carry the full
+ * internal brand documentation — an eight-card colour grid with usage prose,
+ * the type scale table, voice-and-tone traits with do/don't columns, and the
+ * tagline library. That is reference material for people building the product,
+ * and most of it (brand colours, type scale, surface ladder, motion, spacing)
+ * is already documented as live specimens on /design-system. A visitor here is
+ * a journalist, a partner or someone who wants to help; they need assets and
+ * the rules for using them, not the system that produced them. The brand
+ * documentation is preserved in git history if any of it is ever wanted back.
  *
  * Old URLs redirect here with an anchor (next.config.ts), including the three
  * in-page ids the Contribute cards used to be (#download, #ambassador,
- * #partner), which still resolve to the same cards below.
+ * #partner), which still resolve to the same cards below. /brand now lands on
+ * #media-kit, the closest public equivalent of what that page offered.
  */
 
 const ways = [
@@ -69,92 +87,56 @@ const ways = [
  * label, so every value here has to stay a literal colour — a `var(--token)`
  * would render the page showing the string "var(--foreground)" where a hex
  * code belongs. Do not fold these into the semantic tokens.
+ *
+ * Trimmed to the four colours someone reproducing the brand actually needs.
+ * The full palette with per-token usage notes lives on /design-system.
  */
-const colors = [
-  { name: "Primary Pink", hex: "#F61887", rgb: "246 · 24 · 135", bg: "#F61887", text: "#fff", usage: "CTA buttons, active states, key icons. The color of action and care." },
-  { name: "Deep Pink", hex: "#D4006E", rgb: "212 · 0 · 110", bg: "#D4006E", text: "#fff", usage: "Hover states, pressed buttons, and any pink carrying white text." },
-  { name: "Deep Burgundy", hex: "#6D1743", rgb: "109 · 23 · 67", bg: "#6D1743", text: "#fff", usage: "Rich dark accents, bold headings, brand identity moments." },
-  { name: "Background Blush", hex: "#F8F2F4", rgb: "248 · 242 · 244", bg: "#F8F2F4", text: "#1D1D1F", usage: "Primary background. Warm near-white that gives Sakhi its warmth." },
-  { name: "Soft Blush", hex: "#F8E5EC", rgb: "248 · 229 · 236", bg: "#F8E5EC", text: "#1D1D1F", usage: "Card surfaces, modal backgrounds, secondary highlights." },
-  { name: "Text Black", hex: "#1D1D1F", rgb: "29 · 29 · 31", bg: "#1D1D1F", text: "#fff", usage: "All headings, primary body text." },
-  { name: "Body Gray", hex: "#68686D", rgb: "104 · 104 · 109", bg: "#68686D", text: "#fff", usage: "Subtext, labels, secondary information, captions." },
-  { name: "Light Gray", hex: "#EAD8E0", rgb: "234 · 216 · 224", bg: "#EAD8E0", text: "#1D1D1F", usage: "Inactive UI states, dividers, unselected backgrounds." },
-];
-
-const typeScale = [
-  { role: "Display / Screen Title", weight: "Semibold or Bold", size: "28-34pt", usage: "Main heading on each screen. Make it large and direct." },
-  { role: "Section Heading", weight: "Semibold", size: "20-22pt", usage: "Section labels, modal titles." },
-  { role: "Body", weight: "Regular", size: "15-17pt", usage: "All body copy and subtitles." },
-  { role: "Label", weight: "Medium", size: "13-15pt", usage: "Button text, navigation labels, captions." },
-  { role: "Caption", weight: "Regular", size: "11-13pt", usage: "Fine print, timestamps, helper text." },
-];
-
-const voiceTraits = [
-  { trait: "Warm", desc: "Speaks like a person, not a product.", example: "\"That sounds really rough. Your body has been dealing with a lot this week.\"" },
-  { trait: "Honest", desc: "Does not overclaim. Says clearly when something needs a doctor.", example: "\"You have logged cramps for 5 days in a row. That is worth mentioning to your doctor.\"" },
-  { trait: "Calm", desc: "No exclamation marks when things are okay. No alarm when uncertain.", example: "\"Late periods can have many causes. Worth keeping an eye on.\"" },
-  { trait: "Direct", desc: "One clear sentence is always better than three vague ones.", example: "\"Your report is ready. Hand it to your doctor before the appointment.\"" },
-  { trait: "Intimate", desc: "Responds from what you actually logged, not a generic script.", example: "\"You usually log lower energy in your luteal phase, that fits what you are feeling now.\"" },
-];
-
-const taglines = [
-  { line: "She knows your body.", context: "Primary headline, hero, App Store" },
-  { line: "Because she has been paying attention.", context: "Italic sub-headline paired with the above" },
-  { line: "The conversation that was never had.", context: "For the relationship / Be Her Sakhi layer" },
-  { line: "Some questions are too personal to Google.", context: "For Sakhi AI marketing" },
-  { line: "Period is not a taboo. Not here.", context: "Brand manifesto, pink sections" },
-  { line: "A world where no Indian woman manages her health alone.", context: "Vision statement" },
-];
-
-const dos = [
-  "\"Tell me your cycle length\"",
-  "\"Our Secret Code\"",
-  "\"How are you feeling today?\"",
-  "\"She invited you in. That is not a small thing.\"",
-  "\"You have been logging cramps for 4 days. Worth mentioning to your doctor.\"",
-  "Write it the way you would say it to a friend. Then make it shorter.",
-];
-
-const donts = [
-  "\"We are committed to empowering women through holistic health solutions.\"",
-  "\"Our AI-powered insights provide clinically validated predictions.\"",
-  "\"Congratulations! You have completed your health profile!\"",
-  "\"Enter cycle duration\", say \"Tell me your cycle length\"",
-  "Lead with the technology. Lead with the feeling instead.",
-  "\"Wellness\", \"Empowering\", \"Holistic\", \"AI-powered\" as a lead.",
-];
-
-const colorRules = [
-  "Never use purple. That is Flo's color.",
-  "Never use dark backgrounds as default. That is Clue.",
-  "Red is for errors only, never decorative.",
-  "No gradients as the primary visual device.",
-  "Primary Pink never on large background blocks.",
-  "All text on Blush must be Text Black or Body Gray.",
-];
-
-const typeRules = [
-  "One dominant heading per screen. Make it large and direct.",
-  "Never more than two weights on a single screen.",
-  "No italic except for Hindi/foreign terms or pull quotes.",
-  "Line height: 1.4x for body, 1.1x for headings.",
-  "Never use thin weights for headings, they undercut the brand.",
-  "Letter spacing: none for headings, 0.02em for small caps only.",
-];
-
-const logoUsage = [
-  "Clear space: minimum equal to the height of the 'S' on all four sides.",
-  "Approved colors: Primary Pink on Blush, White on dark, Black on white.",
-  "Never stretch, rotate, recolor, or add effects.",
-  "Never place on a busy background or photo without a clear container.",
-  "SVG is the master format. Export PNG or PDF from SVG.",
-  "Never add drop shadows, glows, or outlines to the logo.",
+const kitColors = [
+  { name: "Primary Pink", hex: "#F61887", bg: "#F61887", onDark: true },
+  { name: "Deep Pink", hex: "#D4006E", bg: "#D4006E", onDark: true },
+  { name: "Background Blush", hex: "#F8F2F4", bg: "#F8F2F4", onDark: false },
+  { name: "Text Black", hex: "#1D1D1F", bg: "#1D1D1F", onDark: true },
 ];
 
 const logoSwatches = [
   { bg: "var(--background-blush)", label: "On Blush, preferred", textColor: "var(--primary)" },
   { bg: "#FFFFFF", label: "On White, acceptable", textColor: "var(--primary)" },
   { bg: "var(--primary)", label: "On Pink, reversed white", textColor: "#FFFFFF" },
+];
+
+/* What we can actually send. Deliberately described rather than linked: there
+   is no asset bundle hosted on this site, so a download button here would be
+   a dead end. The contact band at the foot of the page is the real route. */
+const kitContents = [
+  {
+    icon: ImageIcon,
+    title: "Logo files",
+    body: "The sakhi. logotype as SVG, plus PNG exports at common sizes, in all three approved colourways.",
+  },
+  {
+    icon: Palette,
+    title: "Brand colours",
+    body: "Hex, RGB and usage notes for the full palette, so Sakhi reproduces correctly in print and on screen.",
+  },
+  {
+    icon: FileText,
+    title: "Founder bio & fact sheet",
+    body: "Short and long bios, the founding story, and the numbers behind Sakhi with their sources.",
+  },
+  {
+    icon: Type,
+    title: "Product screenshots",
+    body: "High-resolution captures of the app, including the screens most often used in coverage.",
+  },
+];
+
+const logoUsage = [
+  "Clear space: minimum equal to the height of the 'S' on all four sides.",
+  "Approved colours: Primary Pink on Blush, White on dark, Black on white.",
+  "Never stretch, rotate, recolour, or add effects.",
+  "Never place on a busy background or photo without a clear container.",
+  "SVG is the master format. Export PNG or PDF from SVG.",
+  "Never add drop shadows, glows, or outlines to the logo.",
 ];
 
 const pressItems = [
@@ -180,15 +162,32 @@ const pressItems = [
   },
 ];
 
-function RuleList({ items }: { items: string[] }) {
+/**
+ * The opener for each of the page's three chapters. The numbered token is
+ * what carries the structure — it tells you which of three subjects you have
+ * reached without needing a divider or a colour change to do that job.
+ */
+function ZoneHeading({
+  num,
+  eyebrow,
+  title,
+  lead,
+}: {
+  num: string;
+  eyebrow: string;
+  title: React.ReactNode;
+  lead: string;
+}) {
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-      {items.map((r) => (
-        <div key={r} className="flex items-start gap-2.5">
-          <div className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
-          <span className="text-[13px] leading-relaxed text-muted-foreground">{r}</span>
-        </div>
-      ))}
+    <div className="mb-16 max-w-[46rem]">
+      <div className="flex items-center gap-3">
+        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-gradient-to-br from-primary to-secondary text-[11px] font-bold text-white">
+          {num}
+        </span>
+        <span className="eyebrow">{eyebrow}</span>
+      </div>
+      <h2 className="text-h2 mt-5 text-foreground">{title}</h2>
+      <p className="text-lead mt-4 text-muted-foreground">{lead}</p>
     </div>
   );
 }
@@ -197,19 +196,18 @@ export default function ResourcesPage() {
   return (
     <div>
       <PageHero
-        eyebrow="Join the mission"
+        eyebrow="Resources"
         title={
           <>
-            Join the <GradientText>Sakhi mission</GradientText>
+            Everything you need to <GradientText>work with Sakhi</GradientText>
           </>
         }
-        lead="Three ways to be part of something that genuinely matters, for women across India."
+        lead="Ways to get involved, the media kit for press and partners, and where Sakhi has been covered."
       >
-        <HeroPillLinks links={ways} />
         <SectionNav
           items={[
             { href: "#contribute", label: "Get Involved" },
-            { href: "#brand", label: "Brand" },
+            { href: "#media-kit", label: "Media Kit" },
             { href: "#press", label: "Press" },
           ]}
         />
@@ -218,18 +216,26 @@ export default function ResourcesPage() {
       {/* ============================================================ CONTRIBUTE */}
       <Section id="contribute">
         <Container>
-          <SectionHeading title="How you can help" />
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <ZoneHeading
+            num="01"
+            eyebrow="Get involved"
+            title="How you can help"
+            lead="Three ways to be part of something that genuinely matters, for women across India."
+          />
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
             {ways.map((w) => (
               <div
                 key={w.title}
                 id={w.id}
-                className="flex scroll-mt-[calc(var(--nav-clearance)+1rem)] flex-col rounded-2xl border border-border bg-card p-8 transition-[transform,border-color,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-1 hover:border-transparent hover:shadow-card-hover"
+                className="group flex scroll-mt-[calc(var(--nav-clearance)+1rem)] flex-col rounded-2xl border border-border bg-card p-8 transition-[transform,border-color,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-1 hover:border-transparent hover:shadow-card-hover"
               >
-                <span className="bg-gradient-to-br from-primary to-secondary bg-clip-text text-[13px] font-bold text-transparent">
+                <span className="inline-flex size-10 w-fit items-center justify-center rounded-xl bg-accent-faint text-secondary transition-colors duration-300 group-hover:bg-secondary group-hover:text-white">
+                  <w.icon className="size-5" aria-hidden="true" />
+                </span>
+                <span className="mt-5 bg-gradient-to-br from-primary to-secondary bg-clip-text text-[12px] font-bold text-transparent">
                   {w.num}
                 </span>
-                <h3 className="text-h4 mt-4 text-foreground">{w.title}</h3>
+                <h3 className="text-h4 mt-1.5 text-foreground">{w.title}</h3>
                 <p className="mt-2.5 flex-1 text-[14px] leading-relaxed text-muted-foreground">{w.body}</p>
                 <a
                   href={w.href}
@@ -245,20 +251,29 @@ export default function ResourcesPage() {
         </Container>
       </Section>
 
-      {/* ------------------------------------------------------------- for campuses */}
+      {/* ---------------------------------------------------------- partnerships
+          Universities and companies were previously a full-height section each,
+          holding one centred card apiece. They are the same offer to two
+          audiences, so they sit side by side and read as a choice. */}
       <Section tone="blush">
         <Container>
-          <div className="mx-auto max-w-[42rem]">
+          <SectionHeading
+            eyebrow="Partnerships"
+            title="Bring Sakhi to your people"
+            lead="Whether that is a campus of students or a floor of employees, the programme is the same: real health infrastructure, not a wellness newsletter."
+            align="left"
+          />
+          <div className="mt-14 grid grid-cols-1 items-stretch gap-6 lg:grid-cols-2">
             <HoverBorderGradient
               as="div"
               duration={2200}
-              containerClassName="rounded-2xl p-[1.5px] w-full"
-              className="flex w-full flex-col items-stretch rounded-2xl bg-card px-9 py-10 text-left sm:px-12 sm:py-12"
+              containerClassName="rounded-2xl p-[1.5px] w-full h-full"
+              className="flex h-full w-full flex-col items-stretch rounded-2xl bg-card px-9 py-10 text-left"
             >
               <span className="eyebrow">For universities</span>
-              <h2 className="text-h3 mt-4 text-foreground">Sakhi for your campus</h2>
+              <h3 className="text-h3 mt-4 text-foreground">Sakhi for your campus</h3>
               <p className="mt-3 text-[15px] font-medium text-secondary">₹50,000 – ₹1,00,000 per year</p>
-              <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
+              <p className="mt-4 flex-1 text-[15px] leading-relaxed text-muted-foreground">
                 A complete women&rsquo;s health program for your institution. Cycle tracking, AI-powered
                 insights, Doctor Reports, and care infrastructure built for college life. Over 50,000
                 women across India study at campuses with no structured menstrual health support. Sakhi
@@ -271,300 +286,153 @@ export default function ResourcesPage() {
                 Talk to us →
               </a>
             </HoverBorderGradient>
+
+            <div className="flex flex-col rounded-2xl border border-border bg-card px-9 py-10">
+              <span className="eyebrow">For companies</span>
+              <h3 className="text-h3 mt-4 text-foreground">Healthy employees build better companies</h3>
+              <p className="mt-4 flex-1 text-[15px] leading-relaxed text-muted-foreground">
+                Bring Sakhi to your female employees. Real health support, not generic wellness noise.
+                Women who understand their health take fewer unplanned sick days, communicate better
+                about their needs, and feel more supported at work. Sakhi is wellness that actually
+                works.
+              </p>
+              <a
+                href="#contact"
+                className="mt-7 inline-flex w-fit items-center gap-1.5 text-[14.5px] font-semibold text-secondary no-underline underline-offset-[3px] hover:underline"
+              >
+                Corporate enquiry →
+              </a>
+            </div>
           </div>
         </Container>
       </Section>
 
-      {/* -------------------------------------------------------------- for companies */}
-      <Section>
+      {/* ============================================================ MEDIA KIT */}
+      <Section id="media-kit">
         <Container>
-          <div className="mx-auto max-w-[42rem] rounded-2xl border border-border bg-card p-9 sm:p-12">
-            <span className="eyebrow">For companies</span>
-            <h2 className="text-h3 mt-4 text-foreground">Healthy employees build better companies</h2>
-            <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-              Bring Sakhi to your female employees. Real health support, not generic wellness noise.
-              Women who understand their health take fewer unplanned sick days, communicate better
-              about their needs, and feel more supported at work. Sakhi is wellness that actually
-              works.
-            </p>
-            <a
-              href="#contact"
-              className="mt-6 inline-flex items-center gap-1.5 text-[14.5px] font-semibold text-secondary no-underline underline-offset-[3px] hover:underline"
-            >
-              Corporate enquiry →
-            </a>
-          </div>
-        </Container>
-      </Section>
-
-      {/* =============================================================== BRAND */}
-      <Section id="brand" tone="blush">
-        <Container>
-          <div className="mx-auto max-w-[46rem] text-center">
-            <span className="eyebrow">Brand system</span>
-            <h2 className="text-h2 mt-4 text-foreground">
-              Built on clear design. <GradientText>Guided by honest voice.</GradientText>
-            </h2>
-            <p className="text-lead mx-auto mt-5 max-w-[38rem] text-muted-foreground">
-              Every color, every word, every decision in Sakhi&rsquo;s design comes from one place,
-              making a woman feel understood, not processed.
-            </p>
-          </div>
-          <div className="mt-8 flex justify-center">
-            <HeroTagRow tags={["Warm", "Honest", "Calm", "Direct", "Intimate"]} />
-          </div>
-        </Container>
-      </Section>
-
-      {/* --------------------------------------------------------- color palette */}
-      <Section tone="blush" divided={false}>
-        <Container>
-          <SectionHeading
-            eyebrow="Color palette"
-            title="The palette of care"
-            lead="Never purple, that's Flo. Never dark backgrounds by default, that's Clue. Sakhi owns warm, pink, and human."
-            align="left"
+          <ZoneHeading
+            num="02"
+            eyebrow="Media kit"
+            title="Everything you need to write about Sakhi"
+            lead="Logo files, brand colours, screenshots and the founding story, ready to send. Write to us and it is with you the same day."
           />
-          <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {colors.map((c) => (
-              <div key={c.hex} className="overflow-hidden rounded-2xl border border-border transition-transform duration-300 ease-(--ease-out-soft) hover:-translate-y-1">
-                <div className="h-16" style={{ background: c.bg }} />
-                <div className="bg-card p-4">
-                  <div className="text-[13px] font-medium text-foreground">{c.name}</div>
-                  <div className="mt-0.5 font-mono text-[12px] text-secondary">{c.hex}</div>
-                  <div className="mt-1.5 text-[10px] text-muted-foreground">RGB {c.rgb}</div>
-                  <div className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{c.usage}</div>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {kitContents.map((item) => (
+              <div
+                key={item.title}
+                className="group flex gap-4 rounded-2xl border border-border bg-card p-7 transition-[transform,border-color,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-1 hover:border-transparent hover:shadow-card-hover"
+              >
+                <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-faint text-secondary transition-colors duration-300 group-hover:bg-secondary group-hover:text-white">
+                  <item.icon className="size-5" aria-hidden="true" />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="text-h4 text-foreground">{item.title}</h3>
+                  <p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">{item.body}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 rounded-2xl border border-border bg-card p-7">
-            <div className="mb-4 text-[13px] font-medium text-foreground">Color rules, never break these</div>
-            <RuleList items={colorRules} />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ------------------------------------------------------------ typography */}
-      <Section>
-        <Container>
-          <SectionHeading
-            eyebrow="Typography"
-            title="General Sans"
-            align="left"
-            lead={
-              <>
-                Clean, geometric, warm. Not clinical. Not cute. It pairs confidence with enough
-                roundness to feel approachable. Free for commercial use via{" "}
-                <a
-                  href="https://www.fontshare.com/fonts/general-sans"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-secondary underline underline-offset-2"
-                >
-                  fontshare.com
-                </a>
-                .
-              </>
-            }
-          />
-
-          <div className="mt-14 rounded-2xl border border-border bg-card p-8 sm:p-12">
-            <div className="mb-8 text-[13px] font-semibold text-muted-foreground">Type specimen</div>
-            <div className="space-y-6 divide-y divide-border [&>div]:pt-6 [&>div]:first:pt-0">
-              <div>
-                <p className="text-[32px] leading-tight font-semibold text-foreground sm:text-[42px]">
-                  Tell me your cycle length.
-                </p>
-                <p className="mt-2 text-[13px] text-muted-foreground">Display / 42pt Semibold</p>
-              </div>
-              <div>
-                <p className="text-[20px] leading-snug font-semibold text-foreground sm:text-[22px]">
-                  You have been logging cramps for 5 days.
-                </p>
-                <p className="mt-2 text-[13px] text-muted-foreground">Section Heading / 22pt Semibold</p>
-              </div>
-              <div>
-                <p className="text-[15px] leading-relaxed text-muted-foreground sm:text-[16px]">
-                  That sounds really rough. Your body has been dealing with a lot this week. Looking at
-                  what you have logged, you are on day 26, which is often the hardest part of the cycle
-                  for mood.
-                </p>
-                <p className="mt-2 text-[13px] text-muted-foreground">Body / 16pt Regular</p>
-              </div>
-              <div>
-                <p className="text-[13px] font-medium tracking-[0.02em] text-secondary">
-                  OVULATION PHASE · DAY 14
-                </p>
-                <p className="mt-2 text-[13px] text-muted-foreground">Label / 13pt Medium · loose tracking</p>
-              </div>
-            </div>
-          </div>
-
-          {/* A real table: the four columns line up across rows and that alignment
-              is the information. Scrolls inside its own container so the page
-              itself never scrolls sideways. */}
-          <div className="mt-6 overflow-x-auto">
-            <div className="flex min-w-[620px] flex-col divide-y divide-border rounded-2xl border border-border bg-card">
-              {typeScale.map((t) => (
-                <div
-                  key={t.role}
-                  className="grid grid-cols-[minmax(150px,220px)_110px_80px_minmax(200px,1fr)] items-center gap-0 px-5 py-4"
-                >
-                  <div className="text-[13px] font-medium text-foreground">{t.role}</div>
-                  <div className="text-[12px] text-muted-foreground">{t.weight}</div>
-                  <div className="font-mono text-[12px] text-secondary">{t.size}</div>
-                  <div className="text-[12px] text-muted-foreground">{t.usage}</div>
+          {/* ---- the logo, and the rules that come with it ---- */}
+          <div className="mt-20">
+            <SectionHeading
+              eyebrow="The logotype"
+              title="sakhi. in Primary Pink"
+              lead="The logotype is the brand. Clear space, no effects, approved colours only."
+              align="left"
+            />
+            <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
+              {logoSwatches.map((v) => (
+                <div key={v.label}>
+                  <div
+                    className="flex items-center justify-center rounded-2xl py-11"
+                    style={{
+                      background: v.bg,
+                      border: v.bg === "#FFFFFF" ? "1px solid var(--border)" : "none",
+                    }}
+                  >
+                    <div className="text-[28px] font-bold" style={{ color: v.textColor }}>
+                      sakhi.
+                    </div>
+                  </div>
+                  <div className="eyebrow mt-2.5 text-center">{v.label}</div>
                 </div>
               ))}
             </div>
-          </div>
 
-          <div className="mt-6 rounded-2xl border border-border bg-card p-7">
-            <div className="mb-4 text-[13px] font-medium text-foreground">Typography rules</div>
-            <RuleList items={typeRules} />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ----------------------------------------------------------- voice & tone */}
-      <Section tone="blush">
-        <Container>
-          <SectionHeading
-            eyebrow="Voice & tone"
-            title="One voice. Five traits."
-            lead="Sakhi is the friend who is always honest with you. Warm but not soft. Direct but not cold. She never judges. She remembers everything you told her and brings it up at the right moment."
-            align="left"
-          />
-
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {voiceTraits.map((t) => (
-              <div key={t.trait} className="rounded-2xl border border-border bg-card p-6 transition-[transform,border-color,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-1 hover:border-transparent hover:shadow-card-hover">
-                <div className="bg-gradient-to-br from-primary to-secondary bg-clip-text text-[15px] font-bold text-transparent">
-                  {t.trait}
-                </div>
-                <p className="mt-2.5 text-[13px] leading-relaxed text-muted-foreground">{t.desc}</p>
-                <p className="mt-3 text-[12px] leading-relaxed text-muted-foreground italic">{t.example}</p>
+            <div className="mt-8 rounded-2xl border border-border bg-background-blush p-7">
+              <div className="mb-4 text-[13px] font-medium text-foreground">
+                Logo usage rules
               </div>
-            ))}
-          </div>
-
-          {/* Do / Don't */}
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl border border-accent bg-accent-faint p-7">
-              <div className="mb-5 flex items-center gap-2">
-                <div className="size-2 rounded-full bg-primary" />
-                <span className="text-[14px] font-semibold text-foreground">Sakhi sounds like this</span>
-              </div>
-              <div className="flex flex-col gap-3">
-                {dos.map((d) => (
-                  <div key={d} className="border-l-2 border-secondary/25 pl-3.5 text-[13px] leading-relaxed text-foreground">
-                    {d}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-2xl border border-border bg-muted p-7">
-              <div className="mb-5 flex items-center gap-2">
-                <div className="size-2 rounded-full bg-muted-foreground" />
-                <span className="text-[14px] font-semibold text-muted-foreground">Sakhi never sounds like this</span>
-              </div>
-              <div className="flex flex-col gap-3">
-                {donts.map((d, i) => (
-                  <div
-                    key={d}
-                    className={`border-l-2 border-border pl-3.5 text-[13px] leading-relaxed text-muted-foreground ${i < 4 ? "line-through" : ""}`}
-                  >
-                    {d}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {logoUsage.map((r) => (
+                  <div key={r} className="flex items-start gap-2.5">
+                    <div className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
+                    <span className="text-[13px] leading-relaxed text-muted-foreground">{r}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="mt-6 rounded-2xl bg-ink px-8 py-7">
-            <p className="text-[15px] font-semibold tracking-[0.02em] text-primary-soft">
-              The single test for every piece of copy:
-            </p>
-            <p className="mt-2.5 text-[20px] leading-snug text-white sm:text-[22px]">
-              Would a real friend say this? If no, rewrite it.
-            </p>
-          </div>
-        </Container>
-      </Section>
-
-      {/* -------------------------------------------------------------- taglines */}
-      <Section>
-        <Container className="max-w-[52rem]">
-          <SectionHeading
-            eyebrow="Key lines"
-            title="The words that define Sakhi"
-            lead="These lines are not taglines written by a copywriter. They came from understanding the problem deeply and saying it honestly."
-            align="left"
-          />
-          <div className="mt-14 flex flex-col divide-y divide-border rounded-2xl border border-border bg-card">
-            {taglines.map((t) => (
-              <div key={t.line} className="grid grid-cols-1 items-center gap-2 px-6 py-5 sm:grid-cols-[1fr_240px] sm:gap-6">
-                <div className="text-[17px] leading-snug text-foreground italic">&ldquo;{t.line}&rdquo;</div>
-                <div className="text-[12px] leading-relaxed text-muted-foreground">{t.context}</div>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* -------------------------------------------------------------- logo rules */}
-      <Section tone="blush">
-        <Container>
-          <SectionHeading
-            eyebrow="Logo"
-            title="sakhi. in Primary Pink"
-            lead="The logotype is the brand. Clear space, no effects, approved colors only."
-            align="left"
-          />
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            {logoSwatches.map((v) => (
-              <div key={v.label}>
+          {/* ---- colours, at the depth press actually needs ---- */}
+          <div className="mt-20">
+            <SectionHeading
+              eyebrow="Brand colours"
+              title="Four colours to get right"
+              lead="Sakhi is warm, pink and human. Never purple, never dark by default. These are the values to reproduce from."
+              align="left"
+            />
+            <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+              {kitColors.map((c) => (
                 <div
-                  className="flex items-center justify-center rounded-2xl py-11"
-                  style={{ background: v.bg, border: v.bg === "#FFFFFF" ? "1px solid var(--border)" : "none" }}
+                  key={c.hex}
+                  className="overflow-hidden rounded-2xl border border-border bg-card transition-[transform,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-1 hover:shadow-card-hover"
                 >
-                  <div className="text-[28px] font-bold" style={{ color: v.textColor }}>
-                    sakhi.
+                  <div
+                    className="flex h-24 items-end p-4"
+                    style={{ background: c.bg }}
+                  >
+                    <span
+                      className="font-mono text-[12px] font-medium"
+                      style={{ color: c.onDark ? "#fff" : "#1D1D1F" }}
+                    >
+                      {c.hex}
+                    </span>
+                  </div>
+                  <div className="p-4">
+                    <div className="text-[13px] font-medium text-foreground">{c.name}</div>
                   </div>
                 </div>
-                <div className="eyebrow mt-2.5 text-center">{v.label}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 rounded-2xl border border-border bg-background-blush p-7">
-            <div className="mb-4 text-[13px] font-medium text-foreground">Logo usage rules</div>
-            <RuleList items={logoUsage} />
+              ))}
+            </div>
           </div>
         </Container>
       </Section>
 
       {/* =============================================================== PRESS */}
-      <Section id="press">
+      <Section tone="blush" id="press">
         <Container className="max-w-[52rem]">
-          <SectionHeading eyebrow="Press" title="Sakhi in the world" lead="We didn't chase press. We built something worth talking about. Here's where the world has noticed." align="left" />
-          <div className="mt-14">
-            <Timeline
-              data={pressItems.map((item) => ({
-                title: item.date,
-                content: (
-                  <div>
-                    <h3 className="text-h4 text-foreground">{item.publication}</h3>
-                    <p className="mt-2 max-w-lg text-[14.5px] leading-relaxed text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
-                ),
-              }))}
-            />
-          </div>
+          <ZoneHeading
+            num="03"
+            eyebrow="Press"
+            title="Sakhi in the world"
+            lead="We didn't chase press. We built something worth talking about. Here's where the world has noticed."
+          />
+          <Timeline
+            data={pressItems.map((item) => ({
+              title: item.date,
+              content: (
+                <div>
+                  <h3 className="text-h4 text-foreground">{item.publication}</h3>
+                  <p className="mt-2 max-w-lg text-[14.5px] leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+              ),
+            }))}
+          />
         </Container>
       </Section>
 
@@ -572,10 +440,13 @@ export default function ResourcesPage() {
           Replaces three near-identical "email us and we'll send it over" bands
           (Contribute's, Brand's, Press's). Same address, same 24-hour promise,
           worded to cover all three reasons someone ends up here: partnering,
-          brand assets, or a press kit. The two anchor links above ("Talk to
-          us", "Corporate enquiry") point at this section rather than each
-          opening mail directly, so every enquiry lands in the same place. */}
-      <section id="contact" className="relative scroll-mt-[calc(var(--nav-clearance)+1rem)] overflow-hidden bg-ink px-6 py-24 text-center sm:px-8 sm:py-28">
+          brand assets, or a press kit. The anchor links above ("Talk to us",
+          "Corporate enquiry") point at this section rather than each opening
+          mail directly, so every enquiry lands in the same place. */}
+      <section
+        id="contact"
+        className="relative scroll-mt-[calc(var(--nav-clearance)+1rem)] overflow-hidden bg-ink px-6 py-24 text-center sm:px-8 sm:py-28"
+      >
         <Spotlight className="top-0 left-1/2 -translate-x-1/2" fill="var(--secondary)" />
         <Container className="relative z-10 flex flex-col items-center">
           <h2 className="text-h2 max-w-[24ch] text-white">

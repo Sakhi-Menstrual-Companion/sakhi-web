@@ -460,8 +460,12 @@ export default function AboutPage() {
       {/* ------------------------------------------------------------ timeline */}
       <Section>
         <Container className="max-w-[52rem]">
-          <span className="eyebrow">The company timeline</span>
-          <h2 className="text-h2 mt-4 text-foreground">2024 to 2026</h2>
+          <SectionHeading
+            eyebrow="The company timeline"
+            title="From a bootcamp room to the App Store"
+            lead="Every milestone that took Sakhi from a problem statement in January 2024 to a product women use today."
+            align="left"
+          />
           <div className="mt-14">
             <Timeline
               data={timelineEntries.map((entry) => ({
