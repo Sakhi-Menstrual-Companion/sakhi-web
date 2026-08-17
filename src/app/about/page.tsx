@@ -40,6 +40,11 @@ export const metadata: Metadata = {
   description:
     "The story, the vision, and the people behind Sakhi. Why it was built, where it is going, and everyone who made it real.",
   alternates: { canonical: "/about" },
+  // Unlisted for now. This is the line that actually keeps the page out of
+  // search results — the sitemap and robots.txt changes only affect whether
+  // a crawler bothers to fetch it, not whether it may index what it finds.
+  // Same treatment as /design-system. Remove all five together.
+  robots: { index: false, follow: false },
 };
 
 /*

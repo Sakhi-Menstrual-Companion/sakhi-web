@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import { AppDownloadBand } from "@/components/ui/app-download-band";
 import { DesignSystemLauncher } from "@/components/design/design-system-launcher";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/structured-data";
+import { GLASS_ROOT_ID } from "@/lib/liquid-glass";
 
 // Body: neutral, highly legible. Correct register for health copy.
 const body = Inter({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -47,8 +48,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  /* The navbar is a translucent dark pill over a white page, so the two
-     schemes want different browser chrome behind it. */
+  /* These track the page surface, not the navbar, which is why they did not
+     move when the bar went from charcoal to light glass. */
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#050406" },
@@ -100,19 +101,28 @@ export default function RootLayout({
           />
         </head>
         <body className="flex min-h-full flex-col bg-background-shell font-sans">
-          <a
-            href="#main"
-            className="sr-only rounded-lg bg-secondary px-4 py-2 text-sm font-semibold text-secondary-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-200"
-          >
-            Skip to content
-          </a>
-          <Navbar />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
-          <AppDownloadBand />
-          <Footer />
-          <DesignSystemLauncher />
+          {/* The sampling root for the navbar's liquid-glass shader. It exists
+              purely because LiquidGlass never captures its own root element,
+              only that root's children, and it requires the glass element to
+              be one of those children — so the bar and the page it refracts
+              have to be siblings inside a wrapper. It carries the flex column
+              that used to sit on <body> alone so the sticky footer still
+              works. Removing the effect means removing this div too. */}
+          <div id={GLASS_ROOT_ID} className="flex min-h-full flex-1 flex-col">
+            <a
+              href="#main"
+              className="sr-only rounded-lg bg-secondary px-4 py-2 text-sm font-semibold text-secondary-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-200"
+            >
+              Skip to content
+            </a>
+            <Navbar />
+            <main id="main" className="flex-1">
+              {children}
+            </main>
+            <AppDownloadBand />
+            <Footer />
+            <DesignSystemLauncher />
+          </div>
         </body>
       </html>
     </ViewTransitions>

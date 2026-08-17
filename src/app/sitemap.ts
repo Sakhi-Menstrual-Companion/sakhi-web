@@ -7,6 +7,10 @@ const siteUrl = "https://sakhiapp.in";
  * left out here, the same way it's marked `robots: { index: false }` on its
  * own page, it's an internal build tool, not a page for search results.
  *
+ * /about is out for the same reason but not permanently: it is unlisted for
+ * now, noindex on the page and disallowed in robots.ts. It goes back in this
+ * list when it goes back in the nav.
+ *
  * lastModified is set to build time rather than a per-page git timestamp:
  * the content on every route changes together often enough (shared
  * components, shared copy passes) that a single build-time stamp is more
@@ -19,7 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", priority: 1, changeFrequency: "weekly" },
     { path: "/product", priority: 0.9, changeFrequency: "weekly" },
     { path: "/health", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/about", priority: 0.8, changeFrequency: "monthly" },
     { path: "/resources", priority: 0.7, changeFrequency: "monthly" },
     { path: "/privacy", priority: 0.3, changeFrequency: "yearly" },
   ];

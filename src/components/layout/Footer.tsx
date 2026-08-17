@@ -13,12 +13,12 @@ const productLinks = [
   { label: "Press Kit", href: "/resources#press" },
 ];
 
-const companyLinks = [
-  { label: "Our Story", href: "/about#story" },
-  { label: "Vision & Roadmap", href: "/about#vision" },
-  { label: "Team", href: "/about#people" },
-  { label: "Join Us", href: "/resources#contribute" },
-];
+// The three /about anchors (Our Story, Vision & Roadmap, Team) are pulled
+// for now along with the nav link, so the page is not reachable from anywhere
+// on the site while it is meant to stay unlisted. Leaving them here would
+// have handed crawlers the exact internal links the noindex is there to
+// avoid. Restore them together with the Navbar entry.
+const companyLinks = [{ label: "Join Us", href: "/resources#contribute" }];
 
 const connectLinks = [
   { label: "contact@sakhiapp.in", href: "mailto:contact@sakhiapp.in" },
