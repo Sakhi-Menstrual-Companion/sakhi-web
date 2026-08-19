@@ -5,7 +5,6 @@ import { ViewTransitions } from "next-view-transitions";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AppDownloadBand } from "@/components/ui/app-download-band";
-import { DesignSystemLauncher } from "@/components/design/design-system-launcher";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/structured-data";
 import { GLASS_ROOT_ID } from "@/lib/liquid-glass";
 
@@ -121,7 +120,6 @@ export default function RootLayout({
             </main>
             <AppDownloadBand />
             <Footer />
-            <DesignSystemLauncher />
           </div>
         </body>
       </html>
