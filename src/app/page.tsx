@@ -44,7 +44,8 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Sakhi - Period Tracker & Women's Health App for India",
   description:
-    "Sakhi is a free period tracker and health companion built for Indian women. Track your cycle, log symptoms, get AI-powered insights, and share with one trusted person. PCOD, PMS, and 16 conditions covered. Free on the App Store.",
+    "Sakhi is a free period tracker and health companion built for Indian women. Track your cycle, log symptoms, get AI-powered insights, and share with one trusted person. PCOD, PMS, and 16 conditions covered." +
+    (appStoreLive ? " Free on the App Store." : ""),
   alternates: { canonical: "/" },
 };
 
@@ -76,7 +77,10 @@ const marqueeStats = [
   { icon: <ShieldCheck className="size-3.5 text-secondary" aria-hidden="true" />, label: "Zero ads. Ever." },
   { icon: <CloudOff className="size-3.5 text-secondary" aria-hidden="true" />, label: "100% offline-first" },
   { icon: <MapPin className="size-3.5 text-secondary" aria-hidden="true" />, label: "Built in India" },
-  { icon: <Smartphone className="size-3.5 text-secondary" aria-hidden="true" />, label: "Live on the App Store" },
+  // Only once the store flag says so. This was a fixed claim next to a "Coming soon" button.
+  ...(appStoreLive
+    ? [{ icon: <Smartphone className="size-3.5 text-secondary" aria-hidden="true" />, label: "Live on the App Store" }]
+    : []),
 ];
 
 const steps = [
@@ -168,7 +172,7 @@ const plans = [
     price: "₹0",
     unit: "always",
     featured: true,
-    ribbon: "Available now",
+    ribbon: appStoreLive ? "Available now" : "Coming soon",
     features: [
       "Cycle, symptom and mood logging",
       "Calendar and cycle predictions",

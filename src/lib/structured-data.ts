@@ -1,4 +1,4 @@
-import { appStoreUrl } from "@/lib/stores";
+import { appStoreLive, appStoreUrl } from "@/lib/stores";
 const siteUrl = "https://www.teamsakhi.com";
 
 /**
@@ -44,7 +44,9 @@ export const softwareApplicationJsonLd = {
   description:
     "A free period tracker and health companion for Indian women. Cycle tracking, symptom logging, Sakhi AI, a doctor-ready health report, and Be Her Sakhi consent-based sharing with one trusted person.",
   url: `${siteUrl}/product`,
-  downloadUrl: appStoreUrl,
+  // Only once the listing is public. This was unconditional and pointed at a store page
+  // that did not exist, which is a broken link in the markup search engines read.
+  ...(appStoreLive ? { downloadUrl: appStoreUrl } : {}),
   offers: {
     "@type": "Offer",
     price: "0",

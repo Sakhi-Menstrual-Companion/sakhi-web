@@ -20,11 +20,11 @@ const productLinks = [
 // avoid. Restore them together with the Navbar entry.
 const companyLinks = [{ label: "Join Us", href: "/resources#contribute" }];
 
+// Instagram, Twitter / X and LinkedIn were here as href="#", three links that went nowhere.
+// No verified Sakhi profile URL exists in the repo or in 01-HQ, so they are out until
+// Karan gives the real ones. Put each back with its real address.
 const connectLinks = [
   { label: "contact@teamsakhi.com", href: "mailto:contact@teamsakhi.com" },
-  { label: "Instagram", href: "#" },
-  { label: "Twitter / X", href: "#" },
-  { label: "LinkedIn", href: "#" },
 ];
 
 /* One treatment for every link in here. Deep Pink on hover, not Primary Pink:
