@@ -231,7 +231,6 @@ const founderPartnerItems = [
 const heroStats = [
   { n: "Jan 2024", l: "Where it began" },
   { n: "49", l: "User interviews" },
-  { n: "10+", l: "Cities reached" },
   { n: "150M", l: "Women we build for" },
 ];
 
@@ -651,10 +650,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
             <div>
               <span className="eyebrow">Everyone who made this</span>
-              <h2 className="text-h2 mt-4 text-foreground">From a classroom to India</h2>
+              <h2 className="text-h2 mt-4 text-foreground">From a classroom, for India</h2>
               <p className="text-lead mt-5 text-muted-foreground">
-                Sakhi began in Lucknow and reached every corner of India, because the problem it
-                solves lives everywhere. From classrooms to boardrooms, from mothers to daughters.
+                Sakhi began in Lucknow, built for a problem that lives everywhere in India, from
+                classrooms to boardrooms, from mothers to daughters. We are still early, and we are
+                building toward every one of them.
               </p>
               <div className="mt-8 flex flex-wrap gap-x-7 gap-y-4">
                 {heroStats.map((s) => (
@@ -668,7 +668,7 @@ export default function AboutPage() {
             <div>
               <IndiaMap />
               <p className="mt-6 text-center text-[13px] text-muted-foreground italic">
-                Hover the map to explore Sakhi&rsquo;s presence across India →
+                Hover the map for the story behind each stop →
               </p>
             </div>
           </div>
