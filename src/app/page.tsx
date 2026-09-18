@@ -19,6 +19,7 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { FoundingCounter } from "@/components/ui/founding-counter";
 import { Container } from "@/components/ui/section";
 import {
   Accordion,
@@ -700,6 +701,8 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+
+          <FoundingCounter />
         </Container>
       </section>
 
