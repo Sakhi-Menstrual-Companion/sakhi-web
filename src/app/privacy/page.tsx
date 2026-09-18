@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
-const lastUpdated = "August 12, 2026";
+const lastUpdated = "September 18, 2026";
 
 /*
  * Rewritten from the internal draft at 01-HQ/11-Legal/Privacy-Policy, which
@@ -19,9 +19,21 @@ const lastUpdated = "August 12, 2026";
  * email/password login. Neither is current: the app's data lives in
  * Supabase with an offline-first Room copy on-device (see SakhiCore), and
  * login is phone number + OTP (see the Single-Device Login system), not a
- * password. Firebase is still real, but only as the push-notification
- * transport (SakhiFirebaseMessagingService on Android, referenced in the
- * iOS EnvironmentManager), not as the database. Domain and contact email
+ * password. Firebase is still real, but not as the database: it is the
+ * push-notification transport (SakhiFirebaseMessagingService on Android,
+ * referenced in the iOS EnvironmentManager) and it is also Analytics and
+ * Crashlytics (AnalyticsManager, CrashlyticsManager). This file used to say
+ * Firebase was "used only to deliver push notifications", which was not true.
+ *
+ * Checked against the apps on 2026-09-18 and three more processors added that
+ * were doing real work and were not named: Anthropic, which the claude-chat
+ * edge function calls at api.anthropic.com with her message and cycle summary;
+ * Firebase Analytics and Crashlytics, which carry screen and crash data but no
+ * logged health values; and Google Maps, configured in SakhiApp.swift and used
+ * by the walk and emergency screens. Naming the AI processor matters most: a
+ * health app that sends a cycle summary to a third party has to say so.
+ *
+ * Domain and contact email
  * are corrected to sakhiapp.in / contact@sakhiapp.in to match the live site
  * rather than the draft's old sakhi.rachna.co.
  *
@@ -307,7 +319,10 @@ export default function PrivacyPage() {
               <PolicyList
                 items={[
                   "Supabase, our database provider, which stores and manages account and health data securely",
-                  "Firebase Cloud Messaging, used only to deliver push notifications to your device",
+                  "Anthropic, whose Claude model writes Sakhi AI's replies. When you send a message, that message and a short summary of your cycle go to it so the answer can be about you. Anthropic does not use it to train its models, and it is never sent unless you write to Sakhi AI",
+                  "Firebase Cloud Messaging, which delivers push notifications to your device",
+                  "Firebase Analytics and Crashlytics, which tell us which screens are opened and what crashed. These carry usage and device information, never anything you have logged about your health",
+                  "Google Maps, which draws the map and finds places when you set a destination or open an emergency request",
                 ]}
               />
               <p>
