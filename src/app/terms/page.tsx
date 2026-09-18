@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 const lastUpdated = "September 18, 2026";
 
-const CONTACT_EMAIL = "contact@sakhiapp.in";
+const CONTACT_EMAIL = "contact@teamsakhi.com";
 
 const sections = [
   { href: "#not-medical", label: "Not Medical Advice" },

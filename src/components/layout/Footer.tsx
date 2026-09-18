@@ -21,7 +21,7 @@ const productLinks = [
 const companyLinks = [{ label: "Join Us", href: "/resources#contribute" }];
 
 const connectLinks = [
-  { label: "contact@sakhiapp.in", href: "mailto:contact@sakhiapp.in" },
+  { label: "contact@teamsakhi.com", href: "mailto:contact@teamsakhi.com" },
   { label: "Instagram", href: "#" },
   { label: "Twitter / X", href: "#" },
   { label: "LinkedIn", href: "#" },

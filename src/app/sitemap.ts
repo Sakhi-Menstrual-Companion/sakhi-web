@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const siteUrl = "https://sakhiapp.in";
+const siteUrl = "https://www.teamsakhi.com";
 
 /**
  * Every real, indexable route on the site. /design-system is deliberately

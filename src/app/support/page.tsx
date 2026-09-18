@@ -16,7 +16,7 @@ export const metadata: Metadata = {
  * is deliberately plain: one address, what to put in the message, and how long
  * an answer takes.
  *
- * The address is contact@sakhiapp.in, the same one the privacy policy and the
+ * The address is contact@teamsakhi.com, the same one the privacy policy and the
  * apps now use. It used to differ from the apps, which said hello@getswipe.in
  * in 28 places, and a support page that disagrees with the app it supports is
  * worse than no support page.
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 const lastUpdated = "September 18, 2026";
 
-const CONTACT_EMAIL = "contact@sakhiapp.in";
+const CONTACT_EMAIL = "contact@teamsakhi.com";
 
 function Card({
   icon,

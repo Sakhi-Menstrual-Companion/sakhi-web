@@ -807,12 +807,12 @@ export const ctaSpecimens: SpecimenGroup = {
             href="#cta"
             className="mt-3 inline-flex items-center gap-2 text-[16px] font-semibold text-secondary no-underline hover:underline"
           >
-            <Mail className="size-4" aria-hidden="true" /> hello@sakhiapp.in
+            <Mail className="size-4" aria-hidden="true" /> contact@teamsakhi.com
           </a>
         </div>
       ),
-      code: `<a href="mailto:hello@sakhiapp.in" className="inline-flex items-center gap-2 text-[16px] font-semibold text-secondary no-underline hover:underline">
-  <Mail className="size-4" aria-hidden="true" /> hello@sakhiapp.in
+      code: `<a href="mailto:contact@teamsakhi.com" className="inline-flex items-center gap-2 text-[16px] font-semibold text-secondary no-underline hover:underline">
+  <Mail className="size-4" aria-hidden="true" /> contact@teamsakhi.com
 </a>`,
     },
     {
@@ -895,7 +895,7 @@ export const ctaSpecimens: SpecimenGroup = {
       ),
       code: `<div className="mx-auto max-w-xl text-center">
   <h2 className="text-h3 text-foreground">Is there something Sakhi <GradientText>should be doing</GradientText></h2>
-  <a href="mailto:hello@sakhiapp.in" className="mt-5 inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-[14px] font-semibold text-foreground">
+  <a href="mailto:contact@teamsakhi.com" className="mt-5 inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-[14px] font-semibold text-foreground">
     <Mail className="size-4 text-secondary" aria-hidden="true" /> Write to us
   </a>
 </div>`,
@@ -1219,14 +1219,14 @@ export const faqSpecimens: SpecimenGroup = {
             Still have a question we have not answered here?
           </p>
           <span className="inline-flex items-center gap-2 text-[14px] font-semibold text-secondary">
-            <Mail className="size-4" aria-hidden="true" /> hello@sakhiapp.in
+            <Mail className="size-4" aria-hidden="true" /> contact@teamsakhi.com
           </span>
         </div>
       ),
       code: `<div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-accent-faint px-6 py-5">
   <p className="text-[14.5px] text-foreground">Still have a question we have not answered here?</p>
-  <a href="mailto:hello@sakhiapp.in" className="inline-flex items-center gap-2 text-[14px] font-semibold text-secondary no-underline hover:underline">
-    <Mail className="size-4" aria-hidden="true" /> hello@sakhiapp.in
+  <a href="mailto:contact@teamsakhi.com" className="inline-flex items-center gap-2 text-[14px] font-semibold text-secondary no-underline hover:underline">
+    <Mail className="size-4" aria-hidden="true" /> contact@teamsakhi.com
   </a>
 </div>`,
     },

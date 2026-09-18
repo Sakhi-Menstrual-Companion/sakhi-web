@@ -52,7 +52,7 @@ const ways = [
     title: "Campus ambassador",
     body: "Bring Sakhi to your campus. We support our ambassadors with resources, recognition, and a community building something meaningful together.",
     cta: "Become an ambassador",
-    href: "mailto:contact@sakhiapp.in",
+    href: "mailto:contact@teamsakhi.com",
     external: false,
   },
   {
@@ -61,7 +61,7 @@ const ways = [
     title: "Partner with us",
     body: "For institutions, companies, and brands. Sakhi works with universities and companies to bring women's health support to campuses and workplaces.",
     cta: "Get in touch",
-    href: "mailto:contact@sakhiapp.in",
+    href: "mailto:contact@teamsakhi.com",
     external: false,
   },
 ];
@@ -191,7 +191,7 @@ export default function ResourcesPage() {
                   {p.body}
                 </p>
                 <a
-                  href="mailto:contact@sakhiapp.in"
+                  href="mailto:contact@teamsakhi.com"
                   className="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-secondary px-6 py-3 text-[14px] font-semibold text-secondary-foreground no-underline transition-colors duration-200 hover:bg-[#b8005f]"
                 >
                   {p.cta} →
@@ -245,10 +245,10 @@ export default function ResourcesPage() {
             send over. Write to us for any of it.
           </p>
           <a
-            href="mailto:contact@sakhiapp.in"
+            href="mailto:contact@teamsakhi.com"
             className="mt-9 inline-flex items-center gap-2.5 text-[24px] font-medium text-foreground no-underline transition-colors duration-200 hover:text-secondary sm:text-[28px]"
           >
-            <Mail className="size-6 text-secondary" aria-hidden="true" /> contact@sakhiapp.in
+            <Mail className="size-6 text-secondary" aria-hidden="true" /> contact@teamsakhi.com
           </a>
           <p className="mt-4 text-[13px] text-muted-foreground">We respond within 24 hours.</p>
         </Container>

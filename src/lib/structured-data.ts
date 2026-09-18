@@ -1,4 +1,4 @@
-const siteUrl = "https://sakhiapp.in";
+const siteUrl = "https://www.teamsakhi.com";
 
 /**
  * Schema.org JSON-LD, site-wide and per-page. Every field here is something
@@ -19,7 +19,7 @@ export const organizationJsonLd = {
   logo: `${siteUrl}/icon.png`,
   description:
     "Sakhi is a free period tracker and health companion app built for Indian women, covering cycle tracking, symptom logging, AI-powered insights and 16 researched health conditions.",
-  email: "contact@sakhiapp.in",
+  email: "contact@teamsakhi.com",
   areaServed: {
     "@type": "Country",
     name: "India",

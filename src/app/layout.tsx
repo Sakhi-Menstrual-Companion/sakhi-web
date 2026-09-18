@@ -19,7 +19,7 @@ const lato = Lato({
   display: "swap",
 });
 
-const siteUrl = "https://sakhiapp.in";
+const siteUrl = "https://www.teamsakhi.com";
 
 export const metadata: Metadata = {
   /* Without this, the relative opengraph-image.png / twitter-image.png routes

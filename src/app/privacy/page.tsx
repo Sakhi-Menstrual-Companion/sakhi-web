@@ -33,9 +33,12 @@ const lastUpdated = "September 18, 2026";
  * by the walk and emergency screens. Naming the AI processor matters most: a
  * health app that sends a cycle summary to a third party has to say so.
  *
- * Domain and contact email
- * are corrected to sakhiapp.in / contact@sakhiapp.in to match the live site
- * rather than the draft's old sakhi.rachna.co.
+ * Domain and contact email are www.teamsakhi.com / contact@teamsakhi.com.
+ * They were sakhiapp.in / contact@sakhiapp.in until 2026-09-18, which looked
+ * right and was not: sakhiapp.in is a parked domain with no A record and no MX
+ * record, so the site never loaded there and no email to that address could
+ * ever arrive. The live site is www.teamsakhi.com on Vercel, and teamsakhi.com
+ * is the domain with a mail server (Namecheap Private Email).
  *
  * The old draft also carried two separate, largely repeated "security"
  * sections (2.2 and 8). They are merged into one "Keeping your data safe"
@@ -154,7 +157,7 @@ export default function PrivacyPage() {
                 understand that your menstrual health data and personal information are deeply
                 private. This Privacy Policy explains how we collect, use, store, and protect your
                 information when you use the Sakhi mobile application (the &ldquo;App&rdquo;) and
-                the website at sakhiapp.in (the &ldquo;Website&rdquo;).
+                the website at www.teamsakhi.com (the &ldquo;Website&rdquo;).
               </p>
               <p>
                 Sakhi provides menstrual cycle tracking, symptom logging, an AI companion, and
@@ -421,8 +424,8 @@ export default function PrivacyPage() {
 
               <p>
                 To exercise any of these rights, contact us at{" "}
-                <a href="mailto:contact@sakhiapp.in" className="text-secondary underline underline-offset-2">
-                  contact@sakhiapp.in
+                <a href="mailto:contact@teamsakhi.com" className="text-secondary underline underline-offset-2">
+                  contact@teamsakhi.com
                 </a>
                 .
               </p>
@@ -438,8 +441,8 @@ export default function PrivacyPage() {
               <p>
                 If you are a parent or guardian and believe we may have collected information about
                 a child under 13, please contact us at{" "}
-                <a href="mailto:contact@sakhiapp.in" className="text-secondary underline underline-offset-2">
-                  contact@sakhiapp.in
+                <a href="mailto:contact@teamsakhi.com" className="text-secondary underline underline-offset-2">
+                  contact@teamsakhi.com
                 </a>
                 .
               </p>
@@ -464,13 +467,13 @@ export default function PrivacyPage() {
               </p>
               <p>
                 Email:{" "}
-                <a href="mailto:contact@sakhiapp.in" className="text-secondary underline underline-offset-2">
-                  contact@sakhiapp.in
+                <a href="mailto:contact@teamsakhi.com" className="text-secondary underline underline-offset-2">
+                  contact@teamsakhi.com
                 </a>
                 <br />
                 Website:{" "}
-                <a href="https://sakhiapp.in" className="text-secondary underline underline-offset-2">
-                  sakhiapp.in
+                <a href="https://www.teamsakhi.com" className="text-secondary underline underline-offset-2">
+                  www.teamsakhi.com
                 </a>
               </p>
               <p>We read every message and aim to respond as quickly as we can.</p>
