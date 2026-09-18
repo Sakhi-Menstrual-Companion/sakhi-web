@@ -5,7 +5,7 @@ import { Spotlight } from "@/components/ui/spotlight";
 import { GradientText } from "@/components/ui/section";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
-const appStoreUrl = "https://apps.apple.com/app/id6742219623";
+import { anyStoreLive, appStoreUrl } from "@/lib/stores";
 
 function AppleMark({ size = 16 }: { size?: number }) {
   return (
@@ -39,6 +39,9 @@ export function FinalCTA({
   secondaryHref?: string;
 }) {
   const external = ctaHref.startsWith("http");
+  // A "Download Sakhi" button that opens a store page which does not exist yet is worse than
+  // no button. Only the default store link is gated; a page that passes its own href keeps it.
+  const storeNotLiveYet = ctaHref === appStoreUrl && !anyStoreLive;
   return (
     <section className="relative overflow-hidden bg-ink px-6 py-24 sm:px-8 sm:py-32">
       <Spotlight className="top-0 left-1/2 -translate-x-1/2" fill="var(--secondary)" />
@@ -48,13 +51,19 @@ export function FinalCTA({
         </h2>
         <p className="text-lead mx-auto mt-5 max-w-[40ch] text-white/65">{lead}</p>
         <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
-          <HoverBorderGradient
-            as="a"
-            href={ctaHref}
-            {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          >
-            <AppleMark /> {ctaLabel}
-          </HoverBorderGradient>
+          {storeNotLiveYet ? (
+            <HoverBorderGradient as="span" aria-disabled="true">
+              <AppleMark /> Coming soon to the App Store
+            </HoverBorderGradient>
+          ) : (
+            <HoverBorderGradient
+              as="a"
+              href={ctaHref}
+              {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            >
+              <AppleMark /> {ctaLabel}
+            </HoverBorderGradient>
+          )}
           {secondaryLabel && secondaryHref && (
             <Link
               href={secondaryHref}

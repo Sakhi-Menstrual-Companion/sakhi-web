@@ -4,14 +4,10 @@ import { Spotlight } from "@/components/ui/spotlight";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 
-export const appStoreUrl = "https://apps.apple.com/app/id6742219623";
+import { appStoreLive, appStoreUrl, playStoreLive, playStoreUrl } from "@/lib/stores";
 
-// PLACEHOLDER, swap in the real Play Store link.
-// Derived from the applicationId in 02-Android/app/build.gradle.kts
-// ("com.galgotiasuniversity.rachnasakhi") so it is a sane default, but it has
-// not been checked against the live listing.
-export const playStoreUrl =
-  "https://play.google.com/store/apps/details?id=com.galgotiasuniversity.rachnasakhi";
+// Re-exported so existing imports of these from this file keep working.
+export { appStoreUrl, playStoreUrl };
 
 function AppleMark({ size = 16 }: { size?: number }) {
   return (
@@ -45,27 +41,51 @@ function PlayMark({ size = 16 }: { size?: number }) {
 export function StoreButtons({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
     <div className="flex flex-col items-center gap-3 sm:flex-row">
-      <a
-        href={appStoreUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn(
-          "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[15px] font-semibold transition-transform duration-300 hover:-translate-y-0.5",
-          tone === "dark" ? "bg-white text-ink shadow-[0_8px_30px_rgba(0,0,0,0.35)]" : "bg-ink text-white"
-        )}
-      >
-        <AppleMark /> App Store
-      </a>
-      <Button
-        asChild
-        size="lg"
-        variant="outline"
-        className={cn("w-full sm:w-auto", tone === "dark" && "border-white/15 bg-transparent text-white hover:bg-white/10")}
-      >
-        <a href={playStoreUrl} target="_blank" rel="noopener noreferrer">
-          <PlayMark /> Google Play
+      {appStoreLive ? (
+        <a
+          href={appStoreUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[15px] font-semibold transition-transform duration-300 hover:-translate-y-0.5",
+            tone === "dark" ? "bg-white text-ink" : "bg-ink text-white"
+          )}
+        >
+          <AppleMark /> App Store
         </a>
-      </Button>
+      ) : (
+        <span
+          aria-disabled="true"
+          className={cn(
+            "inline-flex cursor-default items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[15px] font-semibold",
+            tone === "dark" ? "bg-white/15 text-white/80" : "bg-ink/40 text-white"
+          )}
+        >
+          <AppleMark /> App Store &middot; Soon
+        </span>
+      )}
+      {playStoreLive ? (
+        <Button
+          asChild
+          size="lg"
+          variant="outline"
+          className={cn("w-full sm:w-auto", tone === "dark" && "border-white/15 bg-transparent text-white hover:bg-white/10")}
+        >
+          <a href={playStoreUrl} target="_blank" rel="noopener noreferrer">
+            <PlayMark /> Google Play
+          </a>
+        </Button>
+      ) : (
+        <span
+          aria-disabled="true"
+          className={cn(
+            "inline-flex w-full cursor-default items-center justify-center gap-2 rounded-full border px-7 py-3.5 text-[15px] font-semibold sm:w-auto",
+            tone === "dark" ? "border-white/15 text-white/60" : "border-border text-muted-foreground"
+          )}
+        >
+          <PlayMark /> Google Play &middot; Soon
+        </span>
+      )}
     </div>
   );
 }

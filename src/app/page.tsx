@@ -32,7 +32,8 @@ import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { CardRail } from "@/components/ui/card-rail";
 import { SakhiLogoMark } from "@/components/ui/SakhiLogo";
-import { StoreButtons, appStoreUrl } from "@/components/ui/app-download-band";
+import { StoreButtons } from "@/components/ui/app-download-band";
+import { appStoreLive, appStoreUrl } from "@/lib/stores";
 import { softwareApplicationJsonLd } from "@/lib/structured-data";
 import type { Metadata } from "next";
 
@@ -176,7 +177,9 @@ const plans = [
       "Be Her Sakhi, one trusted person",
       "Works fully offline",
     ],
-    cta: { label: "Download Sakhi", href: appStoreUrl, variant: "default" as const },
+    cta: appStoreLive
+      ? { label: "Download Sakhi", href: appStoreUrl, variant: "default" as const }
+      : { label: "See what it does", href: "/product", variant: "default" as const },
   },
   {
     name: "Sakhi Plus",
@@ -191,7 +194,9 @@ const plans = [
       "Guidance on diet and routine",
       "Longer report history",
     ],
-    cta: { label: "Get Sakhi Plus", href: appStoreUrl, variant: "outline" as const },
+    cta: appStoreLive
+      ? { label: "Get Sakhi Plus", href: appStoreUrl, variant: "outline" as const }
+      : { label: "See what it does", href: "/product", variant: "outline" as const },
   },
   {
     name: "Campus & NGO",

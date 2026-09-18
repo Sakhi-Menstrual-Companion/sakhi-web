@@ -8,11 +8,7 @@ import screenSummary from "@/assets/app-screen-summary.png";
 import screenTrack from "@/assets/app-screen-track.png";
 import screenEmergency from "@/assets/app-screen-emergency-request.png";
 
-const appStoreUrl = "https://apps.apple.com/app/id6742219623";
-
-// PLACEHOLDER, swap in the real Play Store link.
-const playStoreUrl =
-  "https://play.google.com/store/apps/details?id=com.galgotiasuniversity.rachnasakhi";
+import { appStoreLive, appStoreUrl, playStoreLive, playStoreUrl } from "@/lib/stores";
 
 function AppleMark({ size = 18 }: { size?: number }) {
   return (
@@ -89,35 +85,55 @@ export function DownloadModal({ children }: { children: React.ReactNode }) {
 
         <div className="px-9 pt-2 pb-11 text-center">
           <DialogTitle className="text-h3 mx-auto max-w-[18ch] text-foreground">
-            Download Sakhi to your phone
+            {appStoreLive || playStoreLive ? "Download Sakhi to your phone" : "Sakhi is almost here"}
           </DialogTitle>
           <DialogDescription className="mx-auto mt-3 max-w-[32ch] text-[15px] leading-relaxed text-muted-foreground">
-            Free, no ads, nothing sold on. Pick your store to get started.
+            {appStoreLive || playStoreLive
+              ? "Free, no ads, nothing sold on. Pick your store to get started."
+              : "Free, no ads, nothing sold on. It is with Apple and Google for review now, and the download links go live here the day each store approves it."}
           </DialogDescription>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={appStoreUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-[15px] font-semibold text-white no-underline",
-                "transition-transform duration-200 hover:-translate-y-0.5"
-              )}
-            >
-              <AppleMark /> App Store
-            </a>
-            <a
-              href={playStoreUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-background-shell px-6 py-3.5 text-[15px] font-semibold text-foreground no-underline shadow-[0_1px_4px_rgba(0,0,0,0.06)]",
-                "transition-transform duration-200 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted"
-              )}
-            >
-              <PlayMark /> Google Play
-            </a>
+            {appStoreLive ? (
+              <a
+                href={appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-[15px] font-semibold text-white no-underline",
+                  "transition-transform duration-200 hover:-translate-y-0.5"
+                )}
+              >
+                <AppleMark /> App Store
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                className="inline-flex flex-1 cursor-default items-center justify-center gap-2 rounded-full bg-ink/40 px-6 py-3.5 text-[15px] font-semibold text-white"
+              >
+                <AppleMark /> App Store &middot; Soon
+              </span>
+            )}
+            {playStoreLive ? (
+              <a
+                href={playStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-background-shell px-6 py-3.5 text-[15px] font-semibold text-foreground no-underline",
+                  "transition-transform duration-200 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted"
+                )}
+              >
+                <PlayMark /> Google Play
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                className="inline-flex flex-1 cursor-default items-center justify-center gap-2 rounded-full border border-border bg-background-shell px-6 py-3.5 text-[15px] font-semibold text-muted-foreground"
+              >
+                <PlayMark /> Google Play &middot; Soon
+              </span>
+            )}
           </div>
         </div>
       </DialogContent>

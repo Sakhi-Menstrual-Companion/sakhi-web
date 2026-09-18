@@ -1,3 +1,4 @@
+import { appStoreUrl } from "@/lib/stores";
 const siteUrl = "https://www.teamsakhi.com";
 
 /**
@@ -43,7 +44,7 @@ export const softwareApplicationJsonLd = {
   description:
     "A free period tracker and health companion for Indian women. Cycle tracking, symptom logging, Sakhi AI, a doctor-ready health report, and Be Her Sakhi consent-based sharing with one trusted person.",
   url: `${siteUrl}/product`,
-  downloadUrl: "https://apps.apple.com/app/id6742219623",
+  downloadUrl: appStoreUrl,
   offers: {
     "@type": "Offer",
     price: "0",

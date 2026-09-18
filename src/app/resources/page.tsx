@@ -1,3 +1,4 @@
+import { appStoreLive, appStoreUrl } from "@/lib/stores";
 import type { Metadata } from "next";
 import { Download, Handshake, Mail, Megaphone } from "lucide-react";
 
@@ -42,9 +43,10 @@ const ways = [
     icon: Download,
     title: "Download & use",
     body: "Be an early user. Every log, every bug report, every moment of 'this doesn't feel right' makes Sakhi better for the next woman.",
-    cta: "Download Sakhi",
-    href: "https://apps.apple.com/app/id6742219623",
-    external: true,
+    cta: appStoreLive ? "Download Sakhi" : "Coming soon to the App Store",
+    // Until the listing is public, point at how to reach us rather than at a not-found page.
+    href: appStoreLive ? appStoreUrl : "/support",
+    external: appStoreLive,
   },
   {
     id: "ambassador",
