@@ -372,9 +372,23 @@ export default function HomePage() {
             all the way down to the marquee bar and sit flush on that divider,
             so the wrist is cut by the border rather than floating above it. */}
         <Container className="relative z-10 flex flex-col items-center pt-[calc(var(--nav-clearance)+3.5rem)] pb-0 text-center sm:pt-[calc(var(--nav-clearance)+5.5rem)]">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-1.5 text-[11.5px] font-medium text-muted-foreground backdrop-blur-sm">
-            <IndiaFlag className="animate-flag-wave h-3 w-4.25 shrink-0 drop-shadow-[0_1px_2px_rgba(163,22,84,0.18)]" />
-            Made in India
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-1.5 text-[11.5px] font-medium text-muted-foreground backdrop-blur-sm">
+              <IndiaFlag className="animate-flag-wave h-3 w-4.25 shrink-0 drop-shadow-[0_1px_2px_rgba(163,22,84,0.18)]" />
+              Made in India
+            </div>
+            {/* Apple's College Students: Success Stories feature on Karan, confirmed
+                live 2026-09-19 (01-AI/Timeline.md). Text only, no Apple logo: Apple's
+                marketing guidelines restrict third-party use of the mark, and this is
+                a factual "featured on" link, not a claim that Apple endorses the app. */}
+            <a
+              href="https://www.apple.com/education/college-students/success-stories/kumar/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-1.5 text-[11.5px] font-medium text-muted-foreground backdrop-blur-sm transition-colors hover:text-foreground"
+            >
+              Featured by Apple
+            </a>
           </div>
 
           <h1 className="text-display mt-7 max-w-[16ch] text-foreground">
