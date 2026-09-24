@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
-const lastUpdated = "September 18, 2026";
+const lastUpdated = "September 24, 2026";
 
 /*
  * Rewritten from the internal draft at 01-HQ/11-Legal/Privacy-Policy, which
@@ -32,6 +32,16 @@ const lastUpdated = "September 18, 2026";
  * logged health values; and Google Maps, configured in SakhiApp.swift and used
  * by the walk and emergency screens. Naming the AI processor matters most: a
  * health app that sends a cycle summary to a third party has to say so.
+ *
+ * 2026-09-24: Emergency Assistance and nearby community help were removed from the
+ * app on 2026-09-20, so every paragraph about requests, helpers and arrival times is
+ * gone. Stay With Me, which shipped in 2.0.3, took their place, written from the
+ * migrations that define it (01-iOS/supabase/migrations 057, 060, 061): location,
+ * battery, destination and note live on the server only during a walk and are
+ * wiped when it ends; only start, end, status and whether she was late are kept.
+ * Apple Health was also missing entirely. It is read only (HealthKitManager asks
+ * for read types, never share types), and sleep, steps and wrist temperature are
+ * saved to her account in health_samples (migration 016).
  *
  * Domain and contact email are www.teamsakhi.com / contact@teamsakhi.com.
  * They were sakhiapp.in / contact@sakhiapp.in until 2026-09-18, which looked
@@ -144,8 +154,9 @@ export default function PrivacyPage() {
                 At Sakhi, your privacy is not a feature, it is the foundation. Your health data is
                 stored securely and stays under your control. We never sell it, we do not track
                 you across other apps or websites, and nobody sees your logs but you, unless you
-                choose to share them with one trusted person through Be Her Sakhi. You can ask to
-                see your data or delete it at any time.
+                choose to share them with one trusted person through Be Her Sakhi. Your location is
+                shared only during a Stay With Me walk you start, and only with that person. You can
+                ask to see your data or delete it at any time.
               </p>
             </div>
           </div>
@@ -160,8 +171,10 @@ export default function PrivacyPage() {
                 the website at www.teamsakhi.com (the &ldquo;Website&rdquo;).
               </p>
               <p>
-                Sakhi provides menstrual cycle tracking, symptom logging, an AI companion, and
-                optional emergency assistance through Be Her Sakhi. We take the security and
+                Sakhi provides menstrual cycle tracking, symptom logging, an AI companion, optional
+                sharing with one trusted person through Be Her Sakhi, and Stay With Me, which lets
+                that person see you on your way home. The App works on iPhone and Apple Watch. We
+                take the security and
                 privacy of your data seriously and have designed our systems with privacy as a
                 priority from the start.
               </p>
@@ -192,9 +205,9 @@ export default function PrivacyPage() {
                 ]}
               />
               <p>
-                Alongside your profile, we store your logged cycle and symptom history, and, only
-                if you use Be Her Sakhi or the community help feature, the emergency request
-                records described in the sections below.
+                Alongside your profile, we store your logged cycle and symptom history, anything you
+                choose to bring in from Apple Health, and, only if you use Be Her Sakhi or Stay With
+                Me, the records described in the sections below.
               </p>
 
               <PolicySubheading>Keeping Your Data Safe</PolicySubheading>
@@ -231,22 +244,47 @@ export default function PrivacyPage() {
                   "Flow intensity, as you log it",
                   "Cycle length patterns, calculated from your history",
                   "Symptoms: mood, cramps, and anything else you choose to log",
+                  "Weight, basal body temperature and medication, if you log them",
                 ]}
               />
 
-              <PolicySubheading>Be Her Sakhi & Community Help Data</PolicySubheading>
+              <PolicySubheading>Apple Health Data</PolicySubheading>
               <p>
-                Be Her Sakhi and the nearby community-help feature are entirely optional. We only
-                collect the data below if you choose to use them:
+                Apple Health is off unless you turn it on, and you can turn it off again in the
+                Health app at any time. If you allow it, Sakhi reads, and never writes:
               </p>
               <PolicyList
                 items={[
-                  "Live location, only while a request is active",
-                  "Request details: what you need, and timestamps",
-                  "The identity of your one trusted person, if you add one through Be Her Sakhi",
-                  "Estimated arrival time, calculated from the distance between you and a helper",
+                  "Period and cycle records, such as flow, spotting and ovulation test results",
+                  "Symptoms recorded in Health, such as cramps, headache and bloating",
+                  "Date of birth, height and weight",
+                  "Sleep, step count and sleeping wrist temperature, to show insights next to your cycle",
                 ]}
               />
+              <p>
+                Sleep, steps and wrist temperature are saved to your account so your insights are
+                there on another device. Data from Apple Health is used only to show your own cycle
+                and insights inside Sakhi. It is never used for advertising or marketing, and it is
+                never sold.
+              </p>
+
+              <PolicySubheading>Be Her Sakhi & Stay With Me Data</PolicySubheading>
+              <p>
+                Be Her Sakhi and Stay With Me are entirely optional. We only collect the data below
+                if you choose to use them:
+              </p>
+              <PolicyList
+                items={[
+                  "The identity of your one trusted person, if you add one through Be Her Sakhi",
+                  "During a Stay With Me walk only: your location, your phone's battery level, the place you are going, a short note if you write one, and the time you expect to arrive",
+                  "After a walk ends: only when it started and ended, whether you marked yourself home, and whether your person was told you were late",
+                ]}
+              />
+              <p>
+                When a walk ends, your location, battery, destination and note are deleted from our
+                servers. The line of the path you walked is kept only on the phones, never on our
+                servers.
+              </p>
 
               <PolicySubheading>Technical Information</PolicySubheading>
               <PolicyList
@@ -279,18 +317,21 @@ export default function PrivacyPage() {
                 people&rsquo;s logs.
               </p>
 
-              <PolicySubheading>Be Her Sakhi & Emergency Features</PolicySubheading>
-              <p>If you turn Be Her Sakhi on, your data enables:</p>
+              <PolicySubheading>Be Her Sakhi & Stay With Me</PolicySubheading>
+              <p>If you use Be Her Sakhi and Stay With Me, your data is used to:</p>
               <PolicyList
                 items={[
-                  "Sending a request to your one trusted person or, for the community feature, to nearby Sakhi users",
-                  "Sharing your live location for the duration of an active request only",
-                  "Showing an estimated arrival time",
+                  "Show your one trusted person the updates you have chosen to share",
+                  "Show that person where you are and how much battery you have, only while a walk you started is on",
+                  "Tell them when a walk starts, is extended or ends, and ring their phone if you have not arrived in time",
+                  "Show the two of you the walks you have done together, as dates and times, never places",
                 ]}
               />
               <p>
-                Location is never tracked in the background. It is only used while a request is
-                active, and only because you started one.
+                Location is used only while a walk you started is on, including in the background
+                during that walk so your person can still see you when your phone is in your pocket.
+                It stops the moment the walk ends. Sakhi never tracks your location at any other
+                time.
               </p>
 
               <PolicySubheading>Service Improvement & Support</PolicySubheading>
@@ -313,7 +354,7 @@ export default function PrivacyPage() {
               <PolicyList
                 items={[
                   "Curated updates and care guidance you have agreed to share",
-                  "Your live location and request details, only during an active emergency request",
+                  "Your location, battery level and destination, only during a Stay With Me walk you started",
                 ]}
               />
 
@@ -325,7 +366,8 @@ export default function PrivacyPage() {
                   "Anthropic, whose Claude model writes Sakhi AI's replies. When you send a message, that message and a short summary of your cycle go to it so the answer can be about you. Anthropic does not use it to train its models, and it is never sent unless you write to Sakhi AI",
                   "Firebase Cloud Messaging, which delivers push notifications to your device",
                   "Firebase Analytics and Crashlytics, which tell us which screens are opened and what crashed. These carry usage and device information, never anything you have logged about your health",
-                  "Google Maps, which draws the map and finds places when you set a destination or open an emergency request",
+                  "Google Maps, which draws the map and finds places when you set a destination for Stay With Me or watch a walk",
+                  "Apple, which runs Apple Health on your own device. Sakhi reads from it only if you allow it, and nothing Sakhi stores is sent to Apple",
                 ]}
               />
               <p>
@@ -351,7 +393,8 @@ export default function PrivacyPage() {
                 items={[
                   "Account information: kept as long as your account is active",
                   "Cycle and symptom history: kept to provide your history and trends",
-                  "Be Her Sakhi request logs: kept for 6 months, then automatically deleted",
+                  "Stay With Me location, battery, destination and note: deleted as soon as the walk ends",
+                  "Stay With Me walk times and status: kept while you and your person are connected, and visible to them only while you are connected",
                   "Technical logs: kept for 30 days for troubleshooting",
                 ]}
               />
@@ -365,6 +408,10 @@ export default function PrivacyPage() {
                   "Contact us to delete specific information you can't remove yourself",
                 ]}
               />
+              <p>
+                Removing your trusted person ends their access to everything, including your past
+                walks, straight away.
+              </p>
               <p>
                 When you delete your account, your personal data is permanently removed from our
                 database within 30 days.
@@ -386,6 +433,8 @@ export default function PrivacyPage() {
               <PolicyList
                 items={[
                   "Turn Be Her Sakhi on or off, and choose exactly what is shared",
+                  "Start and stop a Stay With Me walk whenever you want; nothing is shared outside a walk",
+                  "Turn Apple Health access on or off in the Health app",
                   "Manage notification preferences",
                   "Delete your account, which deletes your data",
                 ]}

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
  * For a cycle app it is the single most important thing in here.
  */
 
-const lastUpdated = "September 18, 2026";
+const lastUpdated = "September 24, 2026";
 
 const CONTACT_EMAIL = "contact@teamsakhi.com";
 
@@ -147,6 +147,14 @@ export default function TermsPage() {
               <p>
                 Any food, rest or wellbeing suggestion in the app is general information, not a
                 prescription, and it is not tailored to any condition you may have.
+              </p>
+              <p>
+                Stay With Me is not an emergency service either. It lets one person you choose see
+                you on your way and tells them if you have not arrived in time, and it works only
+                as well as your phone, your network, your location permission and your battery let
+                it. A message or alert can arrive late or not at all. Sakhi does not watch your walk
+                and cannot send help. If you feel unsafe, please call 112 straight away, from the
+                walk screen or from any phone.
               </p>
             </TermsSection>
 
