@@ -218,6 +218,7 @@ export default function PrivacyPage() {
                   "Database access rules mean you can only reach your own data, and Be Her Sakhi data is shared only with the one person you designate.",
                   "A new sign-in on another device ends the session on your previous one, so only one device is ever signed in at a time.",
                   "Access to production data inside our team is limited to the people who need it to keep Sakhi running, and every access is logged.",
+                  "If a breach ever affects your personal data, we will tell you and report it to the Data Protection Board of India, as the Digital Personal Data Protection Act, 2023 requires.",
                 ]}
               />
             </PolicySection>

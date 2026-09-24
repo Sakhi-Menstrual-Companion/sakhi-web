@@ -109,7 +109,7 @@ export default function TermsPage() {
           <div className="mt-16 flex flex-col gap-16">
             <TermsSection number="1" id="agreement" title="This agreement">
               <p>
-                These terms are between you and Rachna Infotech LLP, which builds and runs Sakhi.
+                These terms are between you and Rachna Softech LLP, which builds and runs Sakhi.
                 By creating an account or using the app you agree to them. If you do not, please
                 do not use Sakhi.
               </p>
