@@ -4,10 +4,10 @@ import { ShieldCheck, Smartphone } from "lucide-react";
 
 import photoLivingRoom from "@/assets/lifestyle-living-room.jpg";
 import homeScreenMockup from "@/assets/product-home-screen-mockup.png";
-import screenSummary from "@/assets/app-screen-summary.png";
-import screenTrack from "@/assets/app-screen-track.png";
-import screenAccount from "@/assets/app-screen-account.png";
-import screenEmergency from "@/assets/app-screen-emergency-request.png";
+import screenHome from "@/assets/app2-home.png";
+import screenLog from "@/assets/app2-log.png";
+import screenAskSakhi from "@/assets/app2-ask-sakhi.png";
+import screenStayWithMe from "@/assets/app2-stay-with-me-live.png";
 import { Link } from "next-view-transitions";
 import { Container, GradientText, PageHero, Section, SectionHeading } from "@/components/ui/section";
 import { FeatureGallery } from "@/components/ui/feature-gallery";
@@ -15,7 +15,7 @@ import { FeatureGallery } from "@/components/ui/feature-gallery";
 export const metadata: Metadata = {
   title: "Features - Sakhi",
   description:
-    "Everything Sakhi does. Cycle tracking, Sakhi AI, Be Her Sakhi, the Doctor Report, and more, all in one calm app.",
+    "Everything Sakhi does. Cycle tracking, Sakhi AI, Be Her Sakhi, Stay With Me on iPhone and Apple Watch, the Doctor Report, and more, all in one calm app.",
   alternates: { canonical: "/product" },
 };
 
@@ -82,11 +82,13 @@ export default function ProductPage() {
         <Container>
           <SectionHeading eyebrow="See it for yourself" title="Inside the app" align="left" />
           <div className="mt-14 grid grid-cols-2 gap-5 sm:grid-cols-4">
+            {/* Sakhi 2.0.3 in its demo mode, captured 2026-09-20 for the store listing
+                (01-HQ/04-Design/Branding/07-App-Store-Assets/2026-09-20-Store-Screenshots). */}
             {[
-              { src: screenSummary, alt: "Sakhi's Summary screen showing days on period and the current cycle calendar" },
-              { src: screenTrack, alt: "Sakhi's Track screen for logging period, symptoms, weight and basal body temperature" },
-              { src: screenAccount, alt: "Sakhi's sign-in screen, with a note that health data is handled securely" },
-              { src: screenEmergency, alt: "Requesting pads, tampons, a hot water bag or medicines from the community nearby" },
+              { src: screenHome, alt: "Sakhi's home screen on day 2 of her period, with how she feels today and what to eat" },
+              { src: screenLog, alt: "Logging a day in Sakhi: flow intensity, then symptoms such as cramps, acne and headache" },
+              { src: screenAskSakhi, alt: "Ask Sakhi answering a question about working out during her period, using her own cycle history" },
+              { src: screenStayWithMe, alt: "Stay With Me: a map of her walk home, seven minutes left, with the person she chose watching over her" },
             ].map((shot) => (
               <div key={shot.alt} className="overflow-hidden rounded-panel border-[5px] border-white">
                 <Image src={shot.src} alt={shot.alt} className="h-auto w-full" sizes="(max-width: 640px) 50vw, 22vw" />
@@ -94,8 +96,8 @@ export default function ProductPage() {
             ))}
           </div>
           <p className="mt-16 text-[15px] leading-relaxed text-muted-foreground">
-            Real screens from the app. Dates and numbers shown are sample data, not a real person&rsquo;s health
-            record.
+            Real screens from Sakhi 2.0.3. Names, dates and numbers shown are sample data, not a real
+            person&rsquo;s health record.
           </p>
         </Container>
       </Section>
@@ -115,7 +117,8 @@ export default function ProductPage() {
               </div>
               <h3 className="text-h4 mt-5 text-secondary">Back up securely</h3>
               <p className="mt-2.5 text-[14px] leading-relaxed text-muted-foreground">
-                Create an account to safely back up her health data and access it across devices. Encrypted end to end.
+                Create an account to safely back up her health data and reach it on another phone or her Apple Watch.
+                Encrypted on the way to our servers and while stored, and never sold.
               </p>
               <span className="mt-5 inline-flex items-center rounded-full bg-secondary px-3 py-1 text-[11px] font-semibold text-secondary-foreground">
                 Recommended
@@ -128,7 +131,8 @@ export default function ProductPage() {
               </div>
               <h3 className="text-h4 mt-5 text-foreground">Stay on device only</h3>
               <p className="mt-2.5 text-[14px] leading-relaxed text-muted-foreground">
-                Her data stays on this device and never leaves. It will not be available if she changes phones.
+                Her data stays on this device and never leaves. It will not be available if she changes phones, and it
+                will not appear on her Apple Watch.
               </p>
             </div>
           </div>

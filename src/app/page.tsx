@@ -45,7 +45,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Sakhi - Period Tracker & Women's Health App for India",
   description:
-    "Sakhi is a free period tracker and health companion built for Indian women. Track your cycle, log symptoms, get AI-powered insights, and share with one trusted person. PCOD, PMS, and 16 conditions covered." +
+    "Sakhi is a free period tracker and health companion built for Indian women. Track your cycle, log symptoms, ask Sakhi AI, and walk home with Stay With Me while someone you trust watches over you. PCOD, PMS, and 16 conditions covered." +
     (appStoreLive ? " Free on the App Store." : ""),
   alternates: { canonical: "/" },
 };
@@ -61,6 +61,8 @@ import condPain from "@/assets/condition-pain.jpg";
 import condMental from "@/assets/condition-mental.jpg";
 import condReproductive from "@/assets/condition-reproductive.jpg";
 import condSystemic from "@/assets/condition-systemic.jpg";
+import phoneStayWithMe from "@/assets/framed-stay-with-me-live.png";
+import watchStayWithMe from "@/assets/framed-watch-stay-with-me.png";
 
 const trustRow = [
   { icon: NotebookPen, label: "Log your day in one tap" },
@@ -90,7 +92,7 @@ const steps = [
     icon: NotebookPen,
     screen: "Day view, logging",
     title: "Log what happened today",
-    body: "Period days, pain, mood, sleep, energy and notes. One tap is enough for an ordinary day.",
+    body: "Flow, cramps, mood, symptoms and medication. One tap is enough for an ordinary day.",
   },
   {
     n: "02",
@@ -180,6 +182,7 @@ const plans = [
       "Sakhi AI, with her own context",
       "Doctor-ready health report",
       "Be Her Sakhi, one trusted person",
+      "Stay With Me, on iPhone and Apple Watch",
       "Works fully offline",
     ],
     cta: appStoreLive
@@ -192,16 +195,16 @@ const plans = [
     price: "₹49",
     unit: "/ month",
     featured: false,
-    ribbon: "Available now",
+    // Billing is still a stub in the app (see the note above), so this tier cannot be
+    // "Available now" or send anyone to the store to buy it. Checked 2026-09-24.
+    ribbon: "Coming later",
     features: [
       "Everything in Free",
       "Deeper cycle and symptom insight",
       "Guidance on diet and routine",
       "Longer report history",
     ],
-    cta: appStoreLive
-      ? { label: "Get Sakhi Plus", href: appStoreUrl, variant: "outline" as const }
-      : { label: "See what it does", href: "/product", variant: "outline" as const },
+    cta: { label: "See what it does", href: "/product", variant: "outline" as const },
   },
   {
     name: "Campus & NGO",
@@ -222,7 +225,15 @@ const plans = [
 const faqs = [
   {
     q: "Is Sakhi free?",
-    a: "Yes. Cycle logging, symptoms, the calendar, Sakhi AI, the doctor report and Be Her Sakhi are all free, and there are no ads.",
+    a: "Yes. Cycle logging, symptoms, the calendar, Sakhi AI, the doctor report, Be Her Sakhi and Stay With Me are all free, and there are no ads.",
+  },
+  {
+    q: "What is Stay With Me?",
+    a: "When she is walking home late or taking a ride, she says where she is going and by when. Until she gets there, the person she chooses can see her moving. Reaching her place ends the walk and tells them she arrived. If she is not there in time, their phone rings. Her location is shared only while the walk is on, and 112, 108 and 181 are one tap away on the same screen.",
+  },
+  {
+    q: "Does Sakhi work on Apple Watch?",
+    a: "Yes. The Apple Watch app shows her day, lets her log flow quickly, and runs Stay With Me from her wrist, including the one-tap check-in to say she is okay.",
   },
   {
     q: "Can Sakhi diagnose a condition?",
@@ -230,7 +241,7 @@ const faqs = [
   },
   {
     q: "Who can see what she logs?",
-    a: "Only her. Nothing is shared with anyone unless she chooses to invite one trusted person through Be Her Sakhi, and she can remove that access at any time.",
+    a: "Only her. Nothing is shared with anyone unless she chooses to invite one trusted person through Be Her Sakhi, and she can remove that access at any time. During a Stay With Me walk, only the person she picked sees her location, and only until the walk ends.",
   },
   {
     q: "What is Be Her Sakhi?",
@@ -399,8 +410,8 @@ export default function HomePage() {
           </h1>
 
           <p className="text-lead mt-7 max-w-[46ch] text-muted-foreground">
-            Log your cycle, ask the questions you would never Google, and keep one
-            trusted person close when you choose.
+            Log your cycle, ask the questions you would never Google, and walk home
+            with someone you trust watching over you.
           </p>
 
           <div className="mt-10">
@@ -480,7 +491,7 @@ export default function HomePage() {
                 />
               }
               title="Cycle logs"
-              description="Period, pain, mood, sleep, energy and symptoms in one place, so the pattern becomes visible."
+              description="Flow, cramps, mood, symptoms, medication, weight and temperature in one place, so the pattern becomes visible."
             />
             <BentoGridItem
               className="sm:col-span-2 lg:col-span-2 lg:row-span-3"
@@ -515,6 +526,30 @@ export default function HomePage() {
               icon={<CloudOff className="size-5" aria-hidden="true" />}
               title="Works offline"
               description="Logging never depends on signal. Her history stays on her device first, always."
+            />
+            {/* Stay With Me, the one feature that is about getting home rather than
+                about the cycle. Real 2.0.3 demo-mode captures (Ananya walking home,
+                Rahul as the person she chose), framed by 01-HQ's frame_mockups.py. */}
+            <BentoGridItem
+              className="sm:col-span-2 lg:col-span-4 lg:row-span-4"
+              header={
+                <div className="flex h-full min-h-72 items-end justify-center gap-6 bg-accent-faint px-6 pt-6 sm:gap-10">
+                  <Image
+                    src={phoneStayWithMe}
+                    alt="Stay With Me on iPhone: a map of her walk home, seven minutes to go, with Rahul watching over her"
+                    className="h-72 w-auto select-none object-contain object-bottom lg:h-80"
+                    sizes="200px"
+                  />
+                  <Image
+                    src={watchStayWithMe}
+                    alt="Stay With Me on Apple Watch: Rahul is with you, a countdown, and a button to say I'm home"
+                    className="hidden h-44 w-auto select-none self-center object-contain sm:block lg:h-52"
+                    sizes="160px"
+                  />
+                </div>
+              }
+              title="Stay With Me"
+              description="Walking home late? Say where you are going and by when. The person you choose sees you until you arrive, and their phone rings if you are late. Location is shared only while the walk is on."
             />
           </BentoGrid>
         </Container>

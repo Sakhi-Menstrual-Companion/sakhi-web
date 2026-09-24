@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Sakhi - Your Health Companion",
   description:
-    "Sakhi is the female health companion every Indian woman deserves. Log your health, get AI-powered insights, and share with one trusted person who cares for you.",
+    "Sakhi is the female health companion every Indian woman deserves. Log your health, ask Sakhi AI, share with one trusted person who cares for you, and walk home with Stay With Me.",
   keywords: ["period tracker", "menstrual health", "women's health", "PCOD", "PCOS", "India", "Sakhi"],
   openGraph: {
     title: "Sakhi - Your Health Companion",

@@ -6,15 +6,15 @@
  * data all read from here, so launch day is flipping one of the two flags below and
  * redeploying. Nothing else.
  *
- * Both are false on purpose. Karan's rule is that they stay false until the apps are
- * live, so flipping them is his call, not a code fix. Checked on 2026-09-18: the Play
- * package returns 404. On the Apple side the App Store id used to be 6742219623, which
- * Apple's lookup API answers with zero results in India and the US and which is a 404
- * page. The real id is 6747256551 (Sakhi: Menstrual Companion, currently the 2025
- * version 1.0.5, with 2.0.1 not yet approved), so the url below now points at that.
+ * Karan's rule is that a flag stays false until that app is actually live. Checked on
+ * 2026-09-24: Apple's lookup API (itunes.apple.com/lookup?id=6747256551&country=in)
+ * answers with Sakhi: Menstrual Companion at version 2.0.3, released 2026-09-22, free,
+ * with the Stay With Me listing copy. So the App Store flag is on. The Play package
+ * com.rachna.mysakhi still returns 404 the same day, so that flag stays off.
+ * The old App Store id 6742219623 was a 404; 6747256551 is the real one.
  */
 
-export const appStoreLive = false;
+export const appStoreLive = true;
 export const playStoreLive = false;
 
 export const appStoreUrl = "https://apps.apple.com/app/id6747256551";

@@ -6,8 +6,10 @@ import { ArrowRight } from "lucide-react";
 import lifestyleCycleOverhead from "@/assets/lifestyle-cycle-overhead.jpg";
 import lifestyleSakhiAiChat from "@/assets/lifestyle-sakhi-ai-chat.jpg";
 import lifestyleDayOneCalendar from "@/assets/lifestyle-day-one-calendar.jpg";
-import mayaTrack from "@/assets/maya-track.png";
-import mayaEmergency from "@/assets/maya-emergency.png";
+import framedLog from "@/assets/framed-log.png";
+import framedCare from "@/assets/framed-care.png";
+import framedStayWithMeStart from "@/assets/framed-stay-with-me-start.png";
+import framedWatchToday from "@/assets/framed-watch-today.png";
 import {
   Dialog,
   DialogContent,
@@ -63,6 +65,12 @@ type Feature = {
   imageAlt?: string;
   /** Crop anchor. "top" for the portrait phone mockups, which lose their point if centred. */
   imageAlign?: "center" | "top";
+  /**
+   * "contain" for the device-framed 2.0.3 captures, which are a whole phone or watch on a
+   * transparent canvas. Cropping those cuts the device in half, so they sit inside the
+   * well on --accent-faint instead.
+   */
+  imageFit?: "cover" | "contain";
   /** Brief for whoever shoots the missing art. Only used when `image` is absent. */
   imageLabel: string;
   headline: string;
@@ -85,36 +93,39 @@ const features: Feature[] = [
   },
   {
     title: "Body logging",
-    desc: "Cramps, headache, bloating, fever, energy, weight. Log any symptom on any day, in a few taps, and skip the days you would rather not. Nothing here is compulsory, and the picture still builds as long as you keep coming back to it.",
-    image: mayaTrack,
-    imageAlign: "top",
+    desc: "Flow, cramps, headache, bloating, acne, weight, basal body temperature and medication. Log any of it on any day, in a few taps, and skip the days you would rather not. Nothing here is compulsory, and the picture still builds as long as you keep coming back to it.",
+    image: framedLog,
+    imageFit: "contain",
     imageAlt:
-      "Sakhi's Track screen, logging period flow, cramps and mood for a single day",
+      "Logging a day in Sakhi: flow intensity at the top, then symptoms such as acne, cramps and headache",
     imageLabel: "Track screen, logging symptoms for the day",
     headline: "Log any symptom, on any day.",
     body: [
-      "Cramps, headache, bloating, fever, energy, weight. You can log what happened today in a few taps, and skip the days you do not feel like logging anything at all.",
+      "Flow, cramps, headache, bloating, acne, weight, basal body temperature and medication. You can log what happened today in a few taps, and skip the days you do not feel like logging anything at all.",
       "One entry on its own says very little. Months of entries start to show a pattern, and a pattern is something you can take to a doctor and talk about.",
     ],
   },
   {
     title: "Mood & mental health",
-    desc: "Mood, stress, anxiety, irritability and sleep quality sit alongside the physical symptoms, because they belong in the same picture. Over a few cycles you start to see how the two move together, and which weeks tend to be the harder ones.",
-    imageLabel: "Mood and sleep logging, plotted against cycle phase",
+    desc: "Happy, calm, tired, anxious, irritated, sad or angry. Mood sits alongside the physical symptoms, because it belongs in the same picture. Over a few cycles you start to see how the two move together, and which weeks tend to be the harder ones.",
+    imageLabel: "Mood logging, plotted against cycle phase",
     headline: "See how your cycle and how you feel move together.",
     body: [
-      "Mood, stress, anxiety, irritability and sleep quality are logged the same way as physical symptoms, because they belong in the same picture as everything else.",
+      "Mood is logged the same way as physical symptoms, in one tap, because it belongs in the same picture as everything else.",
       "Across a few cycles you can see whether the harder days land in roughly the same place each month. Sometimes just knowing it is coming makes it easier to carry.",
     ],
   },
   {
-    title: "Lifestyle",
-    desc: "Exercise, diet notes, water intake, and any custom symptom you want to define yourself. If something matters to you and Sakhi does not have a field for it, you can add your own. No targets, no streaks, nothing built to make you feel behind.",
-    imageLabel: "Custom symptom setup, adding your own field",
-    headline: "Track the parts of your life that affect your body.",
+    title: "Apple Watch",
+    desc: "See your day at a glance, log flow in a tap, and run Stay With Me from your wrist, so you do not have to hold your phone out on the walk home. When the walk is on, one tap tells the person you chose that you are okay.",
+    image: framedWatchToday,
+    imageFit: "contain",
+    imageAlt: "Sakhi on Apple Watch: Today, 18 days until next period, follicular phase, and a plus button to log",
+    imageLabel: "Sakhi on Apple Watch, the Today screen",
+    headline: "Sakhi, on your wrist.",
     body: [
-      "Exercise, diet notes, water intake, and any custom symptom you want to define yourself. If there is something that matters to you and Sakhi does not have a field for it, you can add your own.",
-      "None of it is a target and none of it is a streak. There is no score to keep up and nothing here is designed to make you feel behind.",
+      "The watch shows where you are in your cycle and lets you log flow without picking up your phone.",
+      "It also runs Stay With Me. You can start the walk, see how long is left, check in with one tap, and say you are home, all from your wrist.",
     ],
   },
   {
@@ -141,22 +152,26 @@ const features: Feature[] = [
     ],
   },
   {
-    title: "Safety features",
-    desc: "A washroom locator and a nearby public space finder, for the days when finding one quickly is the whole problem. These are small features and not the centre of the app, but the day does not stop being difficult once you leave the house.",
-    image: mayaEmergency,
-    imageAlign: "top",
+    title: "Stay With Me",
+    desc: "Walking home late, or getting a ride? Say where you are going and by when. Until you get there, the person you choose can see you moving, and if you are not there in time, their phone rings. Your location is shared only while the walk is on.",
+    image: framedStayWithMeStart,
+    imageFit: "contain",
     imageAlt:
-      "A map in Sakhi showing nearby places, with a list of things she can ask for",
-    imageLabel: "Map view, nearby washrooms and public spaces",
-    headline: "Small things that matter when you are out.",
+      "Starting Stay With Me: a map, a destination search, the time she will reach by, check-ins every ten minutes, and call buttons for 112, 108 and 181",
+    imageLabel: "Stay With Me, starting a walk home",
+    headline: "Walk home with someone watching over you.",
     body: [
-      "A washroom locator and a nearby public space finder, for the days when finding one quickly is the entire problem you are trying to solve.",
-      "These are not the centre of the app and they are not meant to be. They are here because the day does not stop being difficult the moment you leave the house.",
+      "Say where you are going and by when. Until you get there, the person you choose can see you moving. Reaching your place ends the walk and lets them know you arrived. They can also ask to stay with you, and you decide whether to accept.",
+      "If you are not there in time, their phone rings, so someone knows before you have to ask. Your location stops being shared the moment the walk ends, and 112, 108 and 181 are one tap away on the same screen. Sakhi is not an emergency service.",
     ],
   },
   {
     title: "Be Her Sakhi",
     desc: "Curated updates and care guidance can be shared with one person you trust, if that is something you want. What is shared, and when, is your decision and nobody else's. It is completely optional, and Sakhi works fully without it.",
+    image: framedCare,
+    imageFit: "contain",
+    imageAlt:
+      "Be Her Sakhi: You and Him, with what he can see and a button to remove him at any time",
     imageLabel: "Be Her Sakhi, choosing what a trusted person can see",
     headline: "Share with one trusted person, only if you want to.",
     body: [
@@ -189,6 +204,7 @@ export function FeatureGallery({ className }: { className?: string }) {
             image,
             imageAlt,
             imageAlign,
+            imageFit,
             imageLabel,
             headline,
             body,
@@ -247,6 +263,7 @@ export function FeatureGallery({ className }: { className?: string }) {
                   <div
                     className={cn(
                       "relative aspect-square overflow-hidden rounded-xl",
+                      imageFit === "contain" && "bg-accent-faint",
                       imageLeft && "lg:order-1",
                     )}
                   >
@@ -255,7 +272,7 @@ export function FeatureGallery({ className }: { className?: string }) {
                       alt={imageAlt ?? ""}
                       fill
                       className={cn(
-                        "object-cover",
+                        imageFit === "contain" ? "object-contain p-6 sm:p-12" : "object-cover",
                         imageAlign === "top" ? "object-top" : "object-center",
                       )}
                       sizes="(max-width: 1024px) 100vw, 50vw"

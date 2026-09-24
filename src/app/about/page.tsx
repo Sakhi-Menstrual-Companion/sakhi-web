@@ -22,10 +22,10 @@ import journeyLogoLayerDrops from "@/assets/journey-logo-layer-1-drops.png";
 import journeyLogoLayerReproductive from "@/assets/journey-logo-layer-2-reproductive.png";
 import journeyLogoLayerForm from "@/assets/journey-logo-layer-3-form.png";
 import journeyLogoLayerFinal from "@/assets/journey-logo-layer-4-final.png";
-import mayaOnboarding from "@/assets/maya-onboarding.png";
-import mayaTrack from "@/assets/maya-track.png";
-import mayaEmergency from "@/assets/maya-emergency.png";
-import mayaSummary from "@/assets/maya-summary.png";
+import pathHome from "@/assets/framed-home.png";
+import pathLog from "@/assets/framed-log.png";
+import pathStayWithMeStart from "@/assets/framed-stay-with-me-start.png";
+import pathStayWithMeLive from "@/assets/framed-stay-with-me-live.png";
 import { Container, GradientText, PageHero, Section, SectionHeading } from "@/components/ui/section";
 import { SectionNav } from "@/components/ui/section-nav";
 import { TeamCards } from "@/components/ui/team-cards";
@@ -152,16 +152,10 @@ function JourneyPhoto({
   );
 }
 
-/* The Maya row is the only set whose sources disagree on ratio: three of the
-   mockups are 316x621 and the emergency one is 300x641. Left to size
-   naturally that one card runs about 8% taller than its neighbours and the
-   captions stop lining up, so this row letterboxes into the tallest of the
-   four instead. The fill is the exact background baked into all four PNGs,
-   sampled at rgb(255,233,241), which is why the bars do not show. It is a raw
-   hex rather than a token on purpose: it is matching a colour inside an image
-   file, not taking part in the palette, and it must not move when the palette
-   does. */
-const mayaFrame = { aspect: "aspect-[300/641]", fill: "bg-[#ffe9f1]" };
+/* The "journey it was built for" row: four 2.0.3 demo-mode captures, each a whole
+   framed phone on a transparent canvas (01-HQ frame_mockups.py). They share one
+   ratio, 1419x2796, so the frame only adds the soft blush well behind the bezel. */
+const pathFrame = { aspect: "aspect-[1419/2796]", fill: "bg-accent-faint" };
 
 /* Chapter wrapper: an eyebrow date, a short headline, one paragraph. The
    photo layout that follows each chapter varies (one photo, a hero, a grid
@@ -224,8 +218,8 @@ const northStar = [
 const founderPartnerItems = [
   { label: "ISDP Bootcamp", desc: "Where Sakhi was born, Jan 2024" },
   { label: "Apple Developer Program", desc: "University-custodian model, May 2024" },
-  { label: "Campus Promotion", desc: "v2 launch partner, Jun 2026" },
-  { label: "B2B Pathway", desc: "First institutional partner, Nov 2026" },
+  { label: "Apple Success Story", desc: "Photographed on campus, Sep 2025" },
+  { label: "Support from the CEO's desk", desc: "Offered for Sakhi's growth and reach, May 2026" },
 ];
 
 const heroStats = [
@@ -451,7 +445,17 @@ export default function AboutPage() {
               <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
                 The Times of India covered Sakhi. The team presented at the UP International
                 Trade Show. Then Sakhi was shown to seven Apple delegates, including Greg
-                Joswiak, Apple&rsquo;s Senior Vice President of Worldwide Marketing.
+                Joswiak, Apple&rsquo;s Senior Vice President of Worldwide Marketing. In 2025,
+                Apple told Karan&rsquo;s story, and Sakhi&rsquo;s, on its{" "}
+                <a
+                  href="https://www.apple.com/in/education/college-students/success-stories/kumar/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-secondary underline underline-offset-2"
+                >
+                  College Students success stories page
+                </a>
+                .
               </p>
             </div>
             <Photo
@@ -822,8 +826,8 @@ export default function AboutPage() {
             <div>
               <JourneyPhoto
                 src={journeyDesignEvolution}
-                alt="Six real versions of the Sakhi Summary screen side by side, numbered 1 through 5 and Now, showing the design evolving from an early illustrated greeting to the current calendar and cycle summary"
-                caption="The Summary screen alone went through six real versions before it looked like this. Nothing here shipped on the first try."
+                alt="Six real versions of the Sakhi Summary screen side by side, numbered 1 through 5 and Now, showing the design evolving from an early illustrated greeting to the 2025 calendar and cycle summary"
+                caption="In the first build, the Summary screen alone went through six real versions. The one marked Now is from 2025. Sakhi 2 has since been rebuilt again from the ground up."
               />
             </div>
 
@@ -882,39 +886,39 @@ export default function AboutPage() {
               One path through the app, start to a good ending
             </h3>
             <p className="mt-4 text-[18px] leading-relaxed text-muted-foreground">
-              She finds Sakhi through a friend, in the middle of a period emergency at college.
-              Setup takes a minute: her name, a login, roughly where her cycle stands, nothing
-              forced. A few days later her period starts without warning. She opens Track, logs
-              the flow and the cramps, and Sakhi starts showing her the pattern underneath it. A
-              few weeks in, caught out at a restaurant with nothing on her, she taps Need Help.
-              Two Sakhi users are nearby. Someone accepts, and pads arrive in six minutes. A month
-              later, someone else needs help the way she once did, and this time, she&rsquo;s the
-              one who shows up.
+              A friend tells her about Sakhi. Setup takes a minute: her name, a login, roughly
+              where her cycle stands, nothing forced. A few days later her period starts. She
+              logs the flow and the cramps in a few taps, and over the next weeks Sakhi starts
+              showing her the pattern underneath. One night she leaves a friend&rsquo;s place
+              late. Before she steps out, she opens Stay With Me, says she is going home and
+              when she should be there, and picks the one person she wants watching. They see her
+              moving the whole way. She reaches her door, the walk ends, and they are told she
+              is home.
             </p>
             <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-4">
               <JourneyPhoto
-                src={mayaOnboarding}
-                alt="Sakhi onboarding screen asking for weight, with a skip option, part of a gentle setup that doesn't force precise data"
-                caption="Setting up takes a minute. Nothing is forced."
-                frame={mayaFrame}
+                src={pathLog}
+                alt="Logging a day in Sakhi: flow intensity, then symptoms such as acne, cramps and headache"
+                caption="Logging a period: flow, cramps, how she feels."
+                frame={pathFrame}
               />
               <JourneyPhoto
-                src={mayaTrack}
-                alt="Sakhi Track screen for logging period flow, cramps and mood in a few taps"
-                caption="Logging a period: flow, cramps, mood."
-                frame={mayaFrame}
-              />
-              <JourneyPhoto
-                src={mayaEmergency}
-                alt="Sakhi's community help screen, showing nearby Sakhi users and a request sheet for pads, tampons, a hot water bag or medicines"
-                caption="Caught out with nothing on her, she asks the community nearby."
-                frame={mayaFrame}
-              />
-              <JourneyPhoto
-                src={mayaSummary}
-                alt="Sakhi Summary screen with a calendar and cycle phase insight"
+                src={pathHome}
+                alt="Sakhi's home screen showing the day of her cycle, how she feels today and what to eat"
                 caption="Weeks in, Sakhi already knows the pattern."
-                frame={mayaFrame}
+                frame={pathFrame}
+              />
+              <JourneyPhoto
+                src={pathStayWithMeStart}
+                alt="Starting Stay With Me: a destination, the time she will reach by, check-ins, and call buttons for 112, 108 and 181"
+                caption="Heading home late, she starts Stay With Me."
+                frame={pathFrame}
+              />
+              <JourneyPhoto
+                src={pathStayWithMeLive}
+                alt="Stay With Me during the walk: a map, seven minutes to home, and the person she chose watching over her"
+                caption="The person she chose sees her all the way home."
+                frame={pathFrame}
               />
             </div>
           </div>

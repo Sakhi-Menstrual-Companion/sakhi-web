@@ -42,7 +42,8 @@ export const softwareApplicationJsonLd = {
   operatingSystem: "iOS",
   applicationCategory: "HealthApplication",
   description:
-    "A free period tracker and health companion for Indian women. Cycle tracking, symptom logging, Sakhi AI, a doctor-ready health report, and Be Her Sakhi consent-based sharing with one trusted person.",
+    "A free period tracker and health companion for Indian women. Cycle tracking, symptom logging, Sakhi AI, a doctor-ready health report, Be Her Sakhi consent-based sharing with one trusted person, and Stay With Me for the walk home, on iPhone and Apple Watch.",
+  softwareVersion: "2.0.3",
   url: `${siteUrl}/product`,
   // Only once the listing is public. This was unconditional and pointed at a store page
   // that did not exist, which is a broken link in the markup search engines read.

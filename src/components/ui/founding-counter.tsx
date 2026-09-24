@@ -9,6 +9,7 @@ import {
   joinFoundingWaitlist,
   subscribeFoundingCount,
 } from "@/lib/founding";
+import { appStoreLive } from "@/lib/stores";
 
 type Status = "idle" | "sending" | "joined" | "invalid" | "failed";
 
@@ -89,7 +90,9 @@ export function FoundingCounter() {
 
       {status === "joined" ? (
         <p className="mt-6 text-[14px] text-foreground">
-          You are on the list. We will write to you when Sakhi is ready to download.
+          {appStoreLive
+            ? "You are on the list. We will write to you when Sakhi is on Android, and with anything new for founding members."
+            : "You are on the list. We will write to you when Sakhi is ready to download."}
         </p>
       ) : full ? null : (
         <form onSubmit={onSubmit} className="mx-auto mt-6 flex max-w-[28rem] flex-col gap-3 sm:flex-row">
@@ -127,7 +130,9 @@ export function FoundingCounter() {
       )}
 
       <p className="mt-5 text-[12px] text-muted-foreground">
-        We use it only to tell you when Sakhi is ready. It is never shown to anyone, and never sold.
+        {appStoreLive
+          ? "We use it only to tell you when Sakhi reaches Android and what is new for founding members. It is never shown to anyone, and never sold."
+          : "We use it only to tell you when Sakhi is ready. It is never shown to anyone, and never sold."}
       </p>
     </div>
   );

@@ -4,9 +4,9 @@ import Image from "next/image";
 
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import screenSummary from "@/assets/app-screen-summary.png";
-import screenTrack from "@/assets/app-screen-track.png";
-import screenEmergency from "@/assets/app-screen-emergency-request.png";
+import screenHome from "@/assets/app2-home.png";
+import screenLog from "@/assets/app2-log.png";
+import screenStayWithMe from "@/assets/app2-stay-with-me-live.png";
 
 import { appStoreLive, appStoreUrl, playStoreLive, playStoreUrl } from "@/lib/stores";
 
@@ -46,13 +46,13 @@ function ScreenshotFan() {
         className={cn(tile, "top-7 left-1/2 translate-x-[-130%] rotate-[-10deg]")}
         aria-hidden="true"
       >
-        <Image src={screenTrack} alt="" className="h-auto w-full" sizes="96px" />
+        <Image src={screenLog} alt="" className="h-auto w-full" sizes="96px" />
       </div>
       <div
         className={cn(tile, "top-7 left-1/2 translate-x-[30%] rotate-10")}
         aria-hidden="true"
       >
-        <Image src={screenEmergency} alt="" className="h-auto w-full" sizes="96px" />
+        <Image src={screenStayWithMe} alt="" className="h-auto w-full" sizes="96px" />
       </div>
       <div
         className={cn(
@@ -60,7 +60,7 @@ function ScreenshotFan() {
           "top-1 left-1/2 w-28 -translate-x-1/2 shadow-[0_20px_40px_rgba(0,0,0,0.16)]"
         )}
       >
-        <Image src={screenSummary} alt="Sakhi's Summary screen" className="h-auto w-full" sizes="112px" />
+        <Image src={screenHome} alt="Sakhi's home screen, showing the day of her cycle and her calendar" className="h-auto w-full" sizes="112px" />
       </div>
     </div>
   );
@@ -88,8 +88,10 @@ export function DownloadModal({ children }: { children: React.ReactNode }) {
             {appStoreLive || playStoreLive ? "Download Sakhi to your phone" : "Sakhi is almost here"}
           </DialogTitle>
           <DialogDescription className="mx-auto mt-3 max-w-[32ch] text-[15px] leading-relaxed text-muted-foreground">
-            {appStoreLive || playStoreLive
+            {appStoreLive && playStoreLive
               ? "Free, no ads, nothing sold on. Pick your store to get started."
+              : appStoreLive
+              ? "Free on the App Store for iPhone and Apple Watch, with no ads and nothing sold on. The Android app is on its way."
               : "Free, no ads, nothing sold on. It is with Apple and Google for review now, and the download links go live here the day each store approves it."}
           </DialogDescription>
 

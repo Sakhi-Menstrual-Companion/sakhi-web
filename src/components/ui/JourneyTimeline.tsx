@@ -10,9 +10,9 @@ const milestones = [
   { date: "Q4 2024",        label: "The world notices",       desc: "Times of India. UP International Trade Show. Apple SVP Greg Joswiak hears about Sakhi." },
   { date: "March 2025",     label: "TestFlight beta",         desc: "Power users, early testers, bug reporters. The community that made v2 possible." },
   { date: "June 2025",      label: "App Store launch",        desc: "First public release. Real women downloading and trusting Sakhi for the first time." },
-  { date: "September 2025", label: "Apple Success Story",     desc: "Apple selects Sakhi. Campus photoshoot. A student project becomes a global story." },
-  { date: "May 2026",       label: "Full-time return",        desc: "Karan returns to Sakhi full-time. v2 development begins in earnest." },
-  { date: "June 2026",      label: "v2 launches",             desc: "The biggest update yet. Everything Sakhi has learned, rebuilt from the ground up." },
+  { date: "September 2025", label: "Apple Success Story",     desc: "Apple photographs Karan on campus for its College Students success stories. The page is live on apple.com." },
+  { date: "May 2026",       label: "Karan returns",           desc: "At the university's request, Karan comes back to Sakhi and starts rebuilding it as Sakhi 2." },
+  { date: "September 2026", label: "Sakhi 2 on the App Store", desc: "Rebuilt from the ground up, with Stay With Me and an Apple Watch app. Version 2.0.3 went live on 22 September." },
 ];
 
 export default function JourneyTimeline() {
